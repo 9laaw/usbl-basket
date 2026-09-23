@@ -5453,17 +5453,134 @@ window.loadCompetitionDetailPage = async () => {
 // (BDD INTERNE STRICTEMENT : data/informations.json & documents/*.pdf)
 // ----------------------------------------------------------------------
 
+// Helper IndexedDB pour stockage local pérenne et illimité des PDF (compatible GitHub Pages)
+function openPdfDb() {
+  return new Promise((resolve, reject) => {
+    if (typeof indexedDB === "undefined") {
+      return reject(new Error("IndexedDB non supporté"));
+    }
+    const request = indexedDB.open("USBL_Pdf_Database", 1);
+    request.onupgradeneeded = (e) => {
+      const db = e.target.result;
+      if (!db.objectStoreNames.contains("pdfs")) {
+        db.createObjectStore("pdfs", { keyPath: "category" });
+      }
+    };
+    request.onsuccess = (e) => resolve(e.target.result);
+    request.onerror = (e) => reject(e.target.error);
+  });
+}
+
+async function savePdfToIdb(category, base64Data) {
+  try {
+    const db = await openPdfDb();
+    return new Promise((resolve) => {
+      const tx = db.transaction("pdfs", "readwrite");
+      const store = tx.objectStore("pdfs");
+      store.put({ category, data: base64Data });
+      tx.oncomplete = () => resolve(true);
+      tx.onerror = (e) => {
+        console.warn("[IDB] Put error:", e);
+        resolve(false);
+      };
+    });
+  } catch (e) {
+    console.warn("[IDB] Could not access IndexedDB:", e);
+    return false;
+  }
+}
+
+async function getPdfFromIdb(category) {
+  try {
+    const db = await openPdfDb();
+    return new Promise((resolve) => {
+      const tx = db.transaction("pdfs", "readonly");
+      const store = tx.objectStore("pdfs");
+      const req = store.get(category);
+      req.onsuccess = () => resolve(req.result ? req.result.data : null);
+      req.onerror = () => resolve(null);
+    });
+  } catch (e) {
+    return null;
+  }
+}
+
+async function deletePdfFromIdb(category) {
+  try {
+    const db = await openPdfDb();
+    return new Promise((resolve) => {
+      const tx = db.transaction("pdfs", "readwrite");
+      const store = tx.objectStore("pdfs");
+      store.delete(category);
+      tx.oncomplete = () => resolve(true);
+      tx.onerror = () => resolve(false);
+    });
+  } catch (e) {
+    return false;
+  }
+}
+
+// Convertisseur Base64 -> Blob URL pour affichage et téléchargement fluide
+function getPdfBlobUrl(urlOrData) {
+  if (!urlOrData) return "";
+  if (urlOrData.startsWith("blob:") || urlOrData.startsWith("http://") || urlOrData.startsWith("https://") || urlOrData.startsWith("documents/")) {
+    return urlOrData;
+  }
+  if (urlOrData.startsWith("data:application/pdf") || urlOrData.startsWith("data:application/octet-stream")) {
+    try {
+      const parts = urlOrData.split(";base64,");
+      const raw = window.atob(parts.length > 1 ? parts[1] : parts[0]);
+      const rawLength = raw.length;
+      const uInt8Array = new Uint8Array(rawLength);
+      for (let i = 0; i < rawLength; ++i) {
+        uInt8Array[i] = raw.charCodeAt(i);
+      }
+      const blob = new Blob([uInt8Array], { type: "application/pdf" });
+      return URL.createObjectURL(blob);
+    } catch(e) {
+      console.warn("Could not convert data URL to blob:", e);
+      return urlOrData;
+    }
+  }
+  return urlOrData;
+}
+window.getPdfBlobUrl = getPdfBlobUrl;
+
 // Récupération en temps réel de la base de données interne sans cache
 async function fetchInformationsDb() {
+  let db = {};
+
+  // 1. Base physique data/informations.json
   try {
     const res = await fetch(`data/informations.json?t=${Date.now()}`);
     if (res.ok) {
-      return await res.json();
+      db = await res.json();
     }
   } catch (e) {
     console.warn("[Informations DB] Erreur de lecture de data/informations.json :", e);
   }
-  return null;
+
+  // 2. Fusion avec localStorage (pour les documents publiés sur le site en ligne / GitHub Pages)
+  try {
+    const localRaw = localStorage.getItem("usbl_informations");
+    if (localRaw) {
+      const localDb = JSON.parse(localRaw);
+      db = { ...db, ...localDb };
+    }
+  } catch (e) {}
+
+  // 3. Charger le binaire PDF depuis IndexedDB si enregistré localement
+  const validCategories = ["inscriptions", "planning", "boutiques", "charte", "commissions"];
+  for (const catId of validCategories) {
+    if (db[catId] && (db[catId].isStoredLocally || !db[catId].url)) {
+      const idbData = await getPdfFromIdb(catId);
+      if (idbData) {
+        db[catId].url = idbData;
+      }
+    }
+  }
+
+  return db;
 }
 window.fetchInformationsDb = fetchInformationsDb;
 
@@ -5479,6 +5596,7 @@ async function initCategoryPdfPage() {
   const doc = infoDb ? infoDb[category] : null;
 
   if (doc && doc.url) {
+    const activePdfUrl = getPdfBlobUrl(doc.url);
     let updatedDateFormatted = "";
     if (doc.updatedAt) {
       try {
@@ -5502,18 +5620,18 @@ async function initCategoryPdfPage() {
             </div>
           </div>
           <div class="pdf-actions-bar">
-            <a href="${doc.url}" download="${doc.filename || category + '.pdf'}" class="btn-pdf-action btn-pdf-primary">
+            <a href="${activePdfUrl}" download="${doc.filename || category + '.pdf'}" class="btn-pdf-action btn-pdf-primary">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
               Télécharger le document
             </a>
-            <a href="${doc.url}" target="_blank" rel="noopener noreferrer" class="btn-pdf-action btn-pdf-secondary">
+            <a href="${activePdfUrl}" target="_blank" rel="noopener noreferrer" class="btn-pdf-action btn-pdf-secondary">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
               Plein écran
             </a>
           </div>
         </div>
         <div class="pdf-frame-wrapper">
-          <iframe class="pdf-viewer-frame" src="${doc.url}#toolbar=1&navpanes=0" title="${doc.title || 'Document PDF'}"></iframe>
+          <iframe class="pdf-viewer-frame" src="${activePdfUrl}#toolbar=1&navpanes=0" title="${doc.title || 'Document PDF'}"></iframe>
         </div>
       </div>
     `;
@@ -5682,7 +5800,7 @@ window.loadAdminInformations = async function() {
             ${isPublished ? `
               <div style="color: #2b7a42; font-weight: 600; margin-bottom: 4px;">Fichier actif : <strong>${doc.filename || cat.id + '.pdf'}</strong> (${doc.filesize || 'PDF'})</div>
               <div style="color: var(--text-muted);">Dernière mise en ligne : ${updateFormatted || 'Récemment'}</div>
-              <div style="margin-top: 6px;"><a href="${doc.url}" target="_blank" style="color: var(--primary-color); text-decoration: underline; font-weight: 600;">Consulter le PDF actuel ↗</a></div>
+              <div style="margin-top: 6px;"><a href="${getPdfBlobUrl(doc.url)}" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); text-decoration: underline; font-weight: 600;">Consulter le PDF actuel ↗</a></div>
             ` : `
               <div style="color: var(--text-muted); font-style: italic;">Aucun fichier PDF n'est actuellement en ligne pour cette catégorie.</div>
             `}
@@ -5739,67 +5857,128 @@ window.handlePdfFileSelected = function(category, inputElement) {
   }
 };
 
-window.submitAdminPdf = async function(category) {
-  const file = window.selectedAdminPdfFiles[category];
-  const titleInput = document.getElementById(`admin-pdf-title-${category}`);
-  const title = titleInput ? titleInput.value.trim() : "";
-  const globalAlert = document.getElementById("admin-pdf-global-alert");
-  const btnEl = document.getElementById(`admin-pdf-btn-${category}`);
+window.submitAdminPdf = function(category) {
+  return new Promise((resolve) => {
+    const file = window.selectedAdminPdfFiles[category];
+    const titleInput = document.getElementById(`admin-pdf-title-${category}`);
+    const title = titleInput ? titleInput.value.trim() : "";
+    const globalAlert = document.getElementById("admin-pdf-global-alert");
+    const btnEl = document.getElementById(`admin-pdf-btn-${category}`);
 
-  if (!file) {
-    alert("Veuillez d'abord sélectionner un fichier PDF à téléverser en cliquant sur le bloc de sélection.");
-    return;
-  }
+    if (!file) {
+      alert("Veuillez d'abord sélectionner un fichier PDF à téléverser en cliquant sur le bloc de sélection.");
+      resolve(false);
+      return;
+    }
 
-  if (btnEl) {
-    btnEl.disabled = true;
-    btnEl.textContent = "Téléversement en cours...";
-  }
+    if (btnEl) {
+      btnEl.disabled = true;
+      btnEl.textContent = "Téléversement en cours...";
+    }
 
-  const reader = new FileReader();
-  reader.onload = async function(e) {
+    const reader = new FileReader();
+    reader.onerror = function() {
+      if (btnEl) btnEl.disabled = false;
+      resolve(false);
+    };
+    reader.onload = async function(e) {
     const base64Data = e.target.result;
+    const sizeFormatted = file.size >= 1024 * 1024
+      ? (file.size / (1024 * 1024)).toFixed(1) + " Mo"
+      : Math.max(1, Math.round(file.size / 1024)) + " Ko";
 
-    try {
-      const response = await fetch("/api/upload-pdf", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          category: category,
-          filename: file.name,
-          title: title,
-          data: base64Data
-        })
-      });
+    let serverSynced = false;
 
-      const result = await response.json();
+    // 1. Essai sur endpoint relatif et ports locaux si un serveur Node est présent
+    const endpoints = [];
+    if (window.location.protocol !== "file:") {
+      endpoints.push("/api/upload-pdf");
+    }
+    if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" || window.location.protocol === "file:") {
+      endpoints.push("http://localhost:3001/api/upload-pdf", "http://localhost:3000/api/upload-pdf", "http://localhost:8080/api/upload-pdf");
+    }
 
-      if (response.ok && result.success) {
-        delete window.selectedAdminPdfFiles[category];
-
-        if (globalAlert) {
-          globalAlert.style.display = "block";
-          globalAlert.style.backgroundColor = "#e6f7ec";
-          globalAlert.style.color = "#0d8a43";
-          globalAlert.style.border = "1px solid #b7ecc8";
-          globalAlert.innerHTML = `✓ Succès : Le document officiel pour <strong>${category}</strong> a été enregistré dans la base de données interne locale et publié pour tous les utilisateurs.`;
-          setTimeout(() => { globalAlert.style.display = "none"; }, 6000);
+    for (const ep of endpoints) {
+      try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 800);
+        const response = await fetch(ep, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            category: category,
+            filename: file.name,
+            title: title,
+            data: base64Data
+          }),
+          signal: controller.signal
+        });
+        clearTimeout(timeoutId);
+        if (response.ok) {
+          const result = await response.json();
+          if (result && result.success) {
+            serverSynced = true;
+            console.log(`[PDF Sync] Synced ${category} to server at ${ep}`);
+            break;
+          }
         }
-
-        await window.loadAdminInformations();
-      } else {
-        alert("Erreur lors de l'enregistrement du PDF : " + (result.error || "Erreur inconnue"));
-      }
-    } catch (err) {
-      console.error(err);
-      alert("Erreur de connexion avec le serveur interne.");
-    } finally {
-      if (btnEl) {
-        btnEl.disabled = false;
+      } catch (err) {
+        // Serveur injoignable sur cet endpoint, on continue
       }
     }
+
+    // 2. Toujours stocker dans IndexedDB pour que le document soit disponible instantanément
+    await savePdfToIdb(category, base64Data);
+
+    // 3. Mettre à jour localStorage
+    let infoDb = {};
+    try {
+      const raw = localStorage.getItem("usbl_informations");
+      if (raw) infoDb = JSON.parse(raw);
+    } catch(err) {}
+
+    infoDb[category] = {
+      title: title || (infoDb[category]?.title) || category.toUpperCase(),
+      filename: file.name,
+      url: serverSynced ? `documents/${category}.pdf` : base64Data,
+      filesize: sizeFormatted,
+      updatedAt: new Date().toISOString(),
+      isStoredLocally: !serverSynced
+    };
+
+    try {
+      localStorage.setItem("usbl_informations", JSON.stringify(infoDb));
+    } catch(err) {
+      console.warn("[PDF Sync] localStorage full, but preserved in IndexedDB:", err);
+    }
+
+    delete window.selectedAdminPdfFiles[category];
+
+    if (globalAlert) {
+      globalAlert.style.display = "block";
+      globalAlert.style.backgroundColor = "#e6f7ec";
+      globalAlert.style.color = "#0d8a43";
+      globalAlert.style.border = "1px solid #b7ecc8";
+      globalAlert.innerHTML = `✓ Succès : Le document officiel pour <strong>${category}</strong> ("${file.name}") a été enregistré et publié avec succès !`;
+      setTimeout(() => { globalAlert.style.display = "none"; }, 6000);
+    }
+
+    if (typeof window.showAdminToast === "function") {
+      window.showAdminToast(`Document "${file.name}" publié avec succès !`);
+    }
+
+    await window.loadAdminInformations();
+
+    if (btnEl) {
+      btnEl.disabled = false;
+      btnEl.textContent = "Mettre à jour le PDF";
+    }
+
+    resolve(true);
   };
+
   reader.readAsDataURL(file);
+  });
 };
 
 window.deleteAdminPdf = async function(category) {
@@ -5809,33 +5988,65 @@ window.deleteAdminPdf = async function(category) {
 
   const globalAlert = document.getElementById("admin-pdf-global-alert");
 
-  try {
-    const response = await fetch("/api/delete-pdf", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ category: category })
-    });
-
-    const result = await response.json();
-
-    if (response.ok && result.success) {
-      delete window.selectedAdminPdfFiles[category];
-
-      if (globalAlert) {
-        globalAlert.style.display = "block";
-        globalAlert.style.backgroundColor = "#fff6ed";
-        globalAlert.style.color = "#c45e00";
-        globalAlert.style.border = "1px solid #ffd4a8";
-        globalAlert.innerHTML = `Document pour <strong>${category}</strong> supprimé de la base de données interne.`;
-        setTimeout(() => { globalAlert.style.display = "none"; }, 5000);
-      }
-
-      await window.loadAdminInformations();
-    } else {
-      alert("Erreur lors de la suppression : " + (result.error || "Erreur serveur"));
-    }
-  } catch (err) {
-    console.error(err);
-    alert("Erreur lors de la communication avec le serveur.");
+  // 1. Essayer suppression sur serveurs locaux
+  const endpoints = [];
+  if (window.location.protocol !== "file:") {
+    endpoints.push("/api/delete-pdf");
   }
+  if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" || window.location.protocol === "file:") {
+    endpoints.push("http://localhost:3001/api/delete-pdf", "http://localhost:3000/api/delete-pdf", "http://localhost:8080/api/delete-pdf");
+  }
+
+  for (const ep of endpoints) {
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 800);
+      await fetch(ep, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ category: category }),
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
+    } catch(err) {}
+  }
+
+  // 2. Supprimer d'IndexedDB
+  await deletePdfFromIdb(category);
+
+  // 3. Mettre à jour localStorage
+  let infoDb = {};
+  try {
+    const raw = localStorage.getItem("usbl_informations");
+    if (raw) infoDb = JSON.parse(raw);
+  } catch(err) {}
+
+  if (infoDb[category]) {
+    infoDb[category].url = null;
+    infoDb[category].filename = null;
+    infoDb[category].filesize = null;
+    infoDb[category].updatedAt = null;
+    infoDb[category].isStoredLocally = false;
+  }
+
+  try {
+    localStorage.setItem("usbl_informations", JSON.stringify(infoDb));
+  } catch(err) {}
+
+  delete window.selectedAdminPdfFiles[category];
+
+  if (globalAlert) {
+    globalAlert.style.display = "block";
+    globalAlert.style.backgroundColor = "#fff6ed";
+    globalAlert.style.color = "#c45e00";
+    globalAlert.style.border = "1px solid #ffd4a8";
+    globalAlert.innerHTML = `Document pour <strong>${category}</strong> supprimé de la base de données.`;
+    setTimeout(() => { globalAlert.style.display = "none"; }, 5000);
+  }
+
+  if (typeof window.showAdminToast === "function") {
+    window.showAdminToast(`Document pour ${category} supprimé.`);
+  }
+
+  await window.loadAdminInformations();
 };
