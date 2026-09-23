@@ -339,6 +339,7 @@
                         <div id="form-box-player" class="admin-form-box">
                             <h3 class="admin-form-box-title" id="modal-player-title">Ajouter un Joueur à l'Effectif</h3>
                             <form id="admin-player-form" onsubmit="event.preventDefault(); window.addPlayer();">
+                                <input type="hidden" id="admin-player-edit-team-id" value="">
                                 <input type="hidden" id="admin-player-edit-index" value="">
                                 
                                 <div class="admin-form-grid-2">
@@ -371,7 +372,7 @@
 
                                 <div class="admin-form-grid-2">
                                     <div class="admin-form-group">
-                                        <label class="admin-form-label" for="admin-player-height">Taille</label>
+                                        <label class="admin-form-label" for="admin-player-height">Taille (optionnelle)</label>
                                         <input type="text" id="admin-player-height" class="admin-form-input" placeholder="Ex: 1m88">
                                     </div>
                                     <div class="admin-form-group">

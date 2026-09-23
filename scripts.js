@@ -2920,6 +2920,11 @@ window.openCreatePlayer = () => {
     formSelect.value = filterSelect.value;
   }
 
+  const base64Input = document.getElementById("admin-player-base64");
+  if (base64Input) base64Input.value = "";
+  const photoPreview = document.getElementById("player-photo-preview");
+  if (photoPreview) photoPreview.innerHTML = `<span>Aucune photo</span>`;
+
   window.openAdminModal("modal-player");
 };
 
@@ -2944,10 +2949,28 @@ window.openEditPlayer = (teamId, playerIndex) => {
 
   const formSelect = document.getElementById("admin-player-team");
   if (formSelect) formSelect.value = teamId;
-  if (document.getElementById("admin-player-num")) document.getElementById("admin-player-num").value = player.num;
-  if (document.getElementById("admin-player-name")) document.getElementById("admin-player-name").value = player.name || "";
-  if (document.getElementById("admin-player-height")) document.getElementById("admin-player-height").value = player.height || "";
-  if (document.getElementById("admin-player-position")) document.getElementById("admin-player-position").value = player.position || "Meneur";
+  
+  const numInput = document.getElementById("admin-player-number") || document.getElementById("admin-player-num");
+  if (numInput) numInput.value = player.num;
+  
+  const nameInput = document.getElementById("admin-player-name");
+  if (nameInput) nameInput.value = player.name || "";
+  
+  const heightInput = document.getElementById("admin-player-height");
+  if (heightInput) heightInput.value = (player.height && player.height !== "-") ? player.height : "";
+  
+  const posInput = document.getElementById("admin-player-position");
+  if (posInput) posInput.value = player.position || "Meneur";
+
+  const base64Input = document.getElementById("admin-player-base64");
+  if (base64Input) base64Input.value = player.photo || "";
+
+  const photoPreview = document.getElementById("player-photo-preview");
+  if (photoPreview) {
+    photoPreview.innerHTML = player.photo 
+      ? `<img src="${player.photo}" style="max-height: 50px; border-radius: 4px;" alt="Photo">`
+      : `<span>Aucune photo</span>`;
+  }
 
   window.openAdminModal("modal-player");
 };
@@ -3325,13 +3348,17 @@ window.renderAdminTables = () => {
       } else {
         playersTableBody.innerHTML = teamData.players
           .map((p, index) => {
+            const photoHtml = p.photo
+              ? `<img src="${p.photo}" class="admin-table-photo" alt="Photo" style="width: 28px; height: 28px; border-radius: 50%; object-fit: cover; vertical-align: middle; margin-right: 8px;">`
+              : `<span style="display: inline-block; width: 26px; height: 26px; line-height: 26px; border-radius: 50%; background: #f3f4f6; color: #4b5563; text-align: center; font-size: 0.72rem; font-weight: bold; margin-right: 8px;">#${p.num}</span>`;
+
             return `
                       <tr>
                           <td style="text-align: center;"><strong>#${p.num}</strong></td>
-                          <td><strong>${p.name}</strong></td>
-                          <td>${p.height}</td>
-                          <td><span class="pillar-badge-tag" style="background-color:#f4efea; font-size:0.75rem;">${p.position}</span></td>
-                          <td style="text-align: center; white-space: nowrap;">
+                          <td style="white-space: nowrap;">${photoHtml}<strong>${p.name}</strong></td>
+                          <td>${p.height || '-'}</td>
+                          <td><span class="pillar-badge-tag" style="background-color:#f4efea; font-size:0.75rem;">${p.position || 'Meneur'}</span></td>
+                          <td style="text-align: right; white-space: nowrap;">
                               <button type="button" class="btn-action-edit" onclick="window.openEditPlayer('${teamFilter}', ${index})">Modifier</button>
                               <button type="button" class="btn-delete" onclick="window.deletePlayer('${teamFilter}', ${index})">Supprimer</button>
                           </td>
@@ -3842,16 +3869,39 @@ window.deletePartner = (id) => {
 
 // CRUD Actions: ROSTERS (Joueurs)
 window.addPlayer = () => {
-  const editTeamId = document.getElementById("admin-player-edit-team-id").value;
-  const editIndexStr = document.getElementById("admin-player-edit-index").value;
-  const num = parseInt(document.getElementById("admin-player-num").value, 10);
-  const name = document.getElementById("admin-player-name").value.trim();
-  const height = document.getElementById("admin-player-height").value.trim();
-  const position = document.getElementById("admin-player-position").value;
-  const teamId = document.getElementById("admin-player-team").value;
+  const editTeamEl = document.getElementById("admin-player-edit-team-id");
+  const editTeamId = editTeamEl ? editTeamEl.value : "";
+  const editIndexEl = document.getElementById("admin-player-edit-index");
+  const editIndexStr = editIndexEl ? editIndexEl.value : "";
+  
+  const numInput = document.getElementById("admin-player-number") || document.getElementById("admin-player-num");
+  const num = numInput ? parseInt(numInput.value, 10) : NaN;
+  
+  const nameInput = document.getElementById("admin-player-name");
+  const name = nameInput ? nameInput.value.trim() : "";
+  
+  const heightInput = document.getElementById("admin-player-height");
+  const height = heightInput ? heightInput.value.trim() : "";
+  
+  const posInput = document.getElementById("admin-player-position");
+  const position = posInput ? posInput.value : "Meneur";
+  
+  const teamSelect = document.getElementById("admin-player-team");
+  const teamId = teamSelect ? teamSelect.value : "";
 
-  if (isNaN(num) || !name || !height || !position || !teamId) {
-    window.showAdminToast("Veuillez remplir tous les champs obligatoires du joueur.", "error");
+  const photoInput = document.getElementById("admin-player-base64");
+  const photo = photoInput ? photoInput.value : "";
+
+  if (isNaN(num)) {
+    window.showAdminToast("Veuillez renseigner un numéro de maillot valide.", "error");
+    return;
+  }
+  if (!name) {
+    window.showAdminToast("Veuillez renseigner le nom complet du joueur.", "error");
+    return;
+  }
+  if (!teamId) {
+    window.showAdminToast("Veuillez sélectionner une équipe de destination.", "error");
     return;
   }
 
@@ -3860,50 +3910,79 @@ window.addPlayer = () => {
     return;
   }
 
+  if (!rosters[teamId].players) {
+    rosters[teamId].players = [];
+  }
+
   if (editIndexStr !== "") {
     const editIndex = parseInt(editIndexStr, 10);
-    const updatedPlayer = { num, name, height, position };
+    const existingPlayer = (editTeamId && rosters[editTeamId]?.players?.[editIndex]) || {};
+    const updatedPlayer = {
+      num,
+      name,
+      height: height || "-",
+      position,
+      photo: photo || existingPlayer.photo || ""
+    };
+
     if (editTeamId === teamId) {
       if (rosters[teamId].players && rosters[teamId].players[editIndex]) {
         rosters[teamId].players[editIndex] = updatedPlayer;
+      } else {
+        rosters[teamId].players.push(updatedPlayer);
       }
     } else {
       if (rosters[editTeamId] && rosters[editTeamId].players) {
         rosters[editTeamId].players.splice(editIndex, 1);
       }
-      if (!rosters[teamId].players) rosters[teamId].players = [];
       rosters[teamId].players.push(updatedPlayer);
     }
     safeSetLocalStorage("usbl_rosters", rosters);
     window.saveCollectionToDisk("usbl_rosters", rosters);
-    window.showAdminToast("Joueur mis à jour avec succès !");
+    window.showAdminToast(`Joueur "${name}" mis à jour avec succès !`);
   } else {
-    const newPlayer = { num, name, height, position };
-    if (!rosters[teamId].players) rosters[teamId].players = [];
+    const newPlayer = {
+      num,
+      name,
+      height: height || "-",
+      position,
+      photo: photo || ""
+    };
     rosters[teamId].players.push(newPlayer);
     safeSetLocalStorage("usbl_rosters", rosters);
     window.saveCollectionToDisk("usbl_rosters", rosters);
-    window.showAdminToast("Joueur ajouté à l'effectif !");
+    window.showAdminToast(`Joueur "${name}" (#${num}) ajouté à l'effectif !`);
   }
 
   window.closeAdminModal("modal-player");
-  document.getElementById("admin-player-form").reset();
+  const form = document.getElementById("admin-player-form");
+  if (form) form.reset();
+  if (editTeamEl) editTeamEl.value = "";
+  if (editIndexEl) editIndexEl.value = "";
+  if (photoInput) photoInput.value = "";
+  const photoPreview = document.getElementById("player-photo-preview");
+  if (photoPreview) photoPreview.innerHTML = `<span>Aucune photo</span>`;
+
+  // Synchroniser le filtre de vue sur l'équipe choisie
+  const filterSelect = document.getElementById("admin-player-team-filter");
+  if (filterSelect) filterSelect.value = teamId;
 
   window.renderAdminTables();
-  window.renderCompetitionPages();
-  window.renderCompetitionsHub();
+  if (typeof window.renderCompetitionPages === "function") window.renderCompetitionPages();
+  if (typeof window.renderCompetitionsHub === "function") window.renderCompetitionsHub();
 };
 
 window.deletePlayer = (teamId, index) => {
-  if (!rosters[teamId] || !rosters[teamId].players) return;
-  if (confirm("Êtes-vous sûr de vouloir retirer ce joueur de l'effectif ?")) {
+  if (!rosters[teamId] || !rosters[teamId].players || !rosters[teamId].players[index]) return;
+  const pName = rosters[teamId].players[index].name || "ce joueur";
+  if (confirm(`Êtes-vous sûr de vouloir retirer ${pName} de l'effectif ?`)) {
     rosters[teamId].players.splice(index, 1);
     safeSetLocalStorage("usbl_rosters", rosters);
     window.saveCollectionToDisk("usbl_rosters", rosters);
 
     window.renderAdminTables();
-    window.renderCompetitionPages();
-    window.renderCompetitionsHub();
+    if (typeof window.renderCompetitionPages === "function") window.renderCompetitionPages();
+    if (typeof window.renderCompetitionsHub === "function") window.renderCompetitionsHub();
     window.showAdminToast("Joueur retiré de l'effectif.");
   }
 };
