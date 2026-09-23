@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>US Basket Lislois | L'Union Sportive de Basket Lislois</title>
+    <meta name="description" content="Site officiel de l'Union Sportive de Basket Lislois (USBL). Retrouvez l'esprit des Spartiates de L'Isle-Jourdain (32600) : actualités, résultats et inscriptions.">
+    
+    <!-- Google Fonts Imports -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700;900&family=Outfit:wght@300;600;900&family=Cinzel:wght@600;800;900&family=Anton&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="styles.css?v=5.0">
+    <link rel="icon" type="image/png" href="assets/logo_usbl.png">
+    <style>
+        /* Pure White Theme with Subtle Editorial Texture */
+        body.editorial-pure-theme {
+            background-color: #ffffff !important;
+            background-image: radial-gradient(rgba(42, 34, 31, 0.035) 1px, transparent 1px);
+            background-size: 32px 32px;
+        }
+        #page-leclub {
+            background-color: transparent !important;
+        }
+
+        /* Anti-underline & anti-border enforcement */
+        header.main-header,
+        header.main-header *,
+        .main-nav,
+        .main-nav *,
+        .nav-link,
+        .nav-link * {
+            text-decoration: none !important;
+            text-decoration-line: none !important;
+            -webkit-text-decoration-line: none !important;
+            text-decoration-style: none !important;
+            border-bottom: none !important;
+            box-shadow: none !important;
+        }
+        /* Navbar : de la même couleur que le fond à l'état initial (transparente), et blanche au scroll */
+        .main-header {
+            background-color: transparent !important;
+            border-bottom: 1px solid transparent !important;
+            box-shadow: none !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            transition: background-color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease, padding 0.35s ease;
+        }
+        .main-header.scrolled-header {
+            background-color: rgba(255, 255, 255, 0.98) !important;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+            backdrop-filter: blur(14px) !important;
+            -webkit-backdrop-filter: blur(14px) !important;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06) !important;
+        }
+        .main-header .main-nav a {
+            color: #2a221f !important;
+            text-shadow: none !important;
+        }
+        .main-header .main-nav a.active,
+        .main-header .main-nav a:hover {
+            color: #D21A00 !important;
+        }
+        .main-header .mobile-menu-toggle span {
+            background-color: #2a221f !important;
+        }
+        .main-header .club-logo-img {
+            border: 1px solid rgba(0, 0, 0, 0.1) !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+        }
+
+        /* -------------------------------------------------------------
+           SECTIONS INFÉRIEURES AU SCROLL : FOND NOIR POUR MARQUER LE CHANGEMENT
+           ------------------------------------------------------------- */
+        /* Bandeau Ticker Actualités sur fond blanc (Nuances de blanc/noirs sans couleurs) */
+        .club-ticker-section {
+            background-color: #ffffff !important;
+            border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+        }
+        .ticker-header-badge {
+            background-color: #ffffff !important;
+            border-right: 1px solid rgba(0, 0, 0, 0.08) !important;
+        }
+        .ticker-badge-text {
+            color: #111111 !important;
+            font-weight: 800 !important;
+        }
+        .ticker-pulse-dot {
+            background-color: #111111 !important;
+            box-shadow: 0 0 6px rgba(0, 0, 0, 0.25) !important;
+        }
+        @keyframes tickerPulseDot {
+            0% { transform: scale(0.9); opacity: 0.6; }
+            50% { transform: scale(1.25); opacity: 1; box-shadow: 0 0 8px rgba(0, 0, 0, 0.35); }
+            100% { transform: scale(0.9); opacity: 0.6; }
+        }
+        .ticker-item {
+            color: #111111 !important;
+        }
+        .ticker-date {
+            color: #666666 !important;
+            font-weight: 700 !important;
+        }
+        .ticker-cat {
+            color: #222222 !important;
+            font-weight: 800 !important;
+        }
+        .ticker-title {
+            color: #000000 !important;
+            font-weight: 500 !important;
+        }
+        .ticker-item:hover {
+            color: #000000 !important;
+        }
+        .ticker-item:hover .ticker-title {
+            color: #000000 !important;
+            text-decoration: underline !important;
+        }
+        .ticker-item:hover .ticker-date {
+            color: #222222 !important;
+        }
+        .ticker-item:hover .ticker-cat {
+            color: #000000 !important;
+        }
+        .ticker-venue {
+            color: #777777 !important;
+        }
+        .ticker-separator {
+            color: #cccccc !important;
+        }
+        .ticker-empty-text {
+            color: #777777 !important;
+        }
+
+        /* Section Réseaux Sociaux (Instagram) avec un vrai dégradé de rouge sombre et élégant */
+        .instagram-section {
+            background: linear-gradient(135deg, #150203 0%, #2b0407 20%, #4a070c 45%, #6e0b13 72%, #8e1019 100%) !important;
+            border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.2) !important;
+            position: relative;
+            overflow: hidden;
+        }
+        .instagram-section .section-tag {
+            color: #ffcdd2 !important; /* Rouge très clair / rosé élégant */
+            font-weight: 700 !important;
+            letter-spacing: 0.16em !important;
+            text-transform: uppercase !important;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+        }
+        .instagram-section .section-title {
+            color: #ffffff !important;
+            text-shadow: 0 2px 14px rgba(0, 0, 0, 0.6) !important;
+        }
+        .instagram-section .instagram-section-link {
+            color: #ffffff !important;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.28);
+            padding: 2px 12px;
+            border-radius: 4px;
+            text-decoration: none !important;
+            transition: all 0.25s ease !important;
+            display: inline-block;
+        }
+        .instagram-section .instagram-section-link:hover {
+            color: #ffffff !important;
+            background: rgba(255, 255, 255, 0.24);
+            border-color: #ffffff;
+            transform: translateY(-1px);
+        }
+        .instagram-section .section-divider {
+            height: 3px !important;
+            width: 56px !important;
+            border-radius: 3px !important;
+            background: linear-gradient(90deg, #ef5350 0%, #ffffff 50%, #b71c1c 100%) !important;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+        }
+        .instagram-section .section-lead {
+            color: rgba(255, 255, 255, 0.92) !important;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+            font-size: 1.05rem !important;
+        }
+        .instagram-blur-banner {
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            box-shadow: 0 16px 45px rgba(0, 0, 0, 0.5), 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+        }
+        .instagram-blur-banner:hover {
+            border-color: rgba(255, 255, 255, 0.4) !important;
+            box-shadow: 0 22px 60px rgba(0, 0, 0, 0.65), 0 6px 16px rgba(0, 0, 0, 0.4) !important;
+        }
+        .instagram-banner-btn {
+            background: #ffffff !important;
+            color: #8e1019 !important;
+            font-weight: 800 !important;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3) !important;
+            transition: all 0.3s ease !important;
+        }
+        .instagram-blur-banner:hover .instagram-banner-btn {
+            background: #ffffff !important;
+            color: #55080e !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45) !important;
+        }
+
+        /* Section Actualités sur fond blanc avec accents multi-couleurs */
+        .actus-section {
+            background-color: #ffffff !important;
+            border-top: 1px solid rgba(0, 0, 0, 0.06) !important;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06) !important;
+        }
+        .actus-section .section-tag {
+            color: #FF4307 !important; /* Palette 500 */
+            font-weight: 700 !important;
+            letter-spacing: 0.08em !important;
+        }
+        .actus-section .section-title {
+            color: #1a1a1a !important;
+        }
+        .actus-section .section-divider {
+            height: 2.5px !important;
+            border-radius: 2px !important;
+            background: linear-gradient(90deg, #FF6A2F 0%, #D21A00 50%, #83150B 100%) !important;
+        }
+        .actu-featured-card {
+            background-color: #ffffff !important;
+            border: 1px solid #eae5de !important;
+            border-top: 3px solid #D21A00 !important; /* Rouge marque 700 */
+            box-shadow: 0 10px 30px rgba(71, 6, 3, 0.05) !important;
+            transition: all 0.3s ease !important;
+        }
+        .actu-featured-card:hover {
+            box-shadow: 0 14px 36px rgba(210, 26, 0, 0.1) !important;
+            border-color: #FFC6A4 !important;
+            border-top-color: #A31609 !important;
+        }
+        .actu-featured-photo-frame {
+            border-bottom: 1px solid #eae5de !important;
+        }
+        .actu-title-large a {
+            color: #1a1a1a !important;
+            transition: color 0.2s ease !important;
+        }
+        .actu-title-large a:hover {
+            color: #D21A00 !important;
+        }
+        .actu-excerpt-large {
+            color: #554e4a !important;
+        }
+        .actu-meta .actu-date {
+            color: #887e79 !important;
+        }
+        .actu-link {
+            color: #D21A00 !important;
+            font-weight: 700 !important;
+            transition: color 0.2s ease !important;
+        }
+        .actu-link:hover {
+            color: #A31609 !important;
+        }
+        .actu-side-card {
+            border-bottom: 1px dashed #eae5de !important;
+            padding-bottom: 18px !important;
+            transition: all 0.25s ease !important;
+        }
+        .actu-side-card:hover {
+            padding-left: 6px !important;
+        }
+        .actu-title-side a {
+            color: #1a1a1a !important;
+            transition: color 0.2s ease !important;
+        }
+        .actu-title-side a:hover {
+            color: #FF4307 !important;
+        }
+        .actu-excerpt-side {
+            color: #554e4a !important;
+        }
+        .actu-link-side {
+            color: #FF6A2F !important; /* Palette 400 pour varier des liens 700 */
+            font-weight: 700 !important;
+            transition: color 0.2s ease !important;
+        }
+        .actu-link-side:hover {
+            color: #D21A00 !important;
+        }
+        .actu-empty-title {
+            color: #1a1a1a !important;
+        }
+        .actu-empty-desc {
+            color: #554e4a !important;
+        }
+        .actus-section .btn-outline {
+            color: #2a221f !important;
+            border: 1.5px solid #FFC6A4 !important; /* Palette 200 */
+            background: #ffffff !important;
+            padding: 11px 26px !important;
+            border-radius: 4px !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 8px !important;
+            font-weight: 700 !important;
+            text-decoration: none !important;
+            box-shadow: 0 2px 8px rgba(71, 6, 3, 0.04) !important;
+            transition: all 0.3s ease !important;
+        }
+        .actus-section .btn-outline:hover {
+            border-color: #FF4307 !important; /* Palette 500 */
+            color: #D21A00 !important;         /* Palette 700 */
+            background: #FFF3EC !important;    /* Palette 50 */
+            transform: translateY(-2px) !important;
+            box-shadow: 0 6px 18px rgba(255, 67, 7, 0.16) !important;
+        }
+
+        /* Bandeau Sponsors sur fond noir */
+        .sponsors-section {
+            background-color: #0d0908 !important;
+            border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+        }
+        .sponsors-title {
+            color: rgba(255, 255, 255, 0.6) !important;
+            letter-spacing: 0.12em !important;
+        }
+        .sponsors-row,
+        .sponsors-row span {
+            color: #ffffff !important;
+        }
+        .sponsors-row .dot {
+            color: rgba(255, 255, 255, 0.35) !important;
+        }
+
+        /* Footer sur fond blanc */
+        .main-footer {
+            background-color: #ffffff !important;
+            border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
+            color: #1a1a1a !important;
+        }
+        .footer-col.about h3 {
+            color: #1a1a1a !important;
+        }
+        .footer-col.about p {
+            color: #554e4a !important;
+        }
+        .footer-col.meta h4 {
+            color: #D21A00 !important;
+        }
+        .footer-col.meta p {
+            color: #554e4a !important;
+        }
+        .footer-col.meta a {
+            color: #1a1a1a !important;
+            text-decoration: underline !important;
+        }
+        .footer-col.meta a:hover {
+            color: #D21A00 !important;
+        }
+        .footer-bottom {
+            border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
+            color: #887e79 !important;
+        }
+        .footer-bottom p {
+            color: #887e79 !important;
+        }
+    </style>
+</head>
+<body class="editorial-pure-theme is-home-page">
+
+    <!-- HEADER / NAVIGATION -->
+    <header class="main-header">
+        <div class="container header-container">
+            <a href="index.html" class="logo-area" aria-label="Accueil USBL BCL">
+                <img src="assets/logo_usbl_bcl.jpg" alt="Logo USBL BCL" class="club-logo-img">
+            </a>
+
+            <nav class="main-nav">
+                <ul>
+                    <li class="nav-dropdown-wrapper">
+                        <a href="index.html" class="nav-link" id="nav-leclub" style="text-decoration: none !important; border-bottom: none !important;">Les clubs <span class="dropdown-arrow">▼</span></a>
+                        <ul class="nav-dropdown-menu">
+                            <li class="nav-submenu-wrapper">
+                                <a href="qui-sommes-nous.html" class="nav-submenu-toggle" style="text-decoration: none !important; border-bottom: none !important;">Qui sommes-nous ? <span class="submenu-arrow">▸</span></a>
+                                <ul class="nav-sub-menu">
+                                    <li><a href="qui-sommes-nous-usbl.html" style="text-decoration: none !important; border-bottom: none !important;">USBL</a></li>
+                                    <li><a href="qui-sommes-nous-bcl.html" style="text-decoration: none !important; border-bottom: none !important;">BCL</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="infrastructures.html" style="text-decoration: none !important; border-bottom: none !important;">Nos infrastructures</a></li>
+                            <li><a href="partenaires.html" style="text-decoration: none !important; border-bottom: none !important;">Nos partenaires</a></li>
+                            <li><a href="benevoles.html" style="text-decoration: none !important; border-bottom: none !important;">Bénévoles</a></li>
+                            <li><a href="contact.html" style="text-decoration: none !important; border-bottom: none !important;">Nous contacter</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="competitions.html" class="nav-link" id="nav-competitions" style="text-decoration: none !important; border-bottom: none !important;">Nos équipes</a></li>
+                    <li><a href="evenements.html" class="nav-link" id="nav-evenements" style="text-decoration: none !important; border-bottom: none !important;">Événements</a></li>
+                    <li class="nav-dropdown-wrapper nav-dropdown-right">
+                        <a href="informations.html" class="nav-link" id="nav-informations" style="text-decoration: none !important; border-bottom: none !important;">Informations <span class="dropdown-arrow">▼</span></a>
+                        <ul class="nav-dropdown-menu">
+                            <li><a href="inscriptions.html" style="text-decoration: none !important; border-bottom: none !important;">Inscriptions & Licences</a></li>
+                            <li><a href="planning.html" style="text-decoration: none !important; border-bottom: none !important;">Planning des entraînements</a></li>
+                            <li><a href="boutiques.html" style="text-decoration: none !important; border-bottom: none !important;">Boutiques officielles</a></li>
+                            <li><a href="charte-interne.html" style="text-decoration: none !important; border-bottom: none !important;">Charte interne</a></li>
+                            <li><a href="commissions.html" style="text-decoration: none !important; border-bottom: none !important;">Commissions</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+
+            <button class="mobile-menu-toggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <div id="page-leclub">
+        <!-- HIGH-IMPACT HERO SECTION WITH GASCOSPORT BACKGROUND -->
+        <main id="accueil" class="hero-sports-section">
+            <!-- CENTER BOX : USBL EN BAS À GAUCHE, BCL EN HAUT À DROITE -->
+            <div class="hero-center-box">
+                <a href="qui-sommes-nous-usbl.html" class="hero-dual-logo-link hero-logo-usbl" aria-label="Union Sportive de Basket Lislois (USBL - Section Masculine)" title="USBL - Section Masculine">
+                    <img src="assets/logo_usbl.png" alt="Logo USBL Spartiates" class="hero-dual-logo-img">
+                </a>
+                <a href="qui-sommes-nous-bcl.html" class="hero-dual-logo-link hero-logo-bcl" aria-label="Basket Club Lislois (BCL - Section Féminine)" title="BCL - Section Féminine">
+                    <img src="assets/logo_bcl_transparent.png" alt="Logo Basket Club Lislois" class="hero-dual-logo-img">
+                </a>
+            </div>
+        </main>
+
+        <!-- BANDEAU DÉFILANT : ACTUALITÉS DU CLUB (DYNAMIQUE BDD) -->
+        <aside class="club-ticker-section" aria-label="Actualités et Vie du club">
+            <div class="ticker-header-badge">
+                <span class="ticker-pulse-dot" aria-hidden="true"></span>
+                <span class="ticker-badge-text">ACTUALITÉS</span>
+            </div>
+            <div class="ticker-marquee-track" id="club-ticker-track">
+                <!-- Dynamically populated from actualités database by renderTicker() -->
+            </div>
+        </aside>
+
+        <!-- SECTION INSTAGRAM FEED -->
+        <section id="instagram-feed" class="instagram-section section-padding">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Réseaux Sociaux</span>
+                    <h2 class="section-title">INSTAGRAM <a href="https://www.instagram.com/usbl_bcl32/" target="_blank" class="instagram-section-link">@USBL_BCL32</a></h2>
+                    <div class="section-divider"></div>
+                    <p class="section-lead">Suivez la vie quotidienne du club en direct. Victoires, coulisses, entraînements et événements.</p>
+                </div>
+
+                <!-- Blurred Instagram Interactive Banner -->
+                <a href="https://www.instagram.com/usbl_bcl32/" target="_blank" class="instagram-blur-banner">
+                    <div class="instagram-blur-bg" style="background-image: url('assets/insta.png');"></div>
+                    <div class="instagram-banner-overlay">
+                        <div class="instagram-banner-content">
+                            <div class="instagram-icon-wrapper">
+                                <svg class="instagram-svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                                </svg>
+                            </div>
+                            <span class="instagram-banner-tag">Rejoignez la communauté</span>
+                            <h3 class="instagram-banner-title">Suivez les Spartiates en temps réel !</h3>
+                            <p class="instagram-banner-text">Actualités exclusives, stories de match, coulisses des entraînements et vie du club au quotidien.</p>
+                            <span class="instagram-banner-btn">
+                                Ouvrir notre Instagram
+                                <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <!-- SECTION ACTUALITÉS -->
+        <section id="actus" class="actus-section section-padding">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Actualités</span>
+                    <h2 class="section-title">LE BULLETIN DU BASKET LISLOIS</h2>
+                    <div class="section-divider"></div>
+                </div>
+
+                <!-- Asymmetric Editorial Grid (JS Populated) -->
+                <div class="actus-magazine-grid" id="actus-container">
+                    <!-- Populated dynamically by scripts.js -->
+                </div>
+
+                <div style="text-align: center; margin-top: 35px;">
+                    <a href="evenements.html" class="btn btn-outline" style="font-size: 0.78rem; letter-spacing: 0.05em; text-transform: uppercase;">Consulter tous les communiqués <span class="arrow">→</span></a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- SPONSORS BAND -->
+    <section class="sponsors-section">
+        <div class="container">
+            <h4 class="sponsors-title">ILS SOUTIENNENT LE PROJET SPORTIF</h4>
+            <div class="sponsors-row">
+                <span>Mairie de L'Isle-Jourdain</span>
+                <span class="dot">•</span>
+                <span>Conseil Départemental du Gers</span>
+                <span class="dot">•</span>
+                <span>Gascogne Toulousaine</span>
+                <span class="dot">•</span>
+                <span>Intermarché L'Isle-Jourdain</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- PIED DE PAGE SOBRE -->
+    <footer class="main-footer">
+        <div class="container footer-container">
+            <div class="footer-col about">
+                <h3>BASKET L'ISLE-JOURDAIN</h3>
+                <p>L'USBL (Masculin) et le BCL (Féminin) forment les jeunes générations et animent la vie sportive de L'Isle-Jourdain depuis plusieurs décennies.</p>
+            </div>
+            
+            <div class="footer-col meta">
+                <h4>CONTACT & INFOS</h4>
+                <p>Salle Gasco'Sport, 33 rue de Rozès, 32600 L'Isle-Jourdain</p>
+                <p>Courriel : <a href="mailto:contact@usbl-basket32.fr">contact@usbl-basket32.fr</a></p>
+                <p>Instagram : <a href="https://www.instagram.com/usbl_bcl32/" target="_blank">@usbl_bcl32</a></p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="container footer-bottom-container">
+                <p>&copy; 2026 Basket L'Isle-Jourdain (USBL & BCL). Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

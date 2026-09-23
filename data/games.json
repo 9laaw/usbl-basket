@@ -1,0 +1,984 @@
+{
+  "Régionale masculine seniors - Division 3": {
+    "club": "USBL",
+    "pouleNom": "PYR-B",
+    "classement": [
+      {
+        "team": "MOISSAC CASTELSARRASIN BB",
+        "pts": "0",
+        "j": "0",
+        "g": "0",
+        "p": "0",
+        "pos": "1"
+      },
+      {
+        "team": "MONTAUBAN BASKET CLUB",
+        "pts": "0",
+        "j": "0",
+        "g": "0",
+        "p": "0",
+        "pos": "10"
+      },
+      {
+        "team": "ASTRO BASKET CLUB",
+        "pts": "0",
+        "j": "0",
+        "g": "0",
+        "p": "0",
+        "pos": "2"
+      },
+      {
+        "team": "IE - GASCOGNE ARMAGNAC BASKET C",
+        "pts": "0",
+        "j": "0",
+        "g": "0",
+        "p": "0",
+        "pos": "3"
+      },
+      {
+        "team": "IE - AVENIR CASTERA REJAUMONT",
+        "pts": "0",
+        "j": "0",
+        "g": "0",
+        "p": "0",
+        "pos": "4"
+      },
+      {
+        "team": "US BASKET L'ISLE JOURDAIN",
+        "pts": "0",
+        "j": "0",
+        "g": "0",
+        "p": "0",
+        "pos": "5"
+      },
+      {
+        "team": "BRUGUIERES BASKET CLUB",
+        "pts": "0",
+        "j": "0",
+        "g": "0",
+        "p": "0",
+        "pos": "6"
+      },
+      {
+        "team": "BLEUETS DE GRISOLLES",
+        "pts": "0",
+        "j": "0",
+        "g": "0",
+        "p": "0",
+        "pos": "7"
+      },
+      {
+        "team": "IE - AS MONTALTAISE",
+        "pts": "0",
+        "j": "0",
+        "g": "0",
+        "p": "0",
+        "pos": "8"
+      },
+      {
+        "team": "IE - VALENCE CONDOM GERS BASKET",
+        "pts": "0",
+        "j": "0",
+        "g": "0",
+        "p": "0",
+        "pos": "9"
+      }
+    ],
+    "matchs": [
+      {
+        "idMatch": "200000014563722",
+        "journee": "1",
+        "date": "2026-09-26 à 20:",
+        "joue": false,
+        "equipeAdverse": "BRUGUIERES BASKET CLUB - 1",
+        "scoreAdverse": null,
+        "notreEquipe": "US BASKET L'ISLE JOURDAIN - 1",
+        "notreScore": null,
+        "salle": "Gasco'Sports"
+      },
+      {
+        "idMatch": "200000014563728",
+        "journee": "2",
+        "date": "2026-10-03 à 21:",
+        "joue": false,
+        "equipeAdverse": "IE - AS MONTALTAISE - 1",
+        "scoreAdverse": null,
+        "notreEquipe": "US BASKET L'ISLE JOURDAIN - 1",
+        "notreScore": null,
+        "salle": "SALLE FRANCOIS PECAUT"
+      },
+      {
+        "idMatch": "200000014563733",
+        "journee": "3",
+        "date": "2026-10-10 à 20:",
+        "joue": false,
+        "equipeAdverse": "ASTRO BASKET CLUB - 1",
+        "scoreAdverse": null,
+        "notreEquipe": "US BASKET L'ISLE JOURDAIN - 1",
+        "notreScore": null,
+        "salle": "Gasco'Sports"
+      },
+      {
+        "idMatch": "200000014563736",
+        "journee": "4",
+        "date": "2026-11-07 à 18:",
+        "joue": false,
+        "equipeAdverse": "IE - AVENIR CASTERA REJAUMONT - 2",
+        "scoreAdverse": null,
+        "notreEquipe": "US BASKET L'ISLE JOURDAIN - 1",
+        "notreScore": null,
+        "salle": "SALLE OMNISPORTS"
+      },
+      {
+        "idMatch": "200000014563742",
+        "journee": "5",
+        "date": "2026-11-14 à 20:",
+        "joue": false,
+        "equipeAdverse": "IE - GASCOGNE ARMAGNAC BASKET C - 1",
+        "scoreAdverse": null,
+        "notreEquipe": "US BASKET L'ISLE JOURDAIN - 1",
+        "notreScore": null,
+        "salle": "Gasco'Sports"
+      },
+      {
+        "idMatch": "200000014563748",
+        "journee": "6",
+        "date": "2026-11-28 à 18:",
+        "joue": false,
+        "equipeAdverse": "MOISSAC CASTELSARRASIN BB - 2",
+        "scoreAdverse": null,
+        "notreEquipe": "US BASKET L'ISLE JOURDAIN - 1",
+        "notreScore": null,
+        "salle": "COSEC ARMAND RIGAL"
+      },
+      {
+        "idMatch": "200000014563754",
+        "journee": "7",
+        "date": "2026-12-05 à 20:",
+        "joue": false,
+        "equipeAdverse": "IE - VALENCE CONDOM GERS BASKET - 2",
+        "scoreAdverse": null,
+        "notreEquipe": "US BASKET L'ISLE JOURDAIN - 1",
+        "notreScore": null,
+        "salle": "Gasco'Sports"
+      },
+      {
+        "idMatch": "200000014563758",
+        "journee": "8",
+        "date": "2026-12-12 à 20:",
+        "joue": false,
+        "equipeAdverse": "BLEUETS DE GRISOLLES - 1",
+        "scoreAdverse": null,
+        "notreEquipe": "US BASKET L'ISLE JOURDAIN - 1",
+        "notreScore": null,
+        "salle": "Gasco'Sports"
+      },
+      {
+        "idMatch": "200000014563763",
+        "journee": "9",
+        "date": "2027-01-09 à 20:",
+        "joue": false,
+        "equipeAdverse": "MONTAUBAN BASKET CLUB - 2",
+        "scoreAdverse": null,
+        "notreEquipe": "US BASKET L'ISLE JOURDAIN - 1",
+        "notreScore": null,
+        "salle": "SALLE MULTISPORTS"
+      },
+      {
+        "idMatch": "200000014563767",
+        "journee": "10",
+        "date": "2027-01-16 à 20:",
+        "joue": false,
+        "equipeAdverse": "BRUGUIERES BASKET CLUB - 1",
+        "scoreAdverse": null,
+        "notreEquipe": "US BASKET L'ISLE JOURDAIN - 1",
+        "notreScore": null,
+        "salle": "GYMNASE RENE ALBUS ROUGE"
+      },
+      {
+        "idMatch": "200000014563773",
+        "journee": "11",
+        "date": "2027-01-30 à 20:",
+        "joue": false,
+        "equipeAdverse": "IE - AS MONTALTAISE - 1",
+        "scoreAdverse": null,
+        "notreEquipe": "US BASKET L'ISLE JOURDAIN - 1",
+        "notreScore": null,
+        "salle": "Gasco'Sports"
+      },
+      {
+        "idMatch": "200000014563778",
+        "journee": "12",
+        "date": "2027-02-27 à 20:",
+        "joue": false,
+        "equipeAdverse": "ASTRO BASKET CLUB - 1",
+        "scoreAdverse": null,
+        "notreEquipe": "US BASKET L'ISLE JOURDAIN - 1",
+        "notreScore": null,
+        "salle": "GYMNASE LYCEE TOULOUSE LAUTREC"
+      },
+      {
+        "idMatch": "200000014563781",
+        "journee": "13",
+        "date": "2027-03-06 à 20:",
+        "joue": false,
+        "equipeAdverse": "IE - AVENIR CASTERA REJAUMONT - 2",
+        "scoreAdverse": null,
+        "notreEquipe": "US BASKET L'ISLE JOURDAIN - 1",
+        "notreScore": null,
+        "salle": "Gasco'Sports"
+      },
+      {
+        "idMatch": "200000014563787",
+        "journee": "14",
+        "date": "2027-03-13 à 20:",
+        "joue": false,
+        "equipeAdverse": "IE - GASCOGNE ARMAGNAC BASKET C - 1",
+        "scoreAdverse": null,
+        "notreEquipe": "US BASKET L'ISLE JOURDAIN - 1",
+        "notreScore": null,
+        "salle": "SALLE POLYVALENTE PIERRE LIAN"
+      },
+      {
+        "idMatch": "200000014563793",
+        "journee": "15",
+        "date": "2027-03-20 à 20:",
+        "joue": false,
+        "equipeAdverse": "MOISSAC CASTELSARRASIN BB - 2",
+        "scoreAdverse": null,
+        "notreEquipe": "US BASKET L'ISLE JOURDAIN - 1",
+        "notreScore": null,
+        "salle": "Gasco'Sports"
+      },
+      {
+        "idMatch": "200000014563799",
+        "journee": "16",
+        "date": "2027-04-17 à 18:",
+        "joue": false,
+        "equipeAdverse": "IE - VALENCE CONDOM GERS BASKET - 2",
+        "scoreAdverse": null,
+        "notreEquipe": "US BASKET L'ISLE JOURDAIN - 1",
+        "notreScore": null,
+        "salle": "SALLE JACQUES BAURENS"
+      },
+      {
+        "idMatch": "200000014563803",
+        "journee": "17",
+        "date": "2027-04-24 à 21:",
+        "joue": false,
+        "equipeAdverse": "BLEUETS DE GRISOLLES - 1",
+        "scoreAdverse": null,
+        "notreEquipe": "US BASKET L'ISLE JOURDAIN - 1",
+        "notreScore": null,
+        "salle": "GYMNASE COLLEGE J.LACAZE"
+      },
+      {
+        "idMatch": "200000014563808",
+        "journee": "18",
+        "date": "2027-05-01 à 20:",
+        "joue": false,
+        "equipeAdverse": "MONTAUBAN BASKET CLUB - 2",
+        "scoreAdverse": null,
+        "notreEquipe": "US BASKET L'ISLE JOURDAIN - 1",
+        "notreScore": null,
+        "salle": "Gasco'Sports"
+      }
+    ]
+  },
+  "Inter-départementale masculine seniors - Division 2": {
+    "club": "USBL",
+    "pouleNom": "Poule A",
+    "classement": [
+      {
+        "team": "BASKET CLUB DU MIRANDAIS",
+        "pts": "0",
+        "j": "0",
+        "g": "0",
+        "p": "0",
+        "pos": "1"
+      },
+      {
+        "team": "IE - BASKET CLUB CASTILLON DEBATS",
+        "pts": "0",
+        "j": "0",
+        "g": "0",
+        "p": "0",
+        "pos": "2"
+      },
+      {
+        "team": "IE - ETOILE SPORTIVE ROMEVIENNE",
+        "pts": "0",
+        "j": "0",
+        "g": "0",
+        "p": "0",
+        "pos": "3"
+      },
+      {
+        "team": "BASKET CLUB FLEURANCE-PRECHAC",
+        "pts": "0",
+        "j": "0",
+        "g": "0",
+        "p": "0",
+        "pos": "4"
+      },
+      {
+        "team": "US BASKET L'ISLE JOURDAIN",
+        "pts": "0",
+        "j": "0",
+        "g": "0",
+        "p": "0",
+        "pos": "5"
+      },
+      {
+        "team": "IE - GASCOGNE ARMAGNAC BASKET G",
+        "pts": "0",
+        "j": "0",
+        "g": "0",
+        "p": "0",
+        "pos": "6"
+      }
+    ],
+    "matchs": [
+      {
+        "idMatch": "200000014748325",
+        "journee": "1",
+        "date": "2026-10-04 à 15:",
+        "joue": false,
+        "equipeAdverse": "IE - GASCOGNE ARMAGNAC BASKET G",
+        "scoreAdverse": null,
+        "notreEquipe": "US BASKET L'ISLE JOURDAIN - 2",
+        "notreScore": null,
+        "salle": "HALLE DES SPORTS"
+      },
+      {
+        "idMatch": "200000014748330",
+        "journee": "2",
+        "date": "2026-10-10 à 20:",
+        "joue": false,
+        "equipeAdverse": "IE - BASKET CLUB CASTILLON DEBATS",
+        "scoreAdverse": null,
+        "notreEquipe": "US BASKET L'ISLE JOURDAIN - 2",
+        "notreScore": null,
+        "salle": "GYMNASE MUNICIPAL"
+      },
+      {
+        "idMatch": "200000014748336",
+        "journee": "3",
+        "date": "2026-11-08 à 15:",
+        "joue": false,
+        "equipeAdverse": "BASKET CLUB FLEURANCE-PRECHAC",
+        "scoreAdverse": null,
+        "notreEquipe": "US BASKET L'ISLE JOURDAIN - 2",
+        "notreScore": null,
+        "salle": "Gasco'Sports"
+      },
+      {
+        "idMatch": "200000014748341",
+        "journee": "4",
+        "date": "2026-11-14 à 20:",
+        "joue": false,
+        "equipeAdverse": "IE - ETOILE SPORTIVE ROMEVIENNE - 2",
+        "scoreAdverse": null,
+        "notreEquipe": "US BASKET L'ISLE JOURDAIN - 2",
+        "notreScore": null,
+        "salle": "SALLE CHRISTOPHE LABAT"
+      },
+      {
+        "idMatch": "200000014748349",
+        "journee": "5",
+        "date": "2026-11-29 à 15:",
+        "joue": false,
+        "equipeAdverse": "BASKET CLUB DU MIRANDAIS - 2",
+        "scoreAdverse": null,
+        "notreEquipe": "US BASKET L'ISLE JOURDAIN - 2",
+        "notreScore": null,
+        "salle": "Gasco'Sports"
+      },
+      {
+        "idMatch": "200000014748355",
+        "journee": "6",
+        "date": "2026-12-12 à 20:",
+        "joue": false,
+        "equipeAdverse": "IE - GASCOGNE ARMAGNAC BASKET G",
+        "scoreAdverse": null,
+        "notreEquipe": "US BASKET L'ISLE JOURDAIN - 2",
+        "notreScore": null,
+        "salle": "SALLE POLYVALENTE"
+      },
+      {
+        "idMatch": "200000014748360",
+        "journee": "7",
+        "date": "2027-01-10 à 15:",
+        "joue": false,
+        "equipeAdverse": "IE - BASKET CLUB CASTILLON DEBATS",
+        "scoreAdverse": null,
+        "notreEquipe": "US BASKET L'ISLE JOURDAIN - 2",
+        "notreScore": null,
+        "salle": "Gasco'Sports"
+      },
+      {
+        "idMatch": "200000014748366",
+        "journee": "8",
+        "date": "2027-01-16 à 20:",
+        "joue": false,
+        "equipeAdverse": "BASKET CLUB FLEURANCE-PRECHAC",
+        "scoreAdverse": null,
+        "notreEquipe": "US BASKET L'ISLE JOURDAIN - 2",
+        "notreScore": null,
+        "salle": "COMPLEXE SPORTIF ET CULTUREL"
+      },
+      {
+        "idMatch": "200000014748371",
+        "journee": "9",
+        "date": "2027-01-24 à 15:",
+        "joue": false,
+        "equipeAdverse": "IE - ETOILE SPORTIVE ROMEVIENNE - 2",
+        "scoreAdverse": null,
+        "notreEquipe": "US BASKET L'ISLE JOURDAIN - 2",
+        "notreScore": null,
+        "salle": "Gasco'Sports"
+      },
+      {
+        "idMatch": "200000014748379",
+        "journee": "10",
+        "date": "2027-02-28 à 13:",
+        "joue": false,
+        "equipeAdverse": "BASKET CLUB DU MIRANDAIS - 2",
+        "scoreAdverse": null,
+        "notreEquipe": "US BASKET L'ISLE JOURDAIN - 2",
+        "notreScore": null,
+        "salle": "SALLE DE LA POUDRIERE"
+      }
+    ]
+  },
+  "Inter-départementale pré régionale féminine seniors": {
+    "club": "BCL",
+    "pouleNom": "PRF AB",
+    "classement": [
+      {
+        "team": "JS RISCLOISE BASKET",
+        "pts": "0",
+        "j": "0",
+        "g": "0",
+        "p": "0",
+        "pos": "1"
+      },
+      {
+        "team": "IE - BASKET CLUB L'ISLOIS",
+        "pts": "0",
+        "j": "0",
+        "g": "0",
+        "p": "0",
+        "pos": "10"
+      },
+      {
+        "team": "AS MONTALTAISE",
+        "pts": "0",
+        "j": "0",
+        "g": "0",
+        "p": "0",
+        "pos": "2"
+      },
+      {
+        "team": "IE - BASKET ELUSA CLUB",
+        "pts": "0",
+        "j": "0",
+        "g": "0",
+        "p": "0",
+        "pos": "3"
+      },
+      {
+        "team": "IE - UA VICOISE BASKETBALL",
+        "pts": "0",
+        "j": "0",
+        "g": "0",
+        "p": "0",
+        "pos": "4"
+      },
+      {
+        "team": "JUILLAN BASKET",
+        "pts": "0",
+        "j": "0",
+        "g": "0",
+        "p": "0",
+        "pos": "5"
+      },
+      {
+        "team": "BASKET CLUB LOURDAIS",
+        "pts": "0",
+        "j": "0",
+        "g": "0",
+        "p": "0",
+        "pos": "6"
+      },
+      {
+        "team": "JA BORDERES",
+        "pts": "0",
+        "j": "0",
+        "g": "0",
+        "p": "0",
+        "pos": "7"
+      },
+      {
+        "team": "ASC AUREILHAN",
+        "pts": "0",
+        "j": "0",
+        "g": "0",
+        "p": "0",
+        "pos": "8"
+      },
+      {
+        "team": "STADE BAGNERAIS BASKET",
+        "pts": "0",
+        "j": "0",
+        "g": "0",
+        "p": "0",
+        "pos": "9"
+      }
+    ],
+    "matchs": [
+      {
+        "idMatch": "200000014576471",
+        "journee": "1",
+        "date": "2026-10-04 à 15:",
+        "joue": false,
+        "equipeAdverse": "STADE BAGNERAIS BASKET",
+        "scoreAdverse": null,
+        "notreEquipe": "IE - BASKET CLUB L'ISLOIS - 1",
+        "notreScore": null,
+        "salle": "GYMNASE DE LA PLAINE"
+      },
+      {
+        "idMatch": "200000014576476",
+        "journee": "2",
+        "date": "2026-10-11 à 15:",
+        "joue": false,
+        "equipeAdverse": "JA BORDERES",
+        "scoreAdverse": null,
+        "notreEquipe": "IE - BASKET CLUB L'ISLOIS - 1",
+        "notreScore": null,
+        "salle": "GYMNASE DU COLLEGE"
+      },
+      {
+        "idMatch": "200000014576478",
+        "journee": "3",
+        "date": "2026-10-18 à 15:",
+        "joue": false,
+        "equipeAdverse": "BASKET CLUB LOURDAIS",
+        "scoreAdverse": null,
+        "notreEquipe": "IE - BASKET CLUB L'ISLOIS - 1",
+        "notreScore": null,
+        "salle": "GYMNASE DU COLLEGE"
+      },
+      {
+        "idMatch": "200000014576485",
+        "journee": "4",
+        "date": "2026-11-08 à 15:",
+        "joue": false,
+        "equipeAdverse": "ASC AUREILHAN",
+        "scoreAdverse": null,
+        "notreEquipe": "IE - BASKET CLUB L'ISLOIS - 1",
+        "notreScore": null,
+        "salle": "ESPACE MULTISPORT D'AUREILHAN"
+      },
+      {
+        "idMatch": "200000014576487",
+        "journee": "5",
+        "date": "2026-11-15 à 15:",
+        "joue": false,
+        "equipeAdverse": "AS MONTALTAISE",
+        "scoreAdverse": null,
+        "notreEquipe": "IE - BASKET CLUB L'ISLOIS - 1",
+        "notreScore": null,
+        "salle": "GYMNASE DU COLLEGE"
+      },
+      {
+        "idMatch": "200000014576493",
+        "journee": "6",
+        "date": "2026-11-29 à 15:",
+        "joue": false,
+        "equipeAdverse": "IE - UA VICOISE BASKETBALL - 2",
+        "scoreAdverse": null,
+        "notreEquipe": "IE - BASKET CLUB L'ISLOIS - 1",
+        "notreScore": null,
+        "salle": "GYMNASE DU COLLEGE"
+      },
+      {
+        "idMatch": "200000014576499",
+        "journee": "7",
+        "date": "2026-12-06 à 15:",
+        "joue": false,
+        "equipeAdverse": "JS RISCLOISE BASKET - 1",
+        "scoreAdverse": null,
+        "notreEquipe": "IE - BASKET CLUB L'ISLOIS - 1",
+        "notreScore": null,
+        "salle": "HALLE DES SPORTS"
+      },
+      {
+        "idMatch": "200000014576504",
+        "journee": "8",
+        "date": "2026-12-13 à 15:",
+        "joue": false,
+        "equipeAdverse": "IE - BASKET ELUSA CLUB - 2",
+        "scoreAdverse": null,
+        "notreEquipe": "IE - BASKET CLUB L'ISLOIS - 1",
+        "notreScore": null,
+        "salle": "SALLE OMNISPORT"
+      },
+      {
+        "idMatch": "200000014576510",
+        "journee": "9",
+        "date": "2027-01-10 à 13:",
+        "joue": false,
+        "equipeAdverse": "JUILLAN BASKET - 2",
+        "scoreAdverse": null,
+        "notreEquipe": "IE - BASKET CLUB L'ISLOIS - 1",
+        "notreScore": null,
+        "salle": "SALLE JOUANOLOU"
+      },
+      {
+        "idMatch": "200000014576516",
+        "journee": "10",
+        "date": "2027-01-17 à 15:",
+        "joue": false,
+        "equipeAdverse": "STADE BAGNERAIS BASKET",
+        "scoreAdverse": null,
+        "notreEquipe": "IE - BASKET CLUB L'ISLOIS - 1",
+        "notreScore": null,
+        "salle": "GYMNASE DU COLLEGE"
+      },
+      {
+        "idMatch": "200000014576521",
+        "journee": "11",
+        "date": "2027-01-23 à 20:",
+        "joue": false,
+        "equipeAdverse": "JA BORDERES",
+        "scoreAdverse": null,
+        "notreEquipe": "IE - BASKET CLUB L'ISLOIS - 1",
+        "notreScore": null,
+        "salle": "SALLE POLYVALENTE"
+      },
+      {
+        "idMatch": "200000014576523",
+        "journee": "12",
+        "date": "2027-02-07 à 15:",
+        "joue": false,
+        "equipeAdverse": "BASKET CLUB LOURDAIS",
+        "scoreAdverse": null,
+        "notreEquipe": "IE - BASKET CLUB L'ISLOIS - 1",
+        "notreScore": null,
+        "salle": "GYMNASE DE LA COUSTETE"
+      },
+      {
+        "idMatch": "200000014576530",
+        "journee": "13",
+        "date": "2027-02-28 à 15:",
+        "joue": false,
+        "equipeAdverse": "ASC AUREILHAN",
+        "scoreAdverse": null,
+        "notreEquipe": "IE - BASKET CLUB L'ISLOIS - 1",
+        "notreScore": null,
+        "salle": "GYMNASE DU COLLEGE"
+      },
+      {
+        "idMatch": "200000014576532",
+        "journee": "14",
+        "date": "2027-03-07 à 13:",
+        "joue": false,
+        "equipeAdverse": "AS MONTALTAISE",
+        "scoreAdverse": null,
+        "notreEquipe": "IE - BASKET CLUB L'ISLOIS - 1",
+        "notreScore": null,
+        "salle": "SALLE FRANCOIS PECAUT"
+      },
+      {
+        "idMatch": "200000014576538",
+        "journee": "15",
+        "date": "2027-03-14 à 15:",
+        "joue": false,
+        "equipeAdverse": "IE - UA VICOISE BASKETBALL - 2",
+        "scoreAdverse": null,
+        "notreEquipe": "IE - BASKET CLUB L'ISLOIS - 1",
+        "notreScore": null,
+        "salle": "GYMNASE DU COLLEGE"
+      },
+      {
+        "idMatch": "200000014576544",
+        "journee": "16",
+        "date": "2027-03-21 à 15:",
+        "joue": false,
+        "equipeAdverse": "JS RISCLOISE BASKET - 1",
+        "scoreAdverse": null,
+        "notreEquipe": "IE - BASKET CLUB L'ISLOIS - 1",
+        "notreScore": null,
+        "salle": "SALLE DES SPORTS"
+      },
+      {
+        "idMatch": "200000014576549",
+        "journee": "17",
+        "date": "2027-04-04 à 15:",
+        "joue": false,
+        "equipeAdverse": "IE - BASKET ELUSA CLUB - 2",
+        "scoreAdverse": null,
+        "notreEquipe": "IE - BASKET CLUB L'ISLOIS - 1",
+        "notreScore": null,
+        "salle": "GYMNASE DU COLLEGE"
+      },
+      {
+        "idMatch": "200000014576555",
+        "journee": "18",
+        "date": "2027-04-25 à 15:",
+        "joue": false,
+        "equipeAdverse": "JUILLAN BASKET - 2",
+        "scoreAdverse": null,
+        "notreEquipe": "IE - BASKET CLUB L'ISLOIS - 1",
+        "notreScore": null,
+        "salle": "GYMNASE DU COLLEGE"
+      }
+    ]
+  },
+  "Inter-départementale féminine seniors - Division 2": {
+    "club": "BCL",
+    "pouleNom": "Gers",
+    "classement": [
+      {
+        "team": "BASKET CLUB MAUVEZINOIS",
+        "pts": "0",
+        "j": "0",
+        "g": "0",
+        "p": "0",
+        "pos": "1"
+      },
+      {
+        "team": "AVENIR CASTERA REJAUMONT",
+        "pts": "0",
+        "j": "0",
+        "g": "0",
+        "p": "0",
+        "pos": "2"
+      },
+      {
+        "team": "IE - J.A. CONDOMOISE",
+        "pts": "0",
+        "j": "0",
+        "g": "0",
+        "p": "0",
+        "pos": "3"
+      },
+      {
+        "team": "IE - BASKET CLUB CASTILLON DEBATS",
+        "pts": "0",
+        "j": "0",
+        "g": "0",
+        "p": "0",
+        "pos": "4"
+      },
+      {
+        "team": "JS RISCLOISE BASKET",
+        "pts": "0",
+        "j": "0",
+        "g": "0",
+        "p": "0",
+        "pos": "5"
+      },
+      {
+        "team": "IE - BASKET CLUB L'ISLOIS",
+        "pts": "0",
+        "j": "0",
+        "g": "0",
+        "p": "0",
+        "pos": "6"
+      },
+      {
+        "team": "AUZAN BASKET CLUB",
+        "pts": "0",
+        "j": "0",
+        "g": "0",
+        "p": "0",
+        "pos": "7"
+      },
+      {
+        "team": "SA JEGUN",
+        "pts": "0",
+        "j": "0",
+        "g": "0",
+        "p": "0",
+        "pos": "8"
+      }
+    ],
+    "matchs": [
+      {
+        "idMatch": "200000014736104",
+        "journee": "1",
+        "date": "2026-10-04 à 15:",
+        "joue": false,
+        "equipeAdverse": "JS RISCLOISE BASKET - 2",
+        "scoreAdverse": null,
+        "notreEquipe": "IE - BASKET CLUB L'ISLOIS - 2",
+        "notreScore": null,
+        "salle": "SALLE DES SPORTS"
+      },
+      {
+        "idMatch": "200000014736111",
+        "journee": "2",
+        "date": "2026-10-11 à 13:",
+        "joue": false,
+        "equipeAdverse": "IE - J.A. CONDOMOISE - 2",
+        "scoreAdverse": null,
+        "notreEquipe": "IE - BASKET CLUB L'ISLOIS - 2",
+        "notreScore": null,
+        "salle": "GYMNASE DU COLLEGE"
+      },
+      {
+        "idMatch": "200000014736118",
+        "journee": "3",
+        "date": "2026-11-07 à 20:",
+        "joue": false,
+        "equipeAdverse": "BASKET CLUB MAUVEZINOIS",
+        "scoreAdverse": null,
+        "notreEquipe": "IE - BASKET CLUB L'ISLOIS - 2",
+        "notreScore": null,
+        "salle": "SALLE POLYVALENTE"
+      },
+      {
+        "idMatch": "200000014736129",
+        "journee": "4",
+        "date": "2026-11-15 à 15:",
+        "joue": false,
+        "equipeAdverse": "IE - BASKET CLUB CASTILLON DEBATS",
+        "scoreAdverse": null,
+        "notreEquipe": "IE - BASKET CLUB L'ISLOIS - 2",
+        "notreScore": null,
+        "salle": "GYMNASE DU COLLEGE"
+      },
+      {
+        "idMatch": "200000014736137",
+        "journee": "5",
+        "date": "2026-11-29 à 15:",
+        "joue": false,
+        "equipeAdverse": "AVENIR CASTERA REJAUMONT - 2",
+        "scoreAdverse": null,
+        "notreEquipe": "IE - BASKET CLUB L'ISLOIS - 2",
+        "notreScore": null,
+        "salle": "GYMNASE DU COLLEGE"
+      },
+      {
+        "idMatch": "200000014736145",
+        "journee": "6",
+        "date": "2026-12-06 à 13:",
+        "joue": false,
+        "equipeAdverse": "SA JEGUN - 2",
+        "scoreAdverse": null,
+        "notreEquipe": "IE - BASKET CLUB L'ISLOIS - 2",
+        "notreScore": null,
+        "salle": "HALLE DES SPORTS"
+      },
+      {
+        "idMatch": "200000014736152",
+        "journee": "7",
+        "date": "2026-12-12 à 20:",
+        "joue": false,
+        "equipeAdverse": "AUZAN BASKET CLUB",
+        "scoreAdverse": null,
+        "notreEquipe": "IE - BASKET CLUB L'ISLOIS - 2",
+        "notreScore": null,
+        "salle": "SALLE POLYVALENTE"
+      },
+      {
+        "idMatch": "200000014736160",
+        "journee": "8",
+        "date": "2027-01-10 à 15:",
+        "joue": false,
+        "equipeAdverse": "JS RISCLOISE BASKET - 2",
+        "scoreAdverse": null,
+        "notreEquipe": "IE - BASKET CLUB L'ISLOIS - 2",
+        "notreScore": null,
+        "salle": "GYMNASE DU COLLEGE"
+      },
+      {
+        "idMatch": "200000014736167",
+        "journee": "9",
+        "date": "2027-01-17 à 15:",
+        "joue": false,
+        "equipeAdverse": "IE - J.A. CONDOMOISE - 2",
+        "scoreAdverse": null,
+        "notreEquipe": "IE - BASKET CLUB L'ISLOIS - 2",
+        "notreScore": null,
+        "salle": "SALLE OMNISPORTS"
+      },
+      {
+        "idMatch": "200000014736174",
+        "journee": "10",
+        "date": "2027-01-24 à 15:",
+        "joue": false,
+        "equipeAdverse": "BASKET CLUB MAUVEZINOIS",
+        "scoreAdverse": null,
+        "notreEquipe": "IE - BASKET CLUB L'ISLOIS - 2",
+        "notreScore": null,
+        "salle": "GYMNASE DU COLLEGE"
+      },
+      {
+        "idMatch": "200000014736185",
+        "journee": "11",
+        "date": "2027-02-07 à 15:",
+        "joue": false,
+        "equipeAdverse": "IE - BASKET CLUB CASTILLON DEBATS",
+        "scoreAdverse": null,
+        "notreEquipe": "IE - BASKET CLUB L'ISLOIS - 2",
+        "notreScore": null,
+        "salle": "GYMNASE MUNICIPAL"
+      },
+      {
+        "idMatch": "200000014736193",
+        "journee": "12",
+        "date": "2027-03-07 à 13:",
+        "joue": false,
+        "equipeAdverse": "AVENIR CASTERA REJAUMONT - 2",
+        "scoreAdverse": null,
+        "notreEquipe": "IE - BASKET CLUB L'ISLOIS - 2",
+        "notreScore": null,
+        "salle": "SALLE OMNISPORTS"
+      },
+      {
+        "idMatch": "200000014736201",
+        "journee": "13",
+        "date": "2027-03-14 à 15:",
+        "joue": false,
+        "equipeAdverse": "SA JEGUN - 2",
+        "scoreAdverse": null,
+        "notreEquipe": "IE - BASKET CLUB L'ISLOIS - 2",
+        "notreScore": null,
+        "salle": "SALLE DES SPORTS"
+      },
+      {
+        "idMatch": "200000014736208",
+        "journee": "14",
+        "date": "2027-04-04 à 13:",
+        "joue": false,
+        "equipeAdverse": "AUZAN BASKET CLUB",
+        "scoreAdverse": null,
+        "notreEquipe": "IE - BASKET CLUB L'ISLOIS - 2",
+        "notreScore": null,
+        "salle": "GYMNASE DU COLLEGE"
+      }
+    ]
+  },
+  "Trophée Georges ESTEVE Féminins - 8ème": {
+    "club": "BCL",
+    "pouleNom": "Poule A",
+    "classement": [],
+    "matchs": [
+      {
+        "idMatch": "200000014727611",
+        "journee": "3",
+        "date": "2026-10-24 à 20:",
+        "joue": false,
+        "equipeAdverse": "IE - AUZAN BASKET CLUB",
+        "scoreAdverse": null,
+        "notreEquipe": "IE - BASKET CLUB L'ISLOIS - 1",
+        "notreScore": null,
+        "salle": "SALLE POLYVALENTE"
+      }
+    ]
+  }
+}

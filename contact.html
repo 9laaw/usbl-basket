@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact | Basket L'Isle-Jourdain</title>
+    <meta name="description" content="Contactez le secrétariat de l'Union Sportive Basket Lislois : coordonnées officielles et formulaire de message.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="styles.css?v=4.0">
+    <link rel="icon" type="image/png" href="assets/logo_usbl.png">
+    <style>
+        /* Anti-underline enforcement */
+        header.main-header,
+        header.main-header *,
+        .main-nav,
+        .main-nav *,
+        .nav-link,
+        .nav-link * {
+            text-decoration: none !important;
+            text-decoration-line: none !important;
+            -webkit-text-decoration-line: none !important;
+            text-decoration-style: none !important;
+            border-bottom: none !important;
+            box-shadow: none !important;
+        }
+
+        /* -------------------------------------------------------------
+           STYLE ÉPURÉ ET ÉDITORIAL (RÈGLES STRICTES : ZÉRO BOX, ZÉRO SUPERFLU)
+           ------------------------------------------------------------- */
+        :root {
+            --primary-color: #D21A00;
+            --primary-hover: #A31609;
+            --page-text: #1f1b1a;
+            --muted-text: #595350;
+        }
+
+        body {
+            color: var(--page-text);
+            background-color: #ffffff;
+        }
+
+        .editorial-header-banner {
+            background: linear-gradient(135deg, #580c01 0%, #350702 32%, #1a0504 65%, #100302 100%);
+            border-bottom: 2px solid rgba(139, 18, 0, 0.4);
+            color: #ffffff;
+            padding: 130px 24px 50px 24px;
+        }
+
+        .editorial-header-container {
+            max-width: 860px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .editorial-header-logo {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            flex-shrink: 0;
+        }
+
+        .editorial-header-text h1 {
+            font-family: var(--font-heading);
+            font-size: 2.6rem;
+            line-height: 1.15;
+            margin: 0 0 8px 0;
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        .editorial-header-sub {
+            font-size: 1.05rem;
+            color: rgba(255, 255, 255, 0.75);
+            margin: 0 0 16px 0;
+        }
+
+        .editorial-header-nav {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            font-size: 0.85rem;
+        }
+
+        .editorial-header-nav a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: underline !important;
+            text-underline-offset: 3px;
+        }
+
+        .editorial-header-nav a:hover {
+            color: #ffffff;
+        }
+
+        .editorial-page-wrap {
+            max-width: 860px;
+            margin: 60px auto 100px auto;
+            padding: 0 24px;
+        }
+
+        .editorial-block {
+            margin-bottom: 60px;
+        }
+
+        .editorial-block h2 {
+            font-family: var(--font-heading);
+            font-size: 1.9rem;
+            color: var(--page-text);
+            margin: 0 0 20px 0;
+            font-weight: 700;
+        }
+
+        .editorial-block h3 {
+            font-family: var(--font-heading);
+            font-size: 1.35rem;
+            color: var(--page-text);
+            margin: 28px 0 10px 0;
+            font-weight: 600;
+        }
+
+        .editorial-block p {
+            font-size: 1.02rem;
+            line-height: 1.75;
+            color: var(--page-text);
+            margin: 0 0 16px 0;
+        }
+
+        .editorial-block a {
+            color: var(--primary-color);
+            text-decoration: underline !important;
+            text-underline-offset: 3px;
+            font-weight: 500;
+        }
+
+        .editorial-block a:hover {
+            color: var(--primary-hover);
+        }
+
+        .identity-dl {
+            margin: 16px 0 20px 0;
+            padding: 0;
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            row-gap: 12px;
+            column-gap: 20px;
+            font-size: 0.98rem;
+            line-height: 1.5;
+        }
+
+        .identity-dl dt {
+            color: var(--muted-text);
+            font-weight: 500;
+        }
+
+        .identity-dl dd {
+            margin: 0;
+            color: var(--page-text);
+            font-weight: 600;
+        }
+
+        /* Formulaire épuré sans boîte ni fioritures */
+        .simple-form {
+            margin-top: 24px;
+            max-width: 650px;
+        }
+
+        .form-group-item {
+            margin-bottom: 22px;
+        }
+
+        .form-group-item label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--page-text);
+            margin-bottom: 6px;
+        }
+
+        .form-group-item input,
+        .form-group-item textarea {
+            width: 100%;
+            padding: 10px 12px;
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            border: 1px solid #d5cfc9;
+            border-radius: 4px;
+            box-sizing: border-box;
+            background: #faf8f6;
+            color: var(--page-text);
+        }
+
+        .form-group-item input:focus,
+        .form-group-item textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background: #ffffff;
+        }
+
+        .form-btn-submit {
+            background: linear-gradient(135deg, #FF4307 0%, #D21A00 100%);
+            color: #ffffff;
+            border: none;
+            padding: 12px 28px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            border-radius: 4px;
+            box-shadow: 0 4px 14px rgba(210, 26, 0, 0.22);
+            transition: all 0.3s ease;
+        }
+
+        .form-btn-submit:hover {
+            background: linear-gradient(135deg, #FF6A2F 0%, #A31609 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(210, 26, 0, 0.32);
+        }
+
+        .success-notice {
+            padding: 14px 18px;
+            background: #f1f8f3;
+            color: #1a5c2d;
+            font-size: 0.95rem;
+            margin-bottom: 24px;
+            border-left: 3px solid #2e7d32;
+        }
+
+        @media (max-width: 768px) {
+            .editorial-header-container {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+            .editorial-header-text h1 {
+                font-size: 2.1rem;
+            }
+            .identity-dl {
+                grid-template-columns: 1fr;
+                row-gap: 4px;
+            }
+            .identity-dl dt {
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body class="is-club-page">
+
+    <!-- NAVIGATION COMMUNE -->
+        <!-- HEADER / NAVIGATION -->
+    <header class="main-header">
+        <div class="container header-container">
+            <a href="index.html" class="logo-area" aria-label="Accueil USBL BCL">
+                <img src="assets/logo_usbl_bcl.jpg" alt="Logo USBL BCL" class="club-logo-img">
+            </a>
+
+            <nav class="main-nav">
+                <ul>
+                    <li class="nav-dropdown-wrapper">
+                        <a href="index.html" class="nav-link" id="nav-leclub" style="text-decoration: none !important; border-bottom: none !important;">Les clubs <span class="dropdown-arrow">▼</span></a>
+                        <ul class="nav-dropdown-menu">
+                            <li class="nav-submenu-wrapper">
+                                <a href="qui-sommes-nous.html" class="nav-submenu-toggle" style="text-decoration: none !important; border-bottom: none !important;">Qui sommes-nous ? <span class="submenu-arrow">▸</span></a>
+                                <ul class="nav-sub-menu">
+                                    <li><a href="qui-sommes-nous-usbl.html" style="text-decoration: none !important; border-bottom: none !important;">USBL</a></li>
+                                    <li><a href="qui-sommes-nous-bcl.html" style="text-decoration: none !important; border-bottom: none !important;">BCL</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="infrastructures.html" style="text-decoration: none !important; border-bottom: none !important;">Nos infrastructures</a></li>
+                            <li><a href="partenaires.html" style="text-decoration: none !important; border-bottom: none !important;">Nos partenaires</a></li>
+                            <li><a href="benevoles.html" style="text-decoration: none !important; border-bottom: none !important;">Bénévoles</a></li>
+                            <li><a href="contact.html" style="text-decoration: none !important; border-bottom: none !important;">Nous contacter</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="competitions.html" class="nav-link" id="nav-competitions" style="text-decoration: none !important; border-bottom: none !important;">Nos équipes</a></li>
+                    <li><a href="evenements.html" class="nav-link" id="nav-evenements" style="text-decoration: none !important; border-bottom: none !important;">Événements</a></li>
+                    <li class="nav-dropdown-wrapper nav-dropdown-right">
+                        <a href="informations.html" class="nav-link" id="nav-informations" style="text-decoration: none !important; border-bottom: none !important;">Informations <span class="dropdown-arrow">▼</span></a>
+                        <ul class="nav-dropdown-menu">
+                            <li><a href="inscriptions.html" style="text-decoration: none !important; border-bottom: none !important;">Inscriptions & Licences</a></li>
+                            <li><a href="planning.html" style="text-decoration: none !important; border-bottom: none !important;">Planning des entraînements</a></li>
+                            <li><a href="boutiques.html" style="text-decoration: none !important; border-bottom: none !important;">Boutiques officielles</a></li>
+                            <li><a href="charte-interne.html" style="text-decoration: none !important; border-bottom: none !important;">Charte interne</a></li>
+                            <li><a href="commissions.html" style="text-decoration: none !important; border-bottom: none !important;">Commissions</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+
+            <button class="mobile-menu-toggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- EN-TÊTE ÉDITORIAL -->
+    <header class="editorial-header-banner">
+        <div class="editorial-header-container">
+            <img src="assets/logo_usbl.png" alt="Logo USBL" class="editorial-header-logo">
+            <div class="editorial-header-text">
+                <h1>Nous contacter</h1>
+                <p class="editorial-header-sub">Coordonnées officielles et formulaire de contact du secrétariat.</p>
+                <nav class="editorial-header-nav">
+                    <a href="#coordonnees">Coordonnées</a>
+                    <a href="#formulaire">Écrire un message</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTENU PRINCIPAL -->
+    <main class="editorial-page-wrap">
+
+        <!-- COORDONNÉES OFFICIELLES -->
+        <section id="coordonnees" class="editorial-block">
+            <h2>Coordonnées du club</h2>
+            <p>
+                Pour toute question relative aux inscriptions, aux licences, aux plannings d'entraînements ou au mécénat sportif, plusieurs canaux directs sont à votre disposition.
+            </p>
+
+            <dl class="identity-dl">
+                <dt>Courriel général</dt>
+                <dd><a href="mailto:contact@usbl-basket32.fr">contact@usbl-basket32.fr</a></dd>
+                
+                <dt>Secrétariat licences</dt>
+                <dd><a href="mailto:secretariat@usbl-basket32.fr">secretariat@usbl-basket32.fr</a></dd>
+                
+                <dt>Adresse postale</dt>
+                <dd>Salle Gasco'Sport, 33 rue de Rozès, 32600 L'Isle-Jourdain</dd>
+                
+                <dt>Réseau social officiel</dt>
+                <dd><a href="https://www.instagram.com/usbl_bcl32/" target="_blank" rel="noopener noreferrer">Instagram @usbl_bcl32</a></dd>
+            </dl>
+        </section>
+
+        <!-- FORMULAIRE DE CONTACT -->
+        <section id="formulaire" class="editorial-block">
+            <h2>Envoyer un message au secrétariat</h2>
+            <p>
+                Remplissez ce formulaire pour poser votre question. Un bénévole du club vous répondra dans les meilleurs délais.
+            </p>
+
+            <div id="contact-success-box" class="success-notice" style="display: none;">
+                Votre message a été transmis avec succès au secrétariat. Nous vous répondrons rapidement.
+            </div>
+
+            <form id="contact-details-form" class="simple-form" onsubmit="event.preventDefault(); window.submitContactForm();">
+                <div class="form-group-item">
+                    <label for="contact-name">Nom et prénom</label>
+                    <input type="text" id="contact-name" required>
+                </div>
+
+                <div class="form-group-item">
+                    <label for="contact-email">Adresse courriel</label>
+                    <input type="email" id="contact-email" required>
+                </div>
+
+                <div class="form-group-item">
+                    <label for="contact-subject">Objet du message</label>
+                    <input type="text" id="contact-subject" required>
+                </div>
+
+                <div class="form-group-item">
+                    <label for="contact-msg">Message</label>
+                    <textarea id="contact-msg" rows="5" required></textarea>
+                </div>
+
+                <button type="submit" class="form-btn-submit">Transmettre le message</button>
+            </form>
+        </section>
+
+    </main>
+
+    <!-- PIED DE PAGE SOBRE -->
+    <footer class="main-footer">
+        <div class="container footer-container">
+            <div class="footer-col about">
+                <h3>BASKET L'ISLE-JOURDAIN</h3>
+                <p>L'USBL (Masculin) et le BCL (Féminin) forment les jeunes générations et animent la vie sportive de L'Isle-Jourdain depuis plusieurs décennies.</p>
+            </div>
+            
+            <div class="footer-col meta">
+                <h4>CONTACT & INFOS</h4>
+                <p>Salle Gasco'Sport, 33 rue de Rozès, 32600 L'Isle-Jourdain</p>
+                <p>Courriel : <a href="mailto:contact@usbl-basket32.fr">contact@usbl-basket32.fr</a></p>
+                <p>Instagram : <a href="https://www.instagram.com/usbl_bcl32/" target="_blank">@usbl_bcl32</a></p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="container footer-bottom-container">
+                <p>&copy; 2026 Basket L'Isle-Jourdain (USBL & BCL). Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

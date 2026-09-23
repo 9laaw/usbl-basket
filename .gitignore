@@ -1,0 +1,6 @@
+.vercel
+node_modules/
+data/_backup_local/
+.DS_Store
+*.log
+scratch/

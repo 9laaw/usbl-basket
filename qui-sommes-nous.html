@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qui sommes-nous ? | Basket L'Isle-Jourdain (USBL &amp; BCL)</title>
+    <meta name="description" content="Découvrez l'histoire et les clubs de l'USBL (section masculine) et du BCL (section féminine) à L'Isle-Jourdain.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="styles.css?v=4.0">
+    <link rel="icon" type="image/png" href="assets/logo_usbl.png">
+    
+    <style>
+        /* Anti-underline enforcement */
+        header.main-header,
+        header.main-header *,
+        .main-nav,
+        .main-nav *,
+        .nav-link,
+        .nav-link * {
+            text-decoration: none !important;
+            text-decoration-line: none !important;
+            -webkit-text-decoration-line: none !important;
+            text-decoration-style: none !important;
+            border-bottom: none !important;
+            box-shadow: none !important;
+        }
+
+        :root {
+            --primary-color: #D21A00;
+            --primary-hover: #A31609;
+            --bcl-color: #FF6A2F;
+            --bcl-hover: #e05318;
+            --page-text: #1f1b1a;
+            --muted-text: #595350;
+        }
+
+        body {
+            color: var(--page-text);
+            background-color: #fbfaf8;
+        }
+
+        /* En-tête harmonisé avec le dégradé rouge de la section clubs */
+        .editorial-header-banner {
+            background: linear-gradient(135deg, #580c01 0%, #350702 32%, #1a0504 65%, #100302 100%) !important;
+            border-bottom: 2px solid rgba(139, 18, 0, 0.4) !important;
+            color: #ffffff;
+            padding: 130px 24px 50px 24px;
+        }
+
+        .editorial-header-container {
+            max-width: 1050px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .editorial-header-logo {
+            width: 95px;
+            height: 95px;
+            object-fit: contain;
+            border-radius: 50%;
+            flex-shrink: 0;
+            background: #ffffff;
+            padding: 4px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+        }
+
+        .editorial-header-text h1 {
+            font-family: var(--font-heading);
+            font-size: 2.6rem;
+            line-height: 1.15;
+            margin: 0 0 8px 0;
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        .editorial-header-sub {
+            font-size: 1.05rem;
+            color: rgba(255, 255, 255, 0.88);
+            margin: 0;
+            max-width: 680px;
+            line-height: 1.5;
+        }
+
+        /* Section principale simple et épurée */
+        .about-page-main {
+            background-color: #fbfaf8;
+            padding: 60px 24px 85px 24px;
+            min-height: calc(100vh - 350px);
+        }
+
+        .about-page-container {
+            max-width: 1050px;
+            margin: 0 auto;
+        }
+
+        /* Titre Section 1 */
+        .about-clubs-title {
+            text-align: center;
+            font-family: var(--font-heading);
+            font-size: 2.2rem;
+            color: #1a1615;
+            margin: 0 0 10px 0;
+            font-weight: 700;
+        }
+
+        .about-clubs-subtitle {
+            text-align: center;
+            font-size: 1.05rem;
+            color: #635b54;
+            margin: 0 auto 40px auto;
+            max-width: 650px;
+            line-height: 1.55;
+        }
+
+        /* Grille des 2 cartes */
+        .about-clubs-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            margin-bottom: 55px;
+        }
+
+        @media (max-width: 768px) {
+            .about-clubs-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+        }
+
+        .club-card {
+            background: #ffffff;
+            border-radius: 12px;
+            border: 1px solid #ede8e3;
+            padding: 36px 32px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+        }
+
+        .club-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.09);
+        }
+
+        .club-card-usbl {
+            border-top: 5px solid #D21A00;
+        }
+
+        .club-card-bcl {
+            border-top: 5px solid #FF6A2F;
+        }
+
+        .club-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 22px;
+        }
+
+        .club-card-title {
+            font-family: var(--font-heading);
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #1a1615;
+            margin: 0;
+        }
+
+        .club-card-logo {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
+
+        .club-card-desc {
+            font-size: 1.02rem;
+            line-height: 1.7;
+            color: #4a423e;
+            margin: 0 0 30px 0;
+            flex-grow: 1;
+        }
+
+        .btn-club-page {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-family: var(--font-heading);
+            font-size: 0.92rem;
+            font-weight: 700;
+            text-decoration: none !important;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        .btn-club-usbl {
+            background: #D21A00;
+            color: #ffffff !important;
+        }
+
+        .btn-club-usbl:hover {
+            background: #a81500;
+        }
+
+        .btn-club-bcl {
+            background: #FF6A2F;
+            color: #ffffff !important;
+        }
+
+        .btn-club-bcl:hover {
+            background: #e05318;
+        }
+
+        /* 2. Call To Action (Section 2) */
+        .about-cta-box {
+            text-align: center;
+            background: linear-gradient(135deg, #1c0e0c 0%, #30110c 100%);
+            color: #ffffff;
+            border-radius: 14px;
+            padding: 46px 28px;
+            box-shadow: 0 8px 26px rgba(0, 0, 0, 0.12);
+        }
+
+        .about-cta-title {
+            font-family: var(--font-heading);
+            font-size: 1.95rem;
+            margin: 0 0 12px 0;
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        .about-cta-sub {
+            font-size: 1.02rem;
+            color: rgba(255, 255, 255, 0.88);
+            max-width: 620px;
+            margin: 0 auto 28px auto;
+            line-height: 1.6;
+        }
+
+        .about-cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn-cta-primary {
+            background: #D21A00;
+            color: #ffffff !important;
+            padding: 12px 26px;
+            border-radius: 6px;
+            font-family: var(--font-heading);
+            font-size: 0.92rem;
+            font-weight: 700;
+            text-decoration: none !important;
+            transition: background 0.2s ease;
+        }
+
+        .btn-cta-primary:hover {
+            background: #b31600;
+        }
+
+        .btn-cta-secondary {
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #ffffff !important;
+            padding: 12px 26px;
+            border-radius: 6px;
+            font-family: var(--font-heading);
+            font-size: 0.92rem;
+            font-weight: 700;
+            text-decoration: none !important;
+            transition: background 0.2s ease;
+        }
+
+        .btn-cta-secondary:hover {
+            background: rgba(255, 255, 255, 0.22);
+        }
+
+        @media (max-width: 768px) {
+            .editorial-header-container {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+            .editorial-header-text h1 {
+                font-size: 2.1rem;
+            }
+            .about-clubs-title {
+                font-size: 1.8rem;
+            }
+            .about-cta-title {
+                font-size: 1.6rem;
+            }
+            .club-card {
+                padding: 26px 20px;
+            }
+        }
+    </style>
+</head>
+<body class="is-club-page">
+
+    <!-- NAVIGATION PRINCIPALE COMMUNE -->
+    <header class="main-header">
+        <div class="container header-container">
+            <a href="index.html" class="logo-area" aria-label="Accueil USBL BCL">
+                <img src="assets/logo_usbl_bcl.jpg" alt="Logo USBL BCL" class="club-logo-img">
+            </a>
+
+            <nav class="main-nav">
+                <ul>
+                    <li class="nav-dropdown-wrapper">
+                        <a href="index.html" class="nav-link active" id="nav-leclub" style="text-decoration: none !important; border-bottom: none !important;">Les clubs <span class="dropdown-arrow">▼</span></a>
+                        <ul class="nav-dropdown-menu">
+                            <li class="nav-submenu-wrapper">
+                                <a href="qui-sommes-nous.html" class="nav-submenu-toggle" style="text-decoration: none !important; border-bottom: none !important;">Qui sommes-nous ? <span class="submenu-arrow">▸</span></a>
+                                <ul class="nav-sub-menu">
+                                    <li><a href="qui-sommes-nous-usbl.html" style="text-decoration: none !important; border-bottom: none !important;">USBL</a></li>
+                                    <li><a href="qui-sommes-nous-bcl.html" style="text-decoration: none !important; border-bottom: none !important;">BCL</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="infrastructures.html" style="text-decoration: none !important; border-bottom: none !important;">Nos infrastructures</a></li>
+                            <li><a href="partenaires.html" style="text-decoration: none !important; border-bottom: none !important;">Nos partenaires</a></li>
+                            <li><a href="benevoles.html" style="text-decoration: none !important; border-bottom: none !important;">Bénévoles</a></li>
+                            <li><a href="contact.html" style="text-decoration: none !important; border-bottom: none !important;">Nous contacter</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="competitions.html" class="nav-link" id="nav-competitions" style="text-decoration: none !important; border-bottom: none !important;">Nos équipes</a></li>
+                    <li><a href="evenements.html" class="nav-link" id="nav-evenements" style="text-decoration: none !important; border-bottom: none !important;">Événements</a></li>
+                    <li class="nav-dropdown-wrapper nav-dropdown-right">
+                        <a href="informations.html" class="nav-link" id="nav-informations" style="text-decoration: none !important; border-bottom: none !important;">Informations <span class="dropdown-arrow">▼</span></a>
+                        <ul class="nav-dropdown-menu">
+                            <li><a href="inscriptions.html" style="text-decoration: none !important; border-bottom: none !important;">Inscriptions &amp; Licences</a></li>
+                            <li><a href="planning.html" style="text-decoration: none !important; border-bottom: none !important;">Planning des entraînements</a></li>
+                            <li><a href="boutiques.html" style="text-decoration: none !important; border-bottom: none !important;">Boutiques officielles</a></li>
+                            <li><a href="charte-interne.html" style="text-decoration: none !important; border-bottom: none !important;">Charte interne</a></li>
+                            <li><a href="commissions.html" style="text-decoration: none !important; border-bottom: none !important;">Commissions</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+
+            <button class="mobile-menu-toggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- BANDEAU D'EN-TÊTE HARMONISÉ SECTION LES CLUBS -->
+    <header class="editorial-header-banner">
+        <div class="editorial-header-container">
+            <img src="assets/logo_usbl_bcl.jpg" alt="Basketball L'Isle-Jourdain" class="editorial-header-logo">
+            <div class="editorial-header-text">
+                <h1>Qui sommes-nous ?</h1>
+                <p class="editorial-header-sub">Deux associations sportives historiques unies pour faire vivre et briller le basketball à L'Isle-Jourdain.</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTENU PRINCIPAL ÉPURÉ : 2 SECTIONS SANS ILLUSTRATION -->
+    <main class="about-page-main">
+        <div class="about-page-container">
+
+            <!-- 1. PRÉSENTATION DES DEUX CLUBS -->
+            <section id="clubs">
+                <h2 class="about-clubs-title">Deux clubs, deux identités complémentaires</h2>
+                <p class="about-clubs-subtitle">Choisissez votre section pour en savoir plus sur les effectifs, les résultats et l'histoire spécifique de chaque club.</p>
+
+                <div class="about-clubs-grid">
+                    
+                    <!-- CARTE USBL -->
+                    <div class="club-card club-card-usbl">
+                        <div>
+                            <div class="club-card-header">
+                                <h3 class="club-card-title">USBL Basket</h3>
+                                <img src="assets/logo_usbl.png" alt="Logo USBL" class="club-card-logo">
+                            </div>
+
+                            <p class="club-card-desc">
+                                L'Union Sportive Basket Lislois est la doyenne du basket local. Surnommés <em>les Spartiates</em>, ses joueurs cultivent l'engagement physique, la générosité défensive et une franche camaraderie.
+                            </p>
+                        </div>
+
+                        <a href="qui-sommes-nous-usbl.html" class="btn-club-page btn-club-usbl">
+                            Découvrir l'USBL &rarr;
+                        </a>
+                    </div>
+
+                    <!-- CARTE BCL -->
+                    <div class="club-card club-card-bcl">
+                        <div>
+                            <div class="club-card-header">
+                                <h3 class="club-card-title">Basket Club Lislois</h3>
+                                <img src="assets/logo_bcl.jpg" alt="Logo BCL" class="club-card-logo">
+                            </div>
+
+                            <p class="club-card-desc">
+                                Le Basket Club Lislois est le club 100% féminin de la commune. <em>Les Lisloises</em> prônent un jeu rapide, technique et collectif, dans un environnement bienveillant propice à la progression de chaque joueuse.
+                            </p>
+                        </div>
+
+                        <a href="qui-sommes-nous-bcl.html" class="btn-club-page btn-club-bcl">
+                            Découvrir le BCL &rarr;
+                        </a>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- 2. CALL TO ACTION -->
+            <section class="about-cta-box">
+                <h3 class="about-cta-title">Envie de rejoindre l'aventure ?</h3>
+                <p class="about-cta-sub">
+                    Que vous souhaitiez inscrire votre enfant, rejoindre nos équipes seniors, devenir bénévole ou simplement venir supporter nos équipes le samedi soir, vous êtes les bienvenus !
+                </p>
+                <div class="about-cta-buttons">
+                    <a href="competitions.html" class="btn-cta-primary">Voir nos équipes &amp; calendriers</a>
+                    <a href="contact.html" class="btn-cta-secondary">Nous contacter</a>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- PIED DE PAGE SOBRE -->
+    <footer class="main-footer">
+        <div class="container footer-container">
+            <div class="footer-col about">
+                <h3>BASKET L'ISLE-JOURDAIN</h3>
+                <p>L'USBL (Masculin) et le BCL (Féminin) forment les jeunes générations et animent la vie sportive de L'Isle-Jourdain depuis plusieurs décennies.</p>
+            </div>
+            
+            <div class="footer-col meta">
+                <h4>CONTACT &amp; INFOS</h4>
+                <p>Salle Gasco'Sport, 33 rue de Rozès, 32600 L'Isle-Jourdain</p>
+                <p>Courriel : <a href="mailto:contact@usbl-basket32.fr">contact@usbl-basket32.fr</a></p>
+                <p>Instagram : <a href="https://www.instagram.com/usbl_bcl32/" target="_blank">@usbl_bcl32</a></p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="container footer-bottom-container">
+                <p>&copy; 2026 Basket L'Isle-Jourdain (USBL &amp; BCL). Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

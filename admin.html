@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administration | US Basket Lislois</title>
+    <meta name="description" content="Espace sécurisé d'administration de l'Union Sportive de Basket Lislois (USBL).">
+    
+    <!-- Google Fonts Imports -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="styles.css?v=4.0">
+    <link rel="icon" type="image/png" href="assets/logo_usbl.png">
+</head>
+<body class="editorial-pure-theme has-red-navbar">
+
+    <!-- HEADER / NAVIGATION -->
+        <!-- HEADER / NAVIGATION -->
+    <header class="main-header">
+        <div class="container header-container">
+            <a href="index.html" class="logo-area" aria-label="Accueil USBL BCL">
+                <img src="assets/logo_usbl_bcl.jpg" alt="Logo USBL BCL" class="club-logo-img">
+            </a>
+
+            <nav class="main-nav">
+                <ul>
+                    <li class="nav-dropdown-wrapper">
+                        <a href="index.html" class="nav-link" id="nav-leclub" style="text-decoration: none !important; border-bottom: none !important;">Les clubs <span class="dropdown-arrow">▼</span></a>
+                        <ul class="nav-dropdown-menu">
+                            <li class="nav-submenu-wrapper">
+                                <a href="qui-sommes-nous.html" class="nav-submenu-toggle" style="text-decoration: none !important; border-bottom: none !important;">Qui sommes-nous ? <span class="submenu-arrow">▸</span></a>
+                                <ul class="nav-sub-menu">
+                                    <li><a href="qui-sommes-nous-usbl.html" style="text-decoration: none !important; border-bottom: none !important;">USBL</a></li>
+                                    <li><a href="qui-sommes-nous-bcl.html" style="text-decoration: none !important; border-bottom: none !important;">BCL</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="infrastructures.html" style="text-decoration: none !important; border-bottom: none !important;">Nos infrastructures</a></li>
+                            <li><a href="partenaires.html" style="text-decoration: none !important; border-bottom: none !important;">Nos partenaires</a></li>
+                            <li><a href="benevoles.html" style="text-decoration: none !important; border-bottom: none !important;">Bénévoles</a></li>
+                            <li><a href="contact.html" style="text-decoration: none !important; border-bottom: none !important;">Nous contacter</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="competitions.html" class="nav-link" id="nav-competitions" style="text-decoration: none !important; border-bottom: none !important;">Nos équipes</a></li>
+                    <li><a href="evenements.html" class="nav-link" id="nav-evenements" style="text-decoration: none !important; border-bottom: none !important;">Événements</a></li>
+                    <li class="nav-dropdown-wrapper nav-dropdown-right">
+                        <a href="informations.html" class="nav-link" id="nav-informations" style="text-decoration: none !important; border-bottom: none !important;">Informations <span class="dropdown-arrow">▼</span></a>
+                        <ul class="nav-dropdown-menu">
+                            <li><a href="inscriptions.html" style="text-decoration: none !important; border-bottom: none !important;">Inscriptions & Licences</a></li>
+                            <li><a href="planning.html" style="text-decoration: none !important; border-bottom: none !important;">Planning des entraînements</a></li>
+                            <li><a href="boutiques.html" style="text-decoration: none !important; border-bottom: none !important;">Boutiques officielles</a></li>
+                            <li><a href="charte-interne.html" style="text-decoration: none !important; border-bottom: none !important;">Charte interne</a></li>
+                            <li><a href="commissions.html" style="text-decoration: none !important; border-bottom: none !important;">Commissions</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+
+            <button class="mobile-menu-toggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- SECTION ADMIN LOGIN (Authentification) -->
+    <div id="page-admin-login" style="display: none;">
+        <section class="admin-login-section section-padding">
+            <div class="container admin-auth-container">
+                <div class="admin-login-card">
+                    <div class="auth-header">
+                        <span class="auth-icon">🛡️</span>
+                        <h2 class="auth-title font-style-serif">ACCÈS ADMINISTRATEUR</h2>
+                        <div class="section-divider center-align"></div>
+                        <p class="auth-lead">Veuillez renseigner le mot de passe du club pour accéder à l'interface de gestion de l'USBL.</p>
+                    </div>
+
+                    <div id="login-error-msg" class="auth-error-box" style="display: none;">
+                        <span>⚠️ Mot de passe incorrect. Veuillez réessayer.</span>
+                    </div>
+
+                    <form id="admin-login-form" onsubmit="event.preventDefault(); window.loginAdmin();">
+                        <div class="form-line-group">
+                            <input type="password" id="admin-passcode" required placeholder=" ">
+                            <label for="admin-passcode">Mot de passe du club</label>
+                        </div>
+                        <button type="submit" class="btn btn-outline full-width-btn" style="margin-top: 25px;">Débloquer l'Espace Admin <span class="arrow">→</span></button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- SECTION ADMIN DASHBOARD (Espace de travail) -->
+    <div id="page-admin-dashboard" style="display: none;">
+        <section class="admin-dashboard-section" style="padding: 125px 0 80px 0; background: #fbfaf8;">
+            <div class="container admin-dashboard-container" style="max-width: 1300px;">
+                
+                <!-- En-tête simple et aéré -->
+                <div class="admin-simple-header">
+                    <div>
+                        <span class="admin-simple-badge">ESPACE D'ADMINISTRATION</span>
+                        <h1 class="admin-simple-main-title font-style-serif">Gestion du Club (USBL &amp; BCL)</h1>
+                    </div>
+                    <div class="admin-simple-header-actions">
+                        <a href="index.html" target="_blank" class="btn-simple-action">
+                            <span>🌐</span> Voir le site ↗
+                        </a>
+                        <button type="button" class="btn-simple-action btn-simple-logout" onclick="window.logoutAdmin()">Déconnexion ↩</button>
+                    </div>
+                </div>
+
+                <!-- Navigation épurée par onglets -->
+                <div class="admin-simple-nav">
+                    <button type="button" class="admin-simple-tab-btn active" id="tab-btn-news" onclick="window.switchAdminTab('news')">Actualités &amp; Événements</button>
+                    <button type="button" class="admin-simple-tab-btn" id="tab-btn-teams" onclick="window.switchAdminTab('teams')">Équipes</button>
+                    <button type="button" class="admin-simple-tab-btn" id="tab-btn-players" onclick="window.switchAdminTab('players')">Joueurs</button>
+                    <button type="button" class="admin-simple-tab-btn" id="tab-btn-coachs" onclick="window.switchAdminTab('coachs')">Coachs</button>
+                    <button type="button" class="admin-simple-tab-btn" id="tab-btn-volunteers" onclick="window.switchAdminTab('volunteers')">Bénévoles</button>
+                    <button type="button" class="admin-simple-tab-btn" id="tab-btn-partners" onclick="window.switchAdminTab('partners')">Partenaires</button>
+                    <button type="button" class="admin-simple-tab-btn" id="tab-btn-informations" onclick="window.switchAdminTab('informations')">Documents PDF</button>
+                    <button type="button" class="admin-simple-tab-btn" id="tab-btn-clubs" onclick="window.switchAdminTab('clubs')">Pages clubs</button>
+                </div>
+
+                <!-- TAB 1: ACTUALITÉS & ÉVÉNEMENTS -->
+                <div class="admin-tab-content active" id="admin-tab-news">
+                    <div class="admin-simple-card">
+                        <div class="admin-simple-card-topbar">
+                            <div>
+                                <h2 class="admin-simple-card-title">Actualités &amp; Événements</h2>
+                                <p class="admin-simple-card-subtitle">Publiez les annonces, résultats de matchs et événements officiels du club.</p>
+                            </div>
+                            <button type="button" class="btn-simple-add" onclick="window.openCreateActualite()">
+                                <span>+</span> Publier une actualité
+                            </button>
+                        </div>
+
+                        <!-- Formulaire intégré rétractable -->
+                        <div id="form-box-news" class="admin-form-box">
+                            <h3 class="admin-form-box-title" id="modal-news-title">Nouvelle Publication / Événement</h3>
+                            <form id="admin-news-form" onsubmit="event.preventDefault(); window.addActualite();">
+                                <input type="hidden" id="admin-news-edit-id" value="">
+                                
+                                <div class="admin-form-grid-2">
+                                    <div class="admin-form-group">
+                                        <label class="admin-form-label" for="admin-news-title">Titre de la publication *</label>
+                                        <input type="text" id="admin-news-title" class="admin-form-input" placeholder="Ex: Tournoi des As 2026, Reprise des entraînements..." required>
+                                    </div>
+                                    <div class="admin-form-group">
+                                        <label class="admin-form-label" for="admin-news-category">Catégorie *</label>
+                                        <select id="admin-news-category" class="admin-form-select" required>
+                                            <option value="Événement Club">Événement Club</option>
+                                            <option value="Vie du Club">Vie du Club</option>
+                                            <option value="Compétition">Compétition</option>
+                                            <option value="Stage &amp; Formation">Stage &amp; Formation</option>
+                                            <option value="Partenariat">Partenariat</option>
+                                            <option value="Autre">Autre</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="admin-form-grid-2">
+                                    <div class="admin-form-group">
+                                        <label class="admin-form-label" for="admin-news-date">Date de l'événement / publication</label>
+                                        <input type="date" id="admin-news-date" class="admin-form-input">
+                                    </div>
+                                    <div class="admin-form-group">
+                                        <label class="admin-form-label" for="admin-news-excerpt">Résumé court (accroche) *</label>
+                                        <input type="text" id="admin-news-excerpt" class="admin-form-input" placeholder="Brève phrase d'introduction affichée sur la carte..." required>
+                                    </div>
+                                </div>
+
+                                <div class="admin-form-group">
+                                    <label class="admin-form-label" for="admin-news-content">Contenu complet du communiqué *</label>
+                                    <textarea id="admin-news-content" class="admin-form-textarea" rows="4" placeholder="Détails complets de l'actualité ou de l'événement..." required></textarea>
+                                </div>
+
+                                <div class="admin-form-grid-2">
+                                    <div class="admin-form-group">
+                                        <label class="admin-form-label">Photo principale de couverture</label>
+                                        <input type="file" id="admin-news-cover" accept="image/*" class="admin-form-input" onchange="window.previewNewsCover(event)">
+                                        <input type="hidden" id="admin-news-base64-cover">
+                                        <div class="file-preview-box" id="news-cover-preview" style="margin-top: 6px;">
+                                            <span>Aucune photo</span>
+                                        </div>
+                                    </div>
+                                    <div class="admin-form-group">
+                                        <label class="admin-form-label">Photos secondaires (galerie, optionnel)</label>
+                                        <input type="file" id="admin-news-gallery" accept="image/*" multiple class="admin-form-input" onchange="window.previewNewsGallery(event)">
+                                        <input type="hidden" id="admin-news-base64-gallery">
+                                        <div class="file-preview-box" id="news-gallery-preview" style="margin-top: 6px; display: flex; gap: 6px; flex-wrap: wrap;">
+                                            <span>Aucune photo supplémentaire</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="admin-form-actions">
+                                    <button type="button" class="btn-simple-cancel" onclick="window.closeAdminModal('modal-news')">Annuler</button>
+                                    <button type="submit" class="btn-simple-submit" id="admin-news-submit-btn">Enregistrer la publication</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Tableau des publications -->
+                        <div class="table-frame" style="overflow-x: auto;">
+                            <table class="admin-clean-table" id="admin-news-table">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 120px;">Date</th>
+                                        <th style="width: 160px;">Catégorie</th>
+                                        <th>Titre &amp; Résumé</th>
+                                        <th style="width: 160px; text-align: right;">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 2: ÉQUIPES -->
+                <div class="admin-tab-content" id="admin-tab-teams">
+                    <div class="admin-simple-card">
+                        <div class="admin-simple-card-topbar">
+                            <div>
+                                <h2 class="admin-simple-card-title">Équipes Engagées</h2>
+                                <p class="admin-simple-card-subtitle">Gérez les équipes engagées en championnat du club (USBL Masculin et BCL Féminin).</p>
+                            </div>
+                            <button type="button" class="btn-simple-add" onclick="window.openCreateTeam()">
+                                <span>+</span> Créer une équipe
+                            </button>
+                        </div>
+
+                        <!-- Formulaire Équipe rétractable -->
+                        <div id="form-box-team" class="admin-form-box">
+                            <h3 class="admin-form-box-title" id="modal-team-title">Créer une Équipe</h3>
+                            <form id="admin-team-form" onsubmit="event.preventDefault(); window.addTeam();">
+                                <input type="hidden" id="admin-team-edit-id" value="">
+                                
+                                <div class="admin-form-grid-2">
+                                    <div class="admin-form-group">
+                                        <label class="admin-form-label" for="admin-team-club">Section / Club *</label>
+                                        <select id="admin-team-club" class="admin-form-select" required>
+                                            <option value="usbl">USBL (Section Masculine)</option>
+                                            <option value="bcl">BCL (Section Féminine)</option>
+                                        </select>
+                                    </div>
+                                    <div class="admin-form-group">
+                                        <label class="admin-form-label" for="admin-team-category">Code Catégorie *</label>
+                                        <input type="text" id="admin-team-category" list="category-suggestions" class="admin-form-input" placeholder="Ex: RM3, DMU13, NF3..." required>
+                                        <datalist id="category-suggestions"></datalist>
+                                    </div>
+                                </div>
+
+                                <div class="admin-form-grid-2">
+                                    <div class="admin-form-group">
+                                        <label class="admin-form-label" for="admin-team-name">Nom complet de l'équipe *</label>
+                                        <input type="text" id="admin-team-name" list="name-suggestions" class="admin-form-input" placeholder="Ex: Seniors Garçons 1" required>
+                                        <datalist id="name-suggestions"></datalist>
+                                    </div>
+                                    <div class="admin-form-group">
+                                        <label class="admin-form-label" for="admin-team-coach">Entraîneur / Coach</label>
+                                        <input type="text" id="admin-team-coach" list="coach-suggestions" class="admin-form-input" placeholder="Ex: Rémy Patrizi">
+                                        <datalist id="coach-suggestions"></datalist>
+                                    </div>
+                                </div>
+
+                                <div class="admin-form-grid-2">
+                                    <div class="admin-form-group">
+                                        <label class="admin-form-label" for="admin-team-link-games">Lier aux données &amp; matchs FFBB (Optionnel)</label>
+                                        <select id="admin-team-link-games" class="admin-form-select">
+                                            <option value="">-- Ne pas lier (Équipe personnalisée) --</option>
+                                        </select>
+                                    </div>
+                                    <div class="admin-form-group">
+                                        <label class="admin-form-label" for="admin-team-ffbb">Lien externe FFBB (Optionnel)</label>
+                                        <input type="url" id="admin-team-ffbb" class="admin-form-input" placeholder="https://resultats.ffbb.com/...">
+                                    </div>
+                                </div>
+
+                                <div class="admin-form-group">
+                                    <label class="admin-form-label">Photo officielle de l'équipe (optionnelle)</label>
+                                    <input type="file" id="admin-team-photo" accept="image/*" class="admin-form-input" onchange="window.previewImage(event, 'team-photo-preview')">
+                                    <input type="hidden" id="admin-team-base64">
+                                    <div class="file-preview-box" id="team-photo-preview" style="margin-top: 6px;">
+                                        <span>Aucune photo sélectionnée</span>
+                                    </div>
+                                </div>
+
+                                <div class="admin-form-actions">
+                                    <button type="button" class="btn-simple-cancel" onclick="window.closeAdminModal('modal-team')">Annuler</button>
+                                    <button type="submit" class="btn-simple-submit" id="admin-team-submit-btn">Enregistrer l'équipe</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Tableau des équipes -->
+                        <div class="table-frame" style="overflow-x: auto;">
+                            <table class="admin-clean-table" id="admin-teams-table">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 60px; text-align: center;">Photo</th>
+                                        <th style="width: 70px; text-align: center;">Club</th>
+                                        <th style="width: 90px;">Catégorie</th>
+                                        <th>Nom de l'équipe</th>
+                                        <th>Entraîneur</th>
+                                        <th>Données liées FFBB</th>
+                                        <th style="width: 160px; text-align: right;">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 3: JOUEURS -->
+                <div class="admin-tab-content" id="admin-tab-players">
+                    <div class="admin-simple-card">
+                        <div class="admin-simple-card-topbar">
+                            <div style="display: flex; align-items: center; gap: 15px; flex-wrap: wrap;">
+                                <div>
+                                    <h2 class="admin-simple-card-title">Effectif des Joueurs</h2>
+                                    <p class="admin-simple-card-subtitle">Gérez les joueurs et numéros de maillot par équipe.</p>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <label for="admin-player-team-filter" style="font-size: 0.85rem; font-weight: 600; color: #4b5563;">Équipe :</label>
+                                    <select id="admin-player-team-filter" class="admin-form-select" style="min-width: 220px;" onchange="window.renderAdminTables()"></select>
+                                </div>
+                            </div>
+                            <button type="button" class="btn-simple-add" onclick="window.openCreatePlayer()">
+                                <span>+</span> Ajouter un joueur
+                            </button>
+                        </div>
+
+                        <!-- Formulaire Joueur rétractable -->
+                        <div id="form-box-player" class="admin-form-box">
+                            <h3 class="admin-form-box-title" id="modal-player-title">Ajouter un Joueur à l'Effectif</h3>
+                            <form id="admin-player-form" onsubmit="event.preventDefault(); window.addPlayer();">
+                                <input type="hidden" id="admin-player-edit-index" value="">
+                                
+                                <div class="admin-form-grid-2">
+                                    <div class="admin-form-group">
+                                        <label class="admin-form-label" for="admin-player-team">Équipe de destination *</label>
+                                        <select id="admin-player-team" class="admin-form-select" required></select>
+                                    </div>
+                                    <div class="admin-form-group">
+                                        <label class="admin-form-label" for="admin-player-number">Numéro de maillot *</label>
+                                        <input type="number" id="admin-player-number" class="admin-form-input" placeholder="Ex: 7" required min="0" max="99">
+                                    </div>
+                                </div>
+
+                                <div class="admin-form-grid-2">
+                                    <div class="admin-form-group">
+                                        <label class="admin-form-label" for="admin-player-name">Nom complet du joueur *</label>
+                                        <input type="text" id="admin-player-name" class="admin-form-input" placeholder="Ex: Jean Dupont" required>
+                                    </div>
+                                    <div class="admin-form-group">
+                                        <label class="admin-form-label" for="admin-player-position">Poste de jeu *</label>
+                                        <select id="admin-player-position" class="admin-form-select" required>
+                                            <option value="Meneur">Meneur</option>
+                                            <option value="Arrière">Arrière</option>
+                                            <option value="Ailier">Ailier</option>
+                                            <option value="Ailier fort">Ailier fort</option>
+                                            <option value="Pivot">Pivot</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="admin-form-grid-2">
+                                    <div class="admin-form-group">
+                                        <label class="admin-form-label" for="admin-player-height">Taille</label>
+                                        <input type="text" id="admin-player-height" class="admin-form-input" placeholder="Ex: 1m88">
+                                    </div>
+                                    <div class="admin-form-group">
+                                        <label class="admin-form-label">Photo du joueur (optionnelle)</label>
+                                        <input type="file" id="admin-player-photo" accept="image/*" class="admin-form-input" onchange="window.previewImage(event, 'player-photo-preview')">
+                                        <input type="hidden" id="admin-player-base64">
+                                        <div class="file-preview-box" id="player-photo-preview" style="margin-top: 6px;">
+                                            <span>Aucune photo</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="admin-form-actions">
+                                    <button type="button" class="btn-simple-cancel" onclick="window.closeAdminModal('modal-player')">Annuler</button>
+                                    <button type="submit" class="btn-simple-submit" id="admin-player-submit-btn">Enregistrer le joueur</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Tableau des joueurs -->
+                        <div class="table-frame" style="overflow-x: auto;">
+                            <table class="admin-clean-table" id="admin-players-table">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 50px; text-align: center;">N°</th>
+                                        <th>Nom &amp; Prénom</th>
+                                        <th>Taille</th>
+                                        <th>Poste</th>
+                                        <th style="width: 160px; text-align: right;">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 4: COACHS -->
+                <div class="admin-tab-content" id="admin-tab-coachs">
+                    <div class="admin-simple-card">
+                        <div class="admin-simple-card-topbar">
+                            <div>
+                                <h2 class="admin-simple-card-title">Coachs &amp; Encadrement</h2>
+                                <p class="admin-simple-card-subtitle">Gérez les entraîneurs, adjoints et préparateurs du club.</p>
+                            </div>
+                            <button type="button" class="btn-simple-add" onclick="window.openCreateCoach()">
+                                <span>+</span> Ajouter un coach
+                            </button>
+                        </div>
+
+                        <!-- Formulaire Coach rétractable -->
+                        <div id="form-box-coach" class="admin-form-box">
+                            <h3 class="admin-form-box-title" id="modal-coach-title">Ajouter un Coach / Entraîneur</h3>
+                            <form id="admin-coach-form" onsubmit="event.preventDefault(); window.addCoach();">
+                                <input type="hidden" id="admin-coach-edit-id" value="">
+                                
+                                <div class="admin-form-grid-2">
+                                    <div class="admin-form-group">
+                                        <label class="admin-form-label" for="admin-coach-firstname">Prénom *</label>
+                                        <input type="text" id="admin-coach-firstname" class="admin-form-input" placeholder="Ex: Jérôme" required>
+                                    </div>
+                                    <div class="admin-form-group">
+                                        <label class="admin-form-label" for="admin-coach-lastname">Nom *</label>
+                                        <input type="text" id="admin-coach-lastname" class="admin-form-input" placeholder="Ex: Dupond" required>
+                                    </div>
+                                </div>
+
+                                <div class="admin-form-grid-2">
+                                    <div class="admin-form-group">
+                                        <label class="admin-form-label" for="admin-coach-club">Club *</label>
+                                        <select id="admin-coach-club" class="admin-form-select" required>
+                                            <option value="usbl">USBL (Masculin)</option>
+                                            <option value="bcl">BCL (Féminin)</option>
+                                        </select>
+                                    </div>
+                                    <div class="admin-form-group">
+                                        <label class="admin-form-label" for="admin-coach-role">Rôle officiel *</label>
+                                        <input type="text" id="admin-coach-role" class="admin-form-input" placeholder="Ex: Entraîneur Principal, Adjoint..." required>
+                                    </div>
+                                </div>
+
+                                <div class="admin-form-grid-2">
+                                    <div class="admin-form-group">
+                                        <label class="admin-form-label" for="admin-coach-team">Équipe assignée (optionnelle)</label>
+                                        <select id="admin-coach-team" class="admin-form-select">
+                                            <option value="">-- Aucune équipe spécifique --</option>
+                                        </select>
+                                    </div>
+                                    <div class="admin-form-group">
+                                        <label class="admin-form-label">Photo du coach (optionnelle)</label>
+                                        <input type="file" id="admin-coach-file" accept="image/*" class="admin-form-input" onchange="window.previewImage(event, 'coach-preview')">
+                                        <input type="hidden" id="admin-coach-base64">
+                                        <div class="file-preview-box" id="coach-preview" style="margin-top: 6px;">
+                                            <span>Aucune photo</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="admin-form-group">
+                                    <label class="admin-form-label" for="admin-coach-bio">Biographie / Parcours (Optionnel)</label>
+                                    <textarea id="admin-coach-bio" class="admin-form-textarea" rows="3" placeholder="Parcours sportif, diplômes fédéraux, philosophie de jeu..."></textarea>
+                                </div>
+
+                                <div class="admin-form-actions">
+                                    <button type="button" class="btn-simple-cancel" onclick="window.closeAdminModal('modal-coach')">Annuler</button>
+                                    <button type="submit" class="btn-simple-submit" id="admin-coach-submit-btn">Enregistrer le coach</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Tableau des coachs -->
+                        <div class="table-frame" style="overflow-x: auto;">
+                            <table class="admin-clean-table" id="admin-coachs-table">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 50px; text-align: center;">Photo</th>
+                                        <th>Nom &amp; Prénom</th>
+                                        <th>Rôle</th>
+                                        <th>Équipe associée</th>
+                                        <th style="width: 180px; text-align: right;">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 5: BÉNÉVOLES -->
+                <div class="admin-tab-content" id="admin-tab-volunteers">
+                    <div class="admin-simple-card">
+                        <div class="admin-simple-card-topbar">
+                            <div>
+                                <h2 class="admin-simple-card-title">Membres du Bureau &amp; Bénévoles</h2>
+                                <p class="admin-simple-card-subtitle">Gérez les dirigeants, membres du comité et bénévoles actifs du club.</p>
+                            </div>
+                            <button type="button" class="btn-simple-add" onclick="window.openCreateVolunteer()">
+                                <span>+</span> Ajouter un bénévole
+                            </button>
+                        </div>
+
+                        <!-- Formulaire Bénévole rétractable -->
+                        <div id="form-box-volunteer" class="admin-form-box">
+                            <h3 class="admin-form-box-title" id="modal-volunteer-title">Ajouter un Bénévole</h3>
+                            <form id="admin-volunteer-form" onsubmit="event.preventDefault(); window.addVolunteer();">
+                                <input type="hidden" id="admin-volunteer-edit-id" value="">
+                                
+                                <div class="admin-form-grid-2">
+                                    <div class="admin-form-group">
+                                        <label class="admin-form-label" for="admin-volunteer-firstname">Prénom *</label>
+                                        <input type="text" id="admin-volunteer-firstname" class="admin-form-input" placeholder="Ex: Jean" required>
+                                    </div>
+                                    <div class="admin-form-group">
+                                        <label class="admin-form-label" for="admin-volunteer-lastname">Nom *</label>
+                                        <input type="text" id="admin-volunteer-lastname" class="admin-form-input" placeholder="Ex: Dupont" required>
+                                    </div>
+                                </div>
+
+                                <div class="admin-form-grid-2">
+                                    <div class="admin-form-group">
+                                        <label class="admin-form-label" for="admin-volunteer-role">Rôle / Fonction *</label>
+                                        <input type="text" id="admin-volunteer-role" class="admin-form-input" placeholder="Ex: Président, Trésorier, Logistique..." required>
+                                    </div>
+                                    <div class="admin-form-group">
+                                        <label class="admin-form-label">Photo du bénévole (optionnelle)</label>
+                                        <input type="file" id="admin-volunteer-photo" accept="image/*" class="admin-form-input" onchange="window.previewImage(event, 'volunteer-photo-preview')">
+                                        <input type="hidden" id="admin-volunteer-base64">
+                                        <div class="file-preview-box" id="volunteer-photo-preview" style="margin-top: 6px;">
+                                            <span>Aucune photo</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="admin-form-actions">
+                                    <button type="button" class="btn-simple-cancel" onclick="window.closeAdminModal('modal-volunteer')">Annuler</button>
+                                    <button type="submit" class="btn-simple-submit" id="admin-volunteer-submit-btn">Enregistrer le bénévole</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Tableau des bénévoles -->
+                        <div class="table-frame" style="overflow-x: auto;">
+                            <table class="admin-clean-table" id="admin-volunteers-table">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 50px; text-align: center;">Photo</th>
+                                        <th>Nom &amp; Prénom</th>
+                                        <th>Rôle / Titre</th>
+                                        <th style="width: 160px; text-align: right;">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 6: PARTENAIRES -->
+                <div class="admin-tab-content" id="admin-tab-partners">
+                    <div class="admin-simple-card">
+                        <div class="admin-simple-card-topbar">
+                            <div>
+                                <h2 class="admin-simple-card-title">Partenaires &amp; Sponsors</h2>
+                                <p class="admin-simple-card-subtitle">Gérez les mécènes, commerçants et partenaires institutionnels du club.</p>
+                            </div>
+                            <button type="button" class="btn-simple-add" onclick="window.openCreatePartner()">
+                                <span>+</span> Ajouter un partenaire
+                            </button>
+                        </div>
+
+                        <!-- Formulaire Partenaire rétractable -->
+                        <div id="form-box-partner" class="admin-form-box">
+                            <h3 class="admin-form-box-title" id="modal-partner-title">Ajouter un Partenaire</h3>
+                            <form id="admin-partner-form" onsubmit="event.preventDefault(); window.addPartner();">
+                                <input type="hidden" id="admin-partner-edit-id" value="">
+                                
+                                <div class="admin-form-grid-2">
+                                    <div class="admin-form-group">
+                                        <label class="admin-form-label" for="admin-partner-name">Nom de l'entreprise *</label>
+                                        <input type="text" id="admin-partner-name" class="admin-form-input" placeholder="Ex: Restaurant Le Globe, Groupama..." required>
+                                    </div>
+                                    <div class="admin-form-group">
+                                        <label class="admin-form-label" for="admin-partner-category">Catégorie de partenariat *</label>
+                                        <select id="admin-partner-category" class="admin-form-select" required>
+                                            <option value="Partenaire Majeur">Partenaire Majeur</option>
+                                            <option value="Partenaire Officiel">Partenaire Officiel</option>
+                                            <option value="Artisan &amp; Commerçant">Artisan &amp; Commerçant</option>
+                                            <option value="Institutionnel">Institutionnel</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="admin-form-group">
+                                    <label class="admin-form-label">Logo du partenaire (optionnel)</label>
+                                    <input type="file" id="admin-partner-logo-file" accept="image/*" class="admin-form-input" onchange="window.previewImage(event, 'partner-logo-preview')">
+                                    <input type="hidden" id="admin-partner-base64">
+                                    <div class="file-preview-box" id="partner-logo-preview" style="margin-top: 6px;">
+                                        <span>Aucun logo</span>
+                                    </div>
+                                </div>
+
+                                <div class="admin-form-actions">
+                                    <button type="button" class="btn-simple-cancel" onclick="window.closeAdminModal('modal-partner')">Annuler</button>
+                                    <button type="submit" class="btn-simple-submit" id="admin-partner-submit-btn">Enregistrer le partenaire</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Tableau des partenaires -->
+                        <div class="table-frame" style="overflow-x: auto;">
+                            <table class="admin-clean-table" id="admin-partners-table">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 60px; text-align: center;">Logo</th>
+                                        <th>Entreprise / Partenaire</th>
+                                        <th>Catégorie</th>
+                                        <th style="width: 160px; text-align: right;">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 7: DOCUMENTS PDF -->
+                <div class="admin-tab-content" id="admin-tab-informations">
+                    <div class="admin-simple-card">
+                        <div class="admin-simple-card-topbar">
+                            <div>
+                                <h2 class="admin-simple-card-title">Documents PDF Officiels</h2>
+                                <p class="admin-simple-card-subtitle">Mettez à jour les 5 documents disponibles au téléchargement sur le site public.</p>
+                            </div>
+                        </div>
+
+                        <div class="admin-pdf-cards-grid" id="admin-pdf-cards-container">
+                            <!-- Rendu dynamique par scripts.js -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 8: PAGES DES CLUBS -->
+                <div class="admin-tab-content" id="admin-tab-clubs">
+                    <div class="admin-simple-card">
+                        <div class="admin-simple-card-topbar">
+                            <div>
+                                <h2 class="admin-simple-card-title">Présentation des Clubs</h2>
+                                <p class="admin-simple-card-subtitle">Personnalisez les textes de présentation des pages « Qui sommes-nous ? » USBL et BCL.</p>
+                            </div>
+                            <div class="admin-club-toggle-group">
+                                <button type="button" class="admin-club-toggle-btn active" id="admin-club-toggle-usbl" onclick="window.selectAdminClub('usbl')">USBL (Masculin)</button>
+                                <button type="button" class="admin-club-toggle-btn toggle-bcl" id="admin-club-toggle-bcl" onclick="window.selectAdminClub('bcl')">BCL (Féminin)</button>
+                            </div>
+                        </div>
+
+                        <!-- Formulaire principal d'édition -->
+                        <form id="admin-club-form" onsubmit="event.preventDefault(); window.saveClubData();">
+                            <div class="admin-club-section-card">
+                                <h3 class="font-style-serif">1. En-tête de la page</h3>
+                                <div class="admin-form-grid-2">
+                                    <div class="admin-form-group">
+                                        <label class="admin-form-label" for="admin-club-header-title">Titre principal</label>
+                                        <input type="text" id="admin-club-header-title" class="admin-form-input" placeholder="Ex: Union Sportive Basket Lislois" oninput="window.autoSaveClubData()">
+                                    </div>
+                                    <div class="admin-form-group">
+                                        <label class="admin-form-label" for="admin-club-header-sub">Sous-titre descriptif (optionnel)</label>
+                                        <input type="text" id="admin-club-header-sub" class="admin-form-input" placeholder="Ex: Section masculine de basketball de L'Isle-Jourdain (Gers)." oninput="window.autoSaveClubData()">
+                                    </div>
+                                </div>
+
+                                <div class="admin-form-group">
+                                    <label class="admin-form-label" for="admin-club-header-text">Texte de présentation / Introduction</label>
+                                    <textarea id="admin-club-header-text" class="admin-form-textarea" rows="3" placeholder="Rédigez votre texte d'introduction..." oninput="window.autoSaveClubData()"></textarea>
+                                </div>
+
+                                <div class="admin-form-grid-2">
+                                    <div class="admin-form-group">
+                                        <label class="admin-form-label" for="admin-club-header-photo-file">Photo d'en-tête (optionnelle)</label>
+                                        <input type="file" id="admin-club-header-photo-file" accept="image/*" class="admin-form-input" onchange="window.previewClubImage(event, 'admin-club-header-preview', 'admin-club-header-photo-base64', 'admin-club-header-photo-remove')">
+                                        <input type="hidden" id="admin-club-header-photo-base64">
+                                        <button type="button" id="admin-club-header-photo-remove" class="admin-photo-remove-btn" style="display: none; margin-top: 6px;" onclick="window.removeClubHeaderPhoto()">Supprimer la photo</button>
+                                    </div>
+                                    <div class="admin-form-group">
+                                        <label class="admin-form-label" for="admin-club-header-caption">Légende de la photo</label>
+                                        <input type="text" id="admin-club-header-caption" class="admin-form-input" placeholder="Légende affichée sous la photo" oninput="window.autoSaveClubData()">
+                                    </div>
+                                </div>
+                                <div class="file-preview-box" id="admin-club-header-preview" style="margin-top: 6px; max-width: 250px;">
+                                    <span>Aucune photo</span>
+                                </div>
+                            </div>
+
+                            <div class="admin-club-section-card">
+                                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; margin-bottom: 16px;">
+                                    <h3 class="font-style-serif" style="margin: 0;">2. Sous-parties libres</h3>
+                                    <button type="button" class="btn btn-outline" style="padding: 5px 12px; font-size: 0.8rem;" onclick="window.addAdminClubSection()">+ Ajouter une sous-partie</button>
+                                </div>
+                                <div id="admin-club-sections-container" class="admin-sections-list"></div>
+                            </div>
+
+                            <div class="admin-save-action-bar" style="margin-top: 20px;">
+                                <span id="admin-club-save-status" class="admin-save-status">Prêt à enregistrer</span>
+                                <button type="submit" id="admin-club-save-btn" class="btn-simple-submit">Enregistrer les modifications</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- TOAST CONTAINER -->
+        <div class="admin-toast-container" id="admin-toast-container"></div>
+    </div>
+
+<!-- PIED DE PAGE SOBRE -->
+    <footer class="main-footer">
+        <div class="container footer-container">
+            <div class="footer-col about">
+                <h3>BASKET L'ISLE-JOURDAIN</h3>
+                <p>L'USBL (Masculin) et le BCL (Féminin) forment les jeunes générations et animent la vie sportive de L'Isle-Jourdain depuis plusieurs décennies.</p>
+            </div>
+            
+            <div class="footer-col meta">
+                <h4>CONTACT & INFOS</h4>
+                <p>Salle Gasco'Sport, 33 rue de Rozès, 32600 L'Isle-Jourdain</p>
+                <p>Courriel : <a href="mailto:contact@usbl-basket32.fr">contact@usbl-basket32.fr</a></p>
+                <p>Instagram : <a href="https://www.instagram.com/usbl_bcl32/" target="_blank">@usbl_bcl32</a></p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="container footer-bottom-container">
+                <p>&copy; 2026 Basket L'Isle-Jourdain (USBL & BCL). Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

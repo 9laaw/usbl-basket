@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nos Équipes | Basket L'Isle-Jourdain (USBL & BCL)</title>
+    <meta name="description" content="Découvrez toutes les équipes du basket lislois (USBL & BCL) : championnats, effectifs et actualités sportives.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="styles.css?v=4.0">
+    <link rel="icon" type="image/png" href="assets/logo_usbl.png">
+    <style>
+        /* Anti-underline & anti-border enforcement */
+        header.main-header,
+        header.main-header *,
+        .main-nav,
+        .main-nav *,
+        .nav-link,
+        .nav-link * {
+            text-decoration: none !important;
+            text-decoration-line: none !important;
+            -webkit-text-decoration-line: none !important;
+            text-decoration-style: none !important;
+            border-bottom: none !important;
+            box-shadow: none !important;
+        }
+
+        :root {
+            --usbl-red: #D21A00;    /* Swatch 700 (Point blanc) */
+            --usbl-hover: #A31609;  /* Swatch 800 */
+            --bcl-orange: #FF6A2F;  /* Swatch 400 */
+            --bcl-hover: #FF4307;   /* Swatch 500 */
+            --accent-energy: #F92C00; /* Swatch 600 */
+            --page-text: #1f1b1a;
+            --muted-text: #6b6460;
+            --border-soft: #eae5de;
+            --bg-light: #FFF3EC;    /* Swatch 50 */
+        }
+
+        body {
+            color: var(--page-text);
+            background-color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* -------------------------------------------------------------
+           CONTENEUR PRINCIPAL SANS BANDEAU
+           ------------------------------------------------------------- */
+        .competitions-wrapper {
+            max-width: 1100px;
+            margin: 110px auto 90px auto;
+            padding: 0 24px;
+            min-height: 550px;
+        }
+
+        /* -------------------------------------------------------------
+           1. ÉCRAN DE SÉLECTION INITIAL : TEXTE AU DESSUS + LOGOS
+           ------------------------------------------------------------- */
+        #club-choice-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: calc(75vh - 120px);
+            padding: 30px 0 60px 0;
+            transition: opacity 0.35s ease, transform 0.35s ease;
+        }
+
+        .choice-screen-intro {
+            text-align: center;
+            max-width: 650px;
+            margin-bottom: 45px;
+            transition: opacity 0.35s ease, transform 0.35s ease;
+        }
+
+        .choice-kicker {
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: var(--muted-text);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .choice-title {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 2.6rem;
+            line-height: 1.18;
+            color: var(--page-text);
+            margin: 0 0 12px 0;
+            font-weight: 700;
+        }
+
+        .choice-subtitle {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: var(--muted-text);
+            margin: 0;
+        }
+
+        .pure-logos-grid {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 110px;
+            flex-wrap: wrap;
+        }
+
+        .pure-logo-btn {
+            background: transparent;
+            border: none;
+            padding: 16px;
+            cursor: pointer;
+            outline: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.35s ease;
+            position: relative;
+        }
+
+        .pure-logo-btn img {
+            width: 200px;
+            height: 200px;
+            object-fit: contain;
+            display: block;
+            filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.22)) drop-shadow(0 18px 32px rgba(0, 0, 0, 0.28));
+            transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.35s ease;
+        }
+
+        .pure-logo-btn:hover img {
+            transform: scale(1.12);
+            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.28)) drop-shadow(0 26px 44px rgba(0, 0, 0, 0.38));
+        }
+
+        .pure-logo-btn.anim-clicked img {
+            transform: scale(1.22);
+            filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.32)) drop-shadow(0 32px 55px rgba(229, 57, 53, 0.4));
+        }
+
+        .pure-logo-btn.anim-fade-away {
+            opacity: 0;
+            transform: scale(0.85);
+            pointer-events: none;
+        }
+
+        @media (max-width: 768px) {
+            #club-choice-screen {
+                min-height: 55vh;
+                padding: 20px 0 40px 0;
+            }
+            .choice-title {
+                font-size: 2.1rem;
+            }
+            .pure-logos-grid {
+                gap: 40px;
+            }
+            .pure-logo-btn img {
+                width: 140px;
+                height: 140px;
+            }
+        }
+
+        /* -------------------------------------------------------------
+           2. VUE DES ÉQUIPES DU CLUB CHOISI (SE DÉPLOIE APRÈS CLIC)
+           ------------------------------------------------------------- */
+        #club-teams-view {
+            display: none;
+            opacity: 0;
+            transform: translateY(25px);
+            transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), 
+                        transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        #club-teams-view.active-view {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Barre d'en-tête dynamique du club actif */
+        .active-club-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 0 28px 0;
+            border-bottom: 1px solid var(--border-soft);
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 18px;
+        }
+
+        .active-club-left {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .active-club-logo {
+            width: 52px;
+            height: 52px;
+            object-fit: contain;
+            flex-shrink: 0;
+        }
+
+        .active-club-meta h2 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.85rem;
+            line-height: 1.15;
+            margin: 0 0 4px 0;
+            color: var(--page-text);
+            font-weight: 700;
+        }
+
+        .active-club-meta p {
+            margin: 0;
+            font-size: 0.88rem;
+            color: var(--muted-text);
+        }
+
+        /* Commandes de navigation entre clubs */
+        .active-club-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .club-switcher-pill {
+            background: #ffffff;
+            border: 1px solid var(--border-soft);
+            padding: 8px 16px;
+            font-size: 0.84rem;
+            font-weight: 600;
+            color: var(--page-text);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .club-switcher-pill:hover {
+            border-color: #171312;
+            background: #faf8f6;
+        }
+
+        .club-switcher-pill.active-pill {
+            background: linear-gradient(135deg, var(--palette-500) 0%, var(--palette-700) 100%);
+            color: #ffffff;
+            border-color: transparent;
+            box-shadow: 0 4px 14px rgba(210, 26, 0, 0.25);
+        }
+
+        #switcher-bcl.active-pill {
+            background: linear-gradient(135deg, var(--palette-300) 0%, var(--palette-400) 100%);
+            box-shadow: 0 4px 14px rgba(255, 106, 47, 0.25);
+        }
+
+        .back-to-choice-btn {
+            background: transparent;
+            border: none;
+            color: var(--muted-text);
+            font-size: 0.84rem;
+            cursor: pointer;
+            padding: 8px 12px;
+            text-decoration: underline !important;
+            text-underline-offset: 3px;
+            transition: color 0.2s ease;
+        }
+
+        .back-to-choice-btn:hover {
+            color: var(--page-text);
+        }
+
+        /* -------------------------------------------------------------
+           3. DESIGN INVENTIF DES CARTES D'ÉQUIPES
+           ------------------------------------------------------------- */
+        .teams-showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        /* Carte d'équipe : inspiration fiche technique sportive haut de gamme */
+        .team-showcase-card {
+            background: #ffffff;
+            border: 1px solid var(--border-soft);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: teamCardReveal 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes teamCardReveal {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .team-showcase-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.06);
+        }
+
+        .team-showcase-card.team-usbl {
+            border-top: 3px solid var(--usbl-red);
+        }
+
+        .team-showcase-card.team-bcl {
+            border-top: 3px solid var(--bcl-orange);
+        }
+
+        /* Filigrane discret de la catégorie */
+        .team-watermark-code {
+            position: absolute;
+            top: 8px;
+            right: 14px;
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 3rem;
+            font-weight: 700;
+            line-height: 1;
+            color: rgba(0, 0, 0, 0.035);
+            pointer-events: none;
+            user-select: none;
+            text-transform: uppercase;
+        }
+
+        /* Photo ou En-tête graphique athlétique sobre */
+        .team-card-media {
+            height: 160px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .team-card-media.media-usbl {
+            background: linear-gradient(135deg, #181413 0%, #2e1215 100%);
+        }
+
+        .team-card-media.media-bcl {
+            background: linear-gradient(135deg, #181413 0%, #32160d 100%);
+        }
+
+        .media-watermark-logo {
+            position: absolute;
+            inset: 0;
+            background-size: 130px;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.16;
+            filter: grayscale(40%);
+            pointer-events: none;
+            transition: transform 0.4s ease;
+        }
+
+        .team-showcase-card:hover .media-watermark-logo {
+            transform: scale(1.08);
+        }
+
+        .team-jersey-crest {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 10px 22px;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(4px);
+            border-radius: 3px;
+        }
+
+        .jersey-code {
+            display: block;
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1;
+            letter-spacing: 0.03em;
+            margin-bottom: 4px;
+        }
+
+        .jersey-sub-lbl {
+            display: block;
+            font-size: 0.68rem;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: rgba(255, 255, 255, 0.72);
+            font-weight: 600;
+        }
+
+        .roster-numbers-row {
+            display: flex;
+            gap: 6px;
+            margin-top: 6px;
+            flex-wrap: wrap;
+        }
+
+        .roster-mini-num {
+            display: inline-block;
+            padding: 2px 7px;
+            background: #ffffff;
+            border: 1px solid var(--border-soft);
+            font-size: 0.74rem;
+            font-weight: 700;
+            color: var(--page-text);
+            border-radius: 2px;
+        }
+
+        .team-card-media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .team-showcase-card:hover .team-card-media img {
+            transform: scale(1.04);
+        }
+
+        /* Contenu de la fiche */
+        .team-card-body {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            position: relative;
+        }
+
+        .team-level-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .team-level-tag {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 2px;
+        }
+
+        .team-usbl .team-level-tag {
+            background: #FFF3EC;
+            color: #D21A00;
+            border: 1px solid #FFC6A4;
+        }
+
+        .team-bcl .team-level-tag {
+            background: #FFF3EC;
+            color: #FF6A2F;
+            border: 1px solid #FFE4D2;
+        }
+
+        .team-standing-pill {
+            font-size: 0.72rem;
+            color: #83150B;
+            font-weight: 700;
+            background: #FFF3EC;
+            border: 1px solid #FFE4D2;
+            padding: 3px 9px;
+            border-radius: 3px;
+            letter-spacing: 0.03em;
+        }
+
+        .team-title {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.45rem;
+            margin: 0 0 14px 0;
+            color: var(--page-text);
+            font-weight: 700;
+            line-height: 1.25;
+        }
+
+        .team-meta-list {
+            margin: 0 0 18px 0;
+            padding: 0;
+            list-style: none;
+            font-size: 0.88rem;
+            line-height: 1.6;
+            color: var(--muted-text);
+            border-top: 1px solid #f2ece7;
+            padding-top: 12px;
+        }
+
+        .team-meta-list li {
+            margin-bottom: 4px;
+        }
+
+        .team-meta-list strong {
+            color: var(--page-text);
+            font-weight: 600;
+        }
+
+        /* Aperçu d'effectif ou dernier match */
+        .team-preview-strip {
+            background: #faf8f5;
+            padding: 10px 12px;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            color: var(--muted-text);
+            margin-bottom: 20px;
+            border-left: 2px solid #ded6cf;
+        }
+
+        .team-preview-strip strong {
+            color: var(--page-text);
+        }
+
+        /* Actions au pied de la carte */
+        .team-card-actions {
+            margin-top: auto;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-top: 14px;
+            border-top: 1px solid #f2ece7;
+        }
+
+        .btn-view-roster {
+            flex-grow: 1;
+            background: transparent;
+            border: 1px solid var(--border-soft);
+            color: var(--page-text);
+            font-size: 0.82rem;
+            font-weight: 600;
+            padding: 10px 14px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .btn-view-roster:hover {
+            background: var(--team-accent, #D21A00);
+            color: #ffffff;
+            border-color: var(--team-accent, #D21A00);
+            box-shadow: 0 4px 14px rgba(210, 26, 0, 0.2);
+        }
+
+        .team-ffbb-link {
+            font-size: 0.8rem;
+            color: var(--muted-text);
+            text-decoration: underline !important;
+            text-underline-offset: 3px;
+            white-space: nowrap;
+        }
+
+        .team-ffbb-link:hover {
+            color: var(--page-text);
+        }
+
+        /* État vide si aucune équipe */
+        .empty-club-notice {
+            text-align: center;
+            padding: 60px 24px;
+            background: #faf8f6;
+            border: 1px dashed var(--border-soft);
+            color: var(--muted-text);
+            font-style: italic;
+            font-size: 0.96rem;
+            grid-column: 1 / -1;
+        }
+
+        /* -------------------------------------------------------------
+           4. MODALE ÉDITORIALE EFFECTIF (ROSTER)
+           ------------------------------------------------------------- */
+        .editorial-modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(18, 15, 14, 0.65);
+            backdrop-filter: blur(4px);
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .editorial-modal-window {
+            background: #ffffff;
+            max-width: 640px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+            padding: 36px 32px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+            animation: modalPop 0.25s ease-out;
+        }
+
+        @keyframes modalPop {
+            from { opacity: 0; transform: translateY(12px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .modal-close-cross {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            line-height: 1;
+            cursor: pointer;
+            color: var(--muted-text);
+        }
+
+        .modal-close-cross:hover {
+            color: var(--page-text);
+        }
+
+        .modal-cat-tag {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--muted-text);
+            font-weight: 700;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .modal-team-heading {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 2rem;
+            margin: 0 0 8px 0;
+            font-weight: 700;
+        }
+
+        .modal-coach-name {
+            font-size: 0.95rem;
+            color: var(--muted-text);
+            margin: 0 0 24px 0;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-soft);
+        }
+
+        .modal-roster-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        .modal-roster-table th {
+            text-align: left;
+            padding: 10px 8px;
+            border-bottom: 1px solid var(--border-soft);
+            color: var(--muted-text);
+            font-weight: 600;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .modal-roster-table td {
+            padding: 12px 8px;
+            border-bottom: 1px solid #f4f0ec;
+        }
+
+        .modal-num-badge {
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            line-height: 28px;
+            text-align: center;
+            background: #171312;
+            color: #ffffff;
+            font-size: 0.8rem;
+            font-weight: 700;
+            border-radius: 2px;
+        }
+
+        @media (max-width: 768px) {
+            .competitions-wrapper {
+                margin-top: 85px;
+            }
+            .club-choice-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .club-choice-card {
+                padding: 32px 24px;
+            }
+            .choice-title {
+                font-size: 2rem;
+            }
+            .active-club-bar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .teams-showcase-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body class="has-red-navbar">
+
+    <!-- NAVIGATION COMMUNE -->
+        <!-- HEADER / NAVIGATION -->
+    <header class="main-header">
+        <div class="container header-container">
+            <a href="index.html" class="logo-area" aria-label="Accueil USBL BCL">
+                <img src="assets/logo_usbl_bcl.jpg" alt="Logo USBL BCL" class="club-logo-img">
+            </a>
+
+            <nav class="main-nav">
+                <ul>
+                    <li class="nav-dropdown-wrapper">
+                        <a href="index.html" class="nav-link" id="nav-leclub" style="text-decoration: none !important; border-bottom: none !important;">Les clubs <span class="dropdown-arrow">▼</span></a>
+                        <ul class="nav-dropdown-menu">
+                            <li class="nav-submenu-wrapper">
+                                <a href="qui-sommes-nous.html" class="nav-submenu-toggle" style="text-decoration: none !important; border-bottom: none !important;">Qui sommes-nous ? <span class="submenu-arrow">▸</span></a>
+                                <ul class="nav-sub-menu">
+                                    <li><a href="qui-sommes-nous-usbl.html" style="text-decoration: none !important; border-bottom: none !important;">USBL</a></li>
+                                    <li><a href="qui-sommes-nous-bcl.html" style="text-decoration: none !important; border-bottom: none !important;">BCL</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="infrastructures.html" style="text-decoration: none !important; border-bottom: none !important;">Nos infrastructures</a></li>
+                            <li><a href="partenaires.html" style="text-decoration: none !important; border-bottom: none !important;">Nos partenaires</a></li>
+                            <li><a href="benevoles.html" style="text-decoration: none !important; border-bottom: none !important;">Bénévoles</a></li>
+                            <li><a href="contact.html" style="text-decoration: none !important; border-bottom: none !important;">Nous contacter</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="competitions.html" class="nav-link" id="nav-competitions" style="text-decoration: none !important; border-bottom: none !important;">Nos équipes</a></li>
+                    <li><a href="evenements.html" class="nav-link" id="nav-evenements" style="text-decoration: none !important; border-bottom: none !important;">Événements</a></li>
+                    <li class="nav-dropdown-wrapper nav-dropdown-right">
+                        <a href="informations.html" class="nav-link" id="nav-informations" style="text-decoration: none !important; border-bottom: none !important;">Informations <span class="dropdown-arrow">▼</span></a>
+                        <ul class="nav-dropdown-menu">
+                            <li><a href="inscriptions.html" style="text-decoration: none !important; border-bottom: none !important;">Inscriptions & Licences</a></li>
+                            <li><a href="planning.html" style="text-decoration: none !important; border-bottom: none !important;">Planning des entraînements</a></li>
+                            <li><a href="boutiques.html" style="text-decoration: none !important; border-bottom: none !important;">Boutiques officielles</a></li>
+                            <li><a href="charte-interne.html" style="text-decoration: none !important; border-bottom: none !important;">Charte interne</a></li>
+                            <li><a href="commissions.html" style="text-decoration: none !important; border-bottom: none !important;">Commissions</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+
+            <button class="mobile-menu-toggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- APPLICATION ÉQUIPES (SANS BANDEAU) -->
+    <main class="competitions-wrapper" id="competitions-app">
+
+        <!-- 1. ÉCRAN DE SÉLECTION INITIAL : TEXTE ÉPURÉ + DEUX LOGOS -->
+        <section id="club-choice-screen">
+            <div class="choice-screen-intro">
+                <div class="choice-kicker">Basket L'Isle-Jourdain</div>
+                <h1 class="choice-title">Nos équipes</h1>
+                <p class="choice-subtitle">Choisissez votre section pour découvrir les effectifs et calendriers de la saison.</p>
+            </div>
+
+            <div class="pure-logos-grid">
+                <!-- LOGO USBL -->
+                <button type="button" class="pure-logo-btn logo-usbl" id="card-choice-usbl" onclick="window.chooseClub('usbl')" aria-label="USBL Spartiates">
+                    <img src="assets/logo_usbl.png" alt="Logo USBL Spartiates">
+                </button>
+
+                <!-- LOGO BCL -->
+                <button type="button" class="pure-logo-btn logo-bcl" id="card-choice-bcl" onclick="window.chooseClub('bcl')" aria-label="Basket Club Lislois">
+                    <img src="assets/logo_bcl_transparent.png" alt="Logo Basket Club Lislois">
+                </button>
+            </div>
+        </section>
+
+        <!-- 2. VUE DYNAMIQUE DES ÉQUIPES DU CLUB CHOISI -->
+        <section id="club-teams-view">
+            <!-- Barre d'état et bascule rapide de section -->
+            <div class="active-club-bar">
+                <div class="active-club-left">
+                    <img id="active-club-img" src="assets/logo_usbl.png" alt="Logo club actif" class="active-club-logo">
+                    <div class="active-club-meta">
+                        <h2 id="active-club-title">USBL Spartiates</h2>
+                        <p id="active-club-subtitle">Section Masculine &bull; Équipes en compétition</p>
+                    </div>
+                </div>
+
+                <div class="active-club-controls">
+                    <button type="button" class="back-to-choice-btn" onclick="window.returnToChoiceScreen()">
+                        &larr; Changer de section
+                    </button>
+                </div>
+            </div>
+
+            <!-- Grille des fiches d'équipes (chargées dynamiquement depuis la BDD locale) -->
+            <div class="teams-showcase-grid" id="teams-showcase-grid">
+                <!-- Rempli par JavaScript strictement depuis rosters (BDD locale) -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 3. MODALE D'EFFECTIF (ROSTER) -->
+    <div id="roster-modal" class="editorial-modal-backdrop" onclick="if(event.target===this) window.closeRosterModal();">
+        <div class="editorial-modal-window">
+            <button type="button" class="modal-close-cross" onclick="window.closeRosterModal();" aria-label="Fermer">&times;</button>
+            <span class="modal-cat-tag" id="modal-team-category">Catégorie</span>
+            <h3 class="modal-team-heading" id="modal-team-name">Nom de l'équipe</h3>
+            <p class="modal-coach-name" id="modal-team-coach"><strong>Coach :</strong> Non renseigné</p>
+
+            <table class="modal-roster-table">
+                <thead>
+                    <tr>
+                        <th style="width: 50px;">N°</th>
+                        <th>Nom &amp; Prénom</th>
+                        <th>Taille</th>
+                        <th>Poste</th>
+                    </tr>
+                </thead>
+                <tbody id="roster-table-body">
+                    <!-- Rempli dynamiquement -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- PIED DE PAGE SOBRE -->
+    <footer class="main-footer">
+        <div class="container footer-container">
+            <div class="footer-col about">
+                <h3>BASKET L'ISLE-JOURDAIN</h3>
+                <p>L'USBL (Masculin) et le BCL (Féminin) forment les jeunes générations et animent la vie sportive de L'Isle-Jourdain depuis plusieurs décennies.</p>
+            </div>
+            
+            <div class="footer-col meta">
+                <h4>CONTACT & INFOS</h4>
+                <p>Salle Gasco'Sport, 33 rue de Rozès, 32600 L'Isle-Jourdain</p>
+                <p>Courriel : <a href="mailto:contact@usbl-basket32.fr">contact@usbl-basket32.fr</a></p>
+                <p>Instagram : <a href="https://www.instagram.com/usbl_bcl32/" target="_blank">@usbl_bcl32</a></p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="container footer-bottom-container">
+                <p>&copy; 2026 Basket L'Isle-Jourdain (USBL & BCL). Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="scripts.js"></script>
+    <script>
+        // -------------------------------------------------------------
+        // LOGIQUE D'ANIMATION ET DE CHARGEMENT STRICTEMENT DEPUIS BDD LOCALE
+        // -------------------------------------------------------------
+        let currentSelectedClub = null;
+
+        function getClubKeyForTeam(team) {
+            if (team.club) return team.club.toLowerCase();
+            const text = `${team.name || ''} ${team.category || ''}`.toLowerCase();
+            if (/fille|fem|bcl|cadette|benjamine|df|rf/i.test(text)) {
+                return 'bcl';
+            }
+            return 'usbl';
+        }
+
+        // Clic sur l'un des deux logos initiaux avec animation
+        window.chooseClub = function(clubKey) {
+            const btnClicked = document.getElementById(`card-choice-${clubKey}`);
+            const otherClubKey = clubKey === 'usbl' ? 'bcl' : 'usbl';
+            const btnOther = document.getElementById(`card-choice-${otherClubKey}`);
+            const intro = document.querySelector('.choice-screen-intro');
+
+            if (!btnClicked) {
+                window.switchClubView(clubKey);
+                return;
+            }
+
+            // 1. Animation : le logo cliqué grossit doucement, l'autre et l'en-tête s'estompent
+            btnClicked.classList.add('anim-clicked');
+            if (btnOther) btnOther.classList.add('anim-fade-away');
+            if (intro) {
+                intro.style.opacity = '0';
+                intro.style.transform = 'translateY(-12px)';
+            }
+
+            // 2. Déploiement en fondu de la section équipes après l'animation
+            setTimeout(() => {
+                document.getElementById('club-choice-screen').style.display = 'none';
+                window.switchClubView(clubKey);
+                // Mémoriser dans l'historique de navigation
+                if (window.history && window.history.replaceState) {
+                    window.history.replaceState(null, '', `#${clubKey}`);
+                }
+            }, 350);
+        };
+
+        // Retourner à l'écran de choix des 2 logos
+        window.returnToChoiceScreen = function() {
+            const view = document.getElementById('club-teams-view');
+            const choice = document.getElementById('club-choice-screen');
+            const btnUsbl = document.getElementById('card-choice-usbl');
+            const btnBcl = document.getElementById('card-choice-bcl');
+            const intro = document.querySelector('.choice-screen-intro');
+
+            view.classList.remove('active-view');
+            setTimeout(() => {
+                view.style.display = 'none';
+                choice.style.display = 'flex';
+
+                if (btnUsbl) btnUsbl.className = 'pure-logo-btn logo-usbl';
+                if (btnBcl) btnBcl.className = 'pure-logo-btn logo-bcl';
+                if (intro) {
+                    intro.style.opacity = '1';
+                    intro.style.transform = 'translateY(0)';
+                }
+
+                if (window.history && window.history.replaceState) {
+                    window.history.replaceState(null, '', window.location.pathname);
+                }
+            }, 250);
+        };
+
+        // Afficher les équipes du club (USBL ou BCL)
+        window.switchClubView = function(clubKey) {
+            currentSelectedClub = clubKey;
+            const choice = document.getElementById('club-choice-screen');
+            const view = document.getElementById('club-teams-view');
+            choice.style.display = 'none';
+            view.style.display = 'block';
+            
+            // Forcer le reflow pour lancer l'animation CSS
+            void view.offsetWidth;
+            view.classList.add('active-view');
+
+            // Mettre à jour la barre active
+            const isUsbl = clubKey === 'usbl';
+            const imgEl = document.getElementById('active-club-img');
+            const titleEl = document.getElementById('active-club-title');
+            const subEl = document.getElementById('active-club-subtitle');
+            if (isUsbl) {
+                imgEl.src = 'assets/logo_usbl.png';
+                imgEl.alt = 'Logo USBL Spartiates';
+                titleEl.textContent = 'USBL Spartiates';
+                subEl.textContent = 'Section Masculine • Équipes engagées en compétition';
+            } else {
+                imgEl.src = 'assets/logo_bcl_transparent.png';
+                imgEl.alt = 'Logo Basket Club Lislois';
+                titleEl.textContent = 'Basket Club Lislois';
+                subEl.textContent = 'Section Féminine • Équipes engagées en compétition';
+            }
+
+            // Génération des équipes stockées en base de données locale uniquement
+            renderTeamsForClub(clubKey);
+
+            if (window.history && window.history.replaceState) {
+                window.history.replaceState(null, '', `#${clubKey}`);
+            }
+        };
+
+        function extractDivisionCode(cat) {
+            if (!cat) return '';
+            const match = cat.match(/\b([R|D][M|F][A-Z0-9]*|[Uu]\d+[A-Za-z]*)\b/);
+            if (match) return match[1].toUpperCase();
+            const words = cat.trim().split(/\s+/);
+            return words[words.length - 1].toUpperCase();
+        }
+
+        // Rendu inventif des cartes d'équipes à partir de la BDD locale (rosters)
+        function renderTeamsForClub(clubKey) {
+            const grid = document.getElementById('teams-showcase-grid');
+            if (!grid) return;
+
+            // Récupérer les effectifs (rosters) depuis la variable globale ou localStorage
+            let localRosters = {};
+            if (typeof rosters !== 'undefined' && rosters && Object.keys(rosters).length > 0) {
+                localRosters = rosters;
+            } else {
+                try {
+                    const raw = localStorage.getItem('usbl_rosters');
+                    if (raw) localRosters = JSON.parse(raw);
+                } catch (e) {}
+            }
+
+            // Filtrer strictement les équipes appartenant au club sélectionné
+            const teamIds = Object.keys(localRosters).filter(id => {
+                const team = localRosters[id];
+                return getClubKeyForTeam(team) === clubKey;
+            });
+
+            if (teamIds.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-club-notice">
+                        Aucune équipe n'est actuellement enregistrée pour cette section dans la base de données locale.<br>
+                        Vous pouvez en ajouter à tout moment depuis l'espace d'administration.
+                    </div>
+                `;
+                return;
+            }
+
+            // Nuancier dynamique par équipe pour éviter la répétition visuelle
+            const usblTiers = [
+                { accent: '#D21A00', bg: '#FFF3EC', border: '#FFC6A4', dark: '#380703' }, // Échelon 700 (Point blanc)
+                { accent: '#A31609', bg: '#FFF3EC', border: '#FFC6A4', dark: '#2b0301' }, // Échelon 800
+                { accent: '#F92C00', bg: '#FFF3EC', border: '#FFC6A4', dark: '#360902' }, // Échelon 600
+                { accent: '#FF4307', bg: '#FFF3EC', border: '#FFE4D2', dark: '#320a03' }, // Échelon 500
+                { accent: '#83150B', bg: '#FFE4D2', border: '#FFC6A4', dark: '#230201' }, // Échelon 900
+            ];
+
+            const bclTiers = [
+                { accent: '#FF6A2F', bg: '#FFF3EC', border: '#FFE4D2', dark: '#321406' }, // Échelon 400
+                { accent: '#FF4307', bg: '#FFF3EC', border: '#FFC6A4', dark: '#320a03' }, // Échelon 500
+                { accent: '#FF9E6B', bg: '#FFF3EC', border: '#FFE4D2', dark: '#331908' }, // Échelon 300
+                { accent: '#F92C00', bg: '#FFF3EC', border: '#FFC6A4', dark: '#360902' }, // Échelon 600
+                { accent: '#D21A00', bg: '#FFF3EC', border: '#FFC6A4', dark: '#380703' }, // Échelon 700
+            ];
+
+            // Générer le HTML inventif de chaque carte
+            grid.innerHTML = teamIds.map((id, index) => {
+                const team = localRosters[id];
+                const isUsbl = clubKey === 'usbl';
+                const teamClass = isUsbl ? 'team-usbl' : 'team-bcl';
+                const tierList = isUsbl ? usblTiers : bclTiers;
+                const tier = tierList[index % tierList.length];
+
+                // Extraction précise du code de division pour l'insigne athlétique
+                const shortCode = extractDivisionCode(team.category || '');
+
+                // Joueurs enregistrés
+                const playersCount = (team.players && Array.isArray(team.players)) ? team.players.length : 0;
+                let rosterPreview = '';
+                if (playersCount > 0) {
+                    rosterPreview = `
+                        <div style="font-size: 0.82rem; margin-bottom: 5px;">
+                            <strong>Effectif :</strong> ${playersCount} joueur${playersCount > 1 ? 's' : ''} enregistré${playersCount > 1 ? 's' : ''}
+                        </div>
+                        <div class="roster-numbers-row">
+                            ${team.players.slice(0, 5).map(p => `<span class="roster-mini-num" style="border-color: ${tier.border};">N° ${p.num}</span>`).join('')}
+                            ${playersCount > 5 ? `<span style="font-size: 0.74rem; color: ${tier.accent}; align-self: center; font-weight: 700;">+${playersCount - 5}</span>` : ''}
+                        </div>
+                    `;
+                } else {
+                    rosterPreview = `<strong>Effectif :</strong> Liste des joueurs en cours d'enregistrement`;
+                }
+
+                // Photo ou En-tête graphique athlétique
+                const mediaHtml = team.photo
+                    ? `<div class="team-card-media"><img src="${team.photo}" alt="${team.name}"></div>`
+                    : `<div class="team-card-media" style="background: linear-gradient(135deg, #130f0e 0%, ${tier.dark} 100%);">
+                         <div class="media-watermark-logo" style="background-image: url('${isUsbl ? 'assets/logo_usbl.png' : 'assets/logo_bcl_transparent.png'}');"></div>
+                         <div class="team-jersey-crest" style="border-color: ${tier.border};">
+                           <span class="jersey-code" style="color: #ffffff;">${shortCode}</span>
+                           <span class="jersey-sub-lbl" style="color: ${tier.accent};">${isUsbl ? 'USBL Spartiates' : 'Basket Club Lislois'}</span>
+                         </div>
+                       </div>`;
+
+                // Bouton FFBB officiel si présent
+                const ffbbHtml = team.ffbbLink
+                    ? `<a href="${team.ffbbLink}" target="_blank" rel="noopener noreferrer" class="team-ffbb-link" style="color: ${tier.accent};">Lien FFBB &nearr;</a>`
+                    : '';
+
+                // Coach link
+                const coachName = team.coach ? team.coach.trim() : '';
+                const coachObj = typeof window.getCoachForTeam === 'function' ? window.getCoachForTeam(id, team) : null;
+                let coachLink = null;
+                if (coachObj || coachName) {
+                    const cParams = new URLSearchParams();
+                    if (coachObj && coachObj.id) cParams.set('id', coachObj.id);
+                    if (coachName) cParams.set('name', coachName);
+                    if (id) cParams.set('team', id);
+                    coachLink = `coach-detail.html?${cParams.toString()}`;
+                }
+                const coachHtml = coachLink 
+                    ? `<a href="${coachLink}" class="team-coach-link">${coachName}</a>`
+                    : '<span style="color: var(--text-muted);">À désigner</span>';
+
+                return `
+                    <article class="team-showcase-card ${teamClass}" style="--card-index: ${index}; border-top: 3px solid ${tier.accent} !important;">
+                        <div class="team-watermark-code">${shortCode}</div>
+                        ${mediaHtml}
+                        <div class="team-card-body">
+                            <div class="team-level-row">
+                                <span class="team-level-tag" style="background-color: ${tier.bg} !important; color: ${tier.accent} !important; border: 1px solid ${tier.border} !important;">${team.category || 'Compétition'}</span>
+                            </div>
+
+                            <h3 class="team-title">${team.name}</h3>
+
+                            <ul class="team-meta-list">
+                                <li><strong>Entraîneur :</strong> ${coachHtml}</li>
+                                <li><strong>Section :</strong> ${isUsbl ? 'Masculine (USBL)' : 'Féminine (BCL)'}</li>
+                            </ul>
+
+                            <div class="team-preview-strip">
+                                ${rosterPreview}
+                            </div>
+
+                            <div class="team-card-actions">
+                                <button type="button" class="btn-view-roster" style="--team-accent: ${tier.accent}; border-color: ${tier.border}; color: ${tier.accent};" onclick="window.openRosterModal('${id}')">
+                                    Consulter l'effectif
+                                </button>
+                                ${ffbbHtml}
+                            </div>
+                        </div>
+                    </article>
+                `;
+            }).join('');
+        }
+
+        // Modale d'effectif
+        window.openRosterModal = function(teamId) {
+            let localRosters = {};
+            if (typeof rosters !== 'undefined' && rosters) localRosters = rosters;
+            else {
+                try { localRosters = JSON.parse(localStorage.getItem('usbl_rosters') || '{}'); } catch(e) {}
+            }
+
+            const team = localRosters[teamId];
+            if (!team) return;
+
+            document.getElementById('modal-team-category').textContent = team.category || 'Compétition';
+            const coachObj = typeof window.getCoachForTeam === 'function' ? window.getCoachForTeam(teamId, team) : null;
+            const coachName = (team.coach || '').trim();
+            let coachLink = null;
+            if (coachObj || coachName) {
+                const mParams = new URLSearchParams();
+                if (coachObj && coachObj.id) mParams.set('id', coachObj.id);
+                if (coachName) mParams.set('name', coachName);
+                if (teamId) mParams.set('team', teamId);
+                coachLink = `coach-detail.html?${mParams.toString()}`;
+            }
+            const coachHtml = coachLink 
+                ? `<a href="${coachLink}" class="team-coach-link">${coachName}</a>` 
+                : (coachName || 'Non renseigné');
+            document.getElementById('modal-team-coach').innerHTML = `<strong>Coach principal :</strong> ${coachHtml}`;
+
+            const tbody = document.getElementById('roster-table-body');
+            tbody.innerHTML = '';
+
+            const players = team.players || [];
+            if (players.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: var(--muted-text); padding: 24px 0; font-style: italic;">Aucun joueur n'a encore été enregistré pour cette équipe dans la base locale.</td></tr>`;
+            } else {
+                players.forEach(p => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td><span class="modal-num-badge">${p.num || '-'}</span></td>
+                        <td><strong>${p.name || 'Nom non précisé'}</strong></td>
+                        <td>${p.height || '-'}</td>
+                        <td>${p.position || '-'}</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            }
+
+            document.getElementById('roster-modal').style.display = 'flex';
+        };
+
+        window.closeRosterModal = function() {
+            document.getElementById('roster-modal').style.display = 'none';
+        };
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') window.closeRosterModal();
+        });
+
+        // Détection de hash dans l'URL (#usbl ou #bcl) à l'arrivée
+        function checkInitialClub() {
+            const hash = (window.location.hash || '').toLowerCase().replace('#', '');
+            if (hash === 'usbl' || hash === 'bcl') {
+                window.switchClubView(hash);
+            }
+        }
+
+        checkInitialClub();
+        window.addEventListener('hashchange', checkInitialClub);
+        window.addEventListener('load', () => {
+            if (currentSelectedClub) {
+                renderTeamsForClub(currentSelectedClub);
+            }
+        });
+    </script>
+</body>
+</html>
