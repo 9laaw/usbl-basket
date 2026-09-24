@@ -47,6 +47,24 @@ const CLUBS_FFBB = [
 // Verrou pour éviter les lancements simultanés
 let isRunning = false;
 
+// Synchronisation Git automatique (débouncée) pour pousser les données modifiées vers GitHub Pages
+let gitSyncTimer = null;
+function triggerGitSync() {
+  clearTimeout(gitSyncTimer);
+  gitSyncTimer = setTimeout(() => {
+    const { exec } = require("child_process");
+    exec('git add data/*.json && git commit -m "chore(data): auto-sync data from admin panel" && git push origin main', (err, stdout, stderr) => {
+      if (err) {
+        if (!err.message.includes("nothing to commit")) {
+          console.log("[Git Sync Info]", err.message.split("\n")[0]);
+        }
+      } else {
+        console.log("[Git Sync] ✅ Données synchronisées et poussées sur GitHub Pages avec succès !");
+      }
+    });
+  }, 2500);
+}
+
 // =========================================================================
 // 🔄 MACHINE DE RÉCUPÉRATION DES MATCHS (USBL + BCL / FILTRÉ + PHASES)
 // =========================================================================
@@ -378,6 +396,10 @@ const server = http.createServer((req, res) => {
         console.log(
           `[Database Sync] Écriture effectuée pour ${key} (${fileName})`,
         );
+
+        if (typeof triggerGitSync === "function") {
+          triggerGitSync();
+        }
 
         res.writeHead(200, { "Content-Type": "application/json" });
         res.end(

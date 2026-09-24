@@ -457,45 +457,94 @@ document.addEventListener("DOMContentLoaded", async () => {
   revealOnScroll(); // Lancer une première fois
 
   // ----------------------------------------------------------------------
-  // AUTOMATIC PURGE OF LEGACY MOCK / FAKE NEWS FROM CACHE
   // ----------------------------------------------------------------------
-  // AUTOMATIC PURGE OF LEGACY MOCK / FAKE NEWS FROM CACHE
+  // AUTOMATIC PURGE OF LEGACY MOCK / FAKE NEWS & TEST DATA FROM CACHE
   // ----------------------------------------------------------------------
   const isLegacyMockArticle = (a) => {
     if (!a) return true;
-    const t = a.title || "";
+    const id = String(a.id || "");
+    const t = (a.title || "").toLowerCase();
     return (
-      a.id === "art-1" ||
-      a.id === "art-2" ||
-      a.id !== undefined && String(a.id).startsWith("art-test-") ||
-      a.id === "art-3" ||
-      t.includes("Union et Ferveur") ||
-      t.includes("RM3 : Les Spartiates") ||
-      t.includes("Section Féminine BCL : Reprise") ||
-      t.includes("Stages Basket") ||
-      t.includes("Assemblée Générale") ||
-      t.includes("Mini-Basket") ||
-      t.includes("Label Occitanie") ||
-      t.includes("Tournoi 3x3") ||
-      t.includes("Stages d'Été") ||
-      t.includes("Portes Ouvertes")
+      id === "art-1" ||
+      id === "art-2" ||
+      id === "art-3" ||
+      id === "art-1789565234630" ||
+      id.startsWith("art-test") ||
+      t.includes("test") ||
+      t.includes("union et ferveur") ||
+      t.includes("rm3 : les spartiates") ||
+      t.includes("section féminine bcl : reprise") ||
+      t.includes("stages basket") ||
+      t.includes("assemblée générale") ||
+      t.includes("mini-basket") ||
+      t.includes("label occitanie") ||
+      t.includes("tournoi 3x3") ||
+      t.includes("stages d'été") ||
+      t.includes("portes ouvertes")
     );
   };
+  window.isLegacyMockArticle = isLegacyMockArticle;
 
-  const storedArticlesCheck = localStorage.getItem("usbl_articles");
-  if (storedArticlesCheck) {
-    try {
+  const isLegacyMockTeam = (teamId, team) => {
+    if (!teamId && !team) return true;
+    const id = String(teamId || "");
+    const name = ((team && team.name) || "").toLowerCase();
+    const cat = ((team && team.category) || "").toLowerCase();
+    return (
+      id === "team-1790068366288" ||
+      id.startsWith("team-test") ||
+      name.includes("test") ||
+      cat.includes("test")
+    );
+  };
+  window.isLegacyMockTeam = isLegacyMockTeam;
+
+  const isLegacyMockCoach = (c) => {
+    if (!c) return true;
+    const id = String(c.id || "");
+    const fullName = `${c.firstname || ""} ${c.lastname || ""}`.toLowerCase();
+    return (
+      id === "coach-1790236714410" ||
+      id.startsWith("coach-test") ||
+      fullName.includes("test")
+    );
+  };
+  window.isLegacyMockCoach = isLegacyMockCoach;
+
+  // Immediate Cache Purge across all browsers (Safari, Firefox, Chrome, etc.)
+  try {
+    const storedArticlesCheck = localStorage.getItem("usbl_articles");
+    if (storedArticlesCheck) {
       const parsedArticles = JSON.parse(storedArticlesCheck);
       if (Array.isArray(parsedArticles)) {
         const cleanedArticles = parsedArticles.filter((a) => !isLegacyMockArticle(a));
-        if (cleanedArticles.length !== parsedArticles.length) {
-          localStorage.setItem("usbl_articles", JSON.stringify(cleanedArticles));
-        }
+        localStorage.setItem("usbl_articles", JSON.stringify(cleanedArticles));
       }
-    } catch (e) {
-      localStorage.removeItem("usbl_articles");
     }
-  }
+
+    const storedRostersCheck = localStorage.getItem("usbl_rosters");
+    if (storedRostersCheck) {
+      const parsedRosters = JSON.parse(storedRostersCheck);
+      if (typeof parsedRosters === "object" && parsedRosters !== null && !Array.isArray(parsedRosters)) {
+        const cleanedRosters = {};
+        for (const [k, v] of Object.entries(parsedRosters)) {
+          if (!isLegacyMockTeam(k, v)) {
+            cleanedRosters[k] = v;
+          }
+        }
+        localStorage.setItem("usbl_rosters", JSON.stringify(cleanedRosters));
+      }
+    }
+
+    const storedCoachsCheck = localStorage.getItem("usbl_coachs");
+    if (storedCoachsCheck) {
+      const parsedCoachs = JSON.parse(storedCoachsCheck);
+      if (Array.isArray(parsedCoachs)) {
+        const cleanedCoachs = parsedCoachs.filter((c) => !isLegacyMockCoach(c));
+        localStorage.setItem("usbl_coachs", JSON.stringify(cleanedCoachs));
+      }
+    }
+  } catch (e) {}
 
   // ----------------------------------------------------------------------
   // UNIFIED CLIENT-SIDE DATABASE INITIALIZATION (localStorage)
@@ -545,7 +594,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         localData = JSON.parse(stored);
         if (localStorageKey === "usbl_articles" && Array.isArray(localData)) {
           localData = localData.filter((a) => !isLegacyMockArticle(a));
+        } else if (localStorageKey === "usbl_rosters" && typeof localData === "object" && localData !== null && !Array.isArray(localData)) {
+          for (const [k, v] of Object.entries(localData)) {
+            if (isLegacyMockTeam(k, v)) delete localData[k];
+          }
+        } else if (localStorageKey === "usbl_coachs" && Array.isArray(localData)) {
+          localData = localData.filter((c) => !isLegacyMockCoach(c));
         }
+
         if (Array.isArray(localData)) {
           localData = localData.filter(item => {
             const id = item.id ? String(item.id) : null;
@@ -562,71 +618,26 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     try {
       let res = null;
+      const cacheBustUrl = `${fileName}?_t=${Date.now()}`;
       if (window.location.protocol !== "file:") {
-        try { res = await fetch(fileName); } catch(e) {}
+        try { res = await fetch(cacheBustUrl, { cache: "no-store" }); } catch(e) {}
       }
       if (!res || !res.ok) {
         const ports = [3001, 3000, 8080];
         for (const p of ports) {
           try {
-            const r = await fetch(`http://localhost:${p}/${fileName}`);
+            const r = await fetch(`http://localhost:${p}/${cacheBustUrl}`, { cache: "no-store" });
             if (r.ok) { res = r; break; }
           } catch(e) {}
         }
       }
       if (!res || !res.ok) {
-        try { res = await fetch(fileName); } catch(e) {}
+        try { res = await fetch(cacheBustUrl, { cache: "no-store" }); } catch(e) {}
       }
-      if (res.ok) {
+      if (res && res.ok) {
         const serverData = await res.json();
         if (serverData && (Array.isArray(serverData) || typeof serverData === "object")) {
-          // If local storage has items but server has none (e.g. empty file on Vercel), keep local storage
-          if (localData && Array.isArray(localData) && localData.length > 0 && Array.isArray(serverData) && serverData.length === 0) {
-            console.log(`[Database Sync] Server file ${fileName} is empty, keeping local storage for ${localStorageKey}`);
-            return localData;
-          }
-          if (localData && typeof localData === "object" && !Array.isArray(localData) && Object.keys(localData).length > 0 && typeof serverData === "object" && Object.keys(serverData).length === 0) {
-            console.log(`[Database Sync] Server file ${fileName} is empty, keeping local storage for ${localStorageKey}`);
-            return localData;
-          }
-
-          // If both are arrays, merge them to preserve local browser changes alongside any server updates
-          if (Array.isArray(serverData) && (Array.isArray(localData) || localData === null)) {
-            const isArticles = localStorageKey === "usbl_articles";
-            const cleanServer = serverData.filter(item => {
-              if (isArticles && isLegacyMockArticle(item)) return false;
-              const id = item.id ? String(item.id) : null;
-              const title = item.title ? String(item.title) : null;
-              if (id && deletedIds.includes(id)) return false;
-              if (title && deletedIds.includes(title)) return false;
-              return true;
-            });
-
-            const cleanLocal = (Array.isArray(localData) ? localData : []).filter(item => {
-              if (isArticles && isLegacyMockArticle(item)) return false;
-              const id = item.id ? String(item.id) : null;
-              const title = item.title ? String(item.title) : null;
-              if (id && deletedIds.includes(id)) return false;
-              if (title && deletedIds.includes(title)) return false;
-              return true;
-            });
-
-            const merged = [...cleanLocal];
-            cleanServer.forEach(serverItem => {
-              const exists = cleanLocal.some(localItem => {
-                if (localItem.id && serverItem.id) return String(localItem.id) === String(serverItem.id);
-                if (localItem.title && serverItem.title) return String(localItem.title) === String(serverItem.title);
-                return JSON.stringify(localItem) === JSON.stringify(serverItem);
-              });
-              if (!exists) {
-                merged.push(serverItem);
-              }
-            });
-            localStorage.setItem(localStorageKey, JSON.stringify(merged));
-            return merged;
-          }
-
-          // For club presentation pages, if local storage has customized content and server file is empty, preserve local storage!
+          // 1. Pages de présentation des clubs (USBL & BCL)
           if (localStorageKey.startsWith("usbl_club_")) {
             const isLocalEmpty = !localData || isClubDataEmpty(localData);
             const isServerEmpty = !serverData || isClubDataEmpty(serverData);
@@ -640,25 +651,80 @@ document.addEventListener("DOMContentLoaded", async () => {
             return localData || fallbackDefault;
           }
 
-          // If both are objects (like rosters), merge them with localData taking precedence over serverData!
-          if (typeof serverData === "object" && typeof localData === "object" && !Array.isArray(serverData) && !Array.isArray(localData)) {
-            const cleanServer = { ...serverData };
-            deletedIds.forEach(teamId => delete cleanServer[teamId]);
+          // 2. Collections de type Liste / Tableau (Articles, Coachs, Bénévoles, Partenaires)
+          if (Array.isArray(serverData)) {
+            const isArticles = localStorageKey === "usbl_articles";
+            const isCoachs = localStorageKey === "usbl_coachs";
 
-            const cleanLocal = { ...(localData || {}) };
-            deletedIds.forEach(teamId => delete cleanLocal[teamId]);
+            const cleanServer = serverData.filter(item => {
+              if (isArticles && isLegacyMockArticle(item)) return false;
+              if (isCoachs && isLegacyMockCoach(item)) return false;
+              const id = item.id ? String(item.id) : null;
+              const title = item.title ? String(item.title) : null;
+              if (id && deletedIds.includes(id)) return false;
+              if (title && deletedIds.includes(title)) return false;
+              return true;
+            });
 
-            const merged = { ...cleanServer, ...cleanLocal };
-            deletedIds.forEach(teamId => delete merged[teamId]);
+            // Si le serveur a une base vide (base vidée pour le club), on aligne le cache local immédiatement
+            if (cleanServer.length === 0) {
+              localStorage.setItem(localStorageKey, JSON.stringify([]));
+              return [];
+            }
+
+            const cleanLocal = (Array.isArray(localData) ? localData : []).filter(item => {
+              if (isArticles && isLegacyMockArticle(item)) return false;
+              if (isCoachs && isLegacyMockCoach(item)) return false;
+              const id = item.id ? String(item.id) : null;
+              const title = item.title ? String(item.title) : null;
+              if (id && deletedIds.includes(id)) return false;
+              if (title && deletedIds.includes(title)) return false;
+              return true;
+            });
+
+            // Le serveur fait foi
+            const merged = [...cleanServer];
+            // Ajouter d'éventuels brouillons locaux non encore sur le serveur
+            cleanLocal.forEach(localItem => {
+              if (localItem && localItem.isCustom) {
+                const exists = merged.some(s => s.id && localItem.id && String(s.id) === String(localItem.id));
+                if (!exists) merged.push(localItem);
+              }
+            });
+
             localStorage.setItem(localStorageKey, JSON.stringify(merged));
             return merged;
           }
 
+          // 3. Collections de type Dictionnaire / Objet (Rosters / Équipes)
           if (typeof serverData === "object" && !Array.isArray(serverData)) {
-            const cleanServer = { ...serverData };
-            deletedIds.forEach(teamId => delete cleanServer[teamId]);
-            localStorage.setItem(localStorageKey, JSON.stringify(cleanServer));
-            return cleanServer;
+            const cleanServer = {};
+            for (const [k, v] of Object.entries(serverData)) {
+              if (!isLegacyMockTeam(k, v) && !deletedIds.includes(k)) {
+                cleanServer[k] = v;
+              }
+            }
+
+            // Si le serveur est vide (base vidée pour le club), on aligne le cache local immédiatement
+            if (Object.keys(cleanServer).length === 0) {
+              localStorage.setItem(localStorageKey, JSON.stringify({}));
+              return {};
+            }
+
+            // Le serveur fait foi
+            const merged = { ...cleanServer };
+            if (localData && typeof localData === "object" && !Array.isArray(localData)) {
+              for (const [k, v] of Object.entries(localData)) {
+                if (v && v.isCustom && !deletedIds.includes(k) && !isLegacyMockTeam(k, v)) {
+                  if (!merged[k]) {
+                    merged[k] = v;
+                  }
+                }
+              }
+            }
+
+            localStorage.setItem(localStorageKey, JSON.stringify(merged));
+            return merged;
           }
 
           localStorage.setItem(localStorageKey, JSON.stringify(serverData));
@@ -730,7 +796,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   partners.push(...loadedPartners);
 
   // 4. Rosters (Effectifs)
-  rosters = await loadCollection("data/rosters.json", "usbl_rosters", rosters);
+  rosters = await loadCollection("data/rosters.json", "usbl_rosters", {});
   window.rosters = rosters;
   window.articles = articles;
   window.volunteers = volunteers;
@@ -904,33 +970,8 @@ const matchs = [
   },
 ];
 
-// Base de données des effectifs (Rosters avec effectifs à vide par défaut)
-let rosters = {
-  rm3: {
-    category: "Régionale RM3",
-    name: "Seniors Garçons 1",
-    coach: "Jean-Pierre Gasc",
-    players: [],
-  },
-  rmu21: {
-    category: "Régionale RMU21",
-    name: "Espoirs U21",
-    coach: "Marc Antoine",
-    players: [],
-  },
-  dmu18: {
-    category: "Départementale DMU18",
-    name: "Jeunes U18",
-    coach: "David Salles",
-    players: [],
-  },
-  dmu13: {
-    category: "Départementale DMU13",
-    name: "Minimes U13",
-    coach: "Julien Lopez",
-    players: [],
-  },
-};
+// Base de données des effectifs (Rosters à vide par défaut)
+let rosters = {};
 
 // Base de données Boutique
 const products = {
@@ -2688,6 +2729,74 @@ window.showAdminToast = (message, type = "success") => {
     toast.style.transition = "all 0.3s ease";
     setTimeout(() => toast.remove(), 300);
   }, 4000);
+};
+
+// Outil d'exportation complète de sauvegarde des données JSON
+window.exportDatabaseBackup = () => {
+  const data = {
+    exportDate: new Date().toISOString(),
+    articles: window.articles || articles || [],
+    rosters: window.rosters || rosters || {},
+    coachs: window.coachs || coachs || [],
+    volunteers: window.volunteers || volunteers || [],
+    partners: window.partners || partners || []
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `usbl-backup-${new Date().toISOString().slice(0, 10)}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  window.showAdminToast("Sauvegarde exportée avec succès !");
+};
+
+// Réinitialisation intégrale de la base de données pour livraison propre au club
+window.resetDatabaseForClub = async () => {
+  if (!confirm("Voulez-vous réinitialiser toute la base de données (actualités, effectifs, coachs, bénévoles, partenaires) pour livrer un prototype 100% propre au club ?")) {
+    return;
+  }
+
+  // 1. Vider les structures en mémoire
+  articles.length = 0;
+  for (const k in rosters) delete rosters[k];
+  coachs.length = 0;
+  volunteers.length = 0;
+  partners.length = 0;
+
+  // 2. Vider le localStorage
+  localStorage.setItem("usbl_articles", "[]");
+  localStorage.setItem("usbl_rosters", "{}");
+  localStorage.setItem("usbl_coachs", "[]");
+  localStorage.setItem("usbl_volunteers", "[]");
+  localStorage.setItem("usbl_partners", "[]");
+
+  // 3. Purger les tombstones
+  localStorage.removeItem("usbl_deleted_usbl_articles");
+  localStorage.removeItem("usbl_deleted_usbl_rosters");
+  localStorage.removeItem("usbl_deleted_usbl_coachs");
+  localStorage.removeItem("usbl_deleted_usbl_volunteers");
+  localStorage.removeItem("usbl_deleted_usbl_partners");
+
+  // 4. Synchroniser avec le serveur local s'il est en cours
+  if (typeof window.saveCollectionToDisk === "function") {
+    await window.saveCollectionToDisk("usbl_articles", []);
+    await window.saveCollectionToDisk("usbl_rosters", {});
+    await window.saveCollectionToDisk("usbl_coachs", []);
+    await window.saveCollectionToDisk("usbl_volunteers", []);
+    await window.saveCollectionToDisk("usbl_partners", []);
+  }
+
+  // 5. Rafraîchir toutes les vues de l'application
+  if (typeof window.renderAdminTables === "function") window.renderAdminTables();
+  if (typeof window.renderArticles === "function") window.renderArticles();
+  if (typeof window.renderTicker === "function") window.renderTicker();
+  if (typeof window.renderVolunteers === "function") window.renderVolunteers();
+  if (typeof window.renderPartners === "function") window.renderPartners();
+  if (typeof window.renderCompetitionPages === "function") window.renderCompetitionPages();
+  if (typeof window.renderCompetitionsHub === "function") window.renderCompetitionsHub();
+
+  window.showAdminToast("Base de données réinitialisée à zéro avec succès !");
 };
 
 // Filtrage instantané des tableaux d'administration
