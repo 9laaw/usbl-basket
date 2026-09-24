@@ -505,7 +505,39 @@ document.addEventListener("DOMContentLoaded", async () => {
   // UNIFIED DATABASE SYNCHRONIZATION WITH PHYSICAL JSON FILES & localStorage
   // ----------------------------------------------------------------------
 
+  // Helper functions for deletion tracking (Tombstones) to prevent resurrection on reload
+  window.getDeletedIds = (collectionKey) => {
+    try {
+      const raw = localStorage.getItem("usbl_deleted_" + collectionKey);
+      return raw ? JSON.parse(raw) : [];
+    } catch (e) {
+      return [];
+    }
+  };
+
+  window.recordDeletedId = (collectionKey, id) => {
+    if (!id) return;
+    const list = window.getDeletedIds(collectionKey);
+    const idStr = String(id);
+    if (!list.includes(idStr)) {
+      list.push(idStr);
+      try {
+        localStorage.setItem("usbl_deleted_" + collectionKey, JSON.stringify(list));
+      } catch (e) {}
+    }
+  };
+
+  window.unmarkDeletedId = (collectionKey, id) => {
+    if (!id) return;
+    const list = window.getDeletedIds(collectionKey).filter(x => x !== String(id));
+    try {
+      localStorage.setItem("usbl_deleted_" + collectionKey, JSON.stringify(list));
+    } catch (e) {}
+  };
+
   const loadCollection = async (fileName, localStorageKey, fallbackDefault) => {
+    const deletedIds = typeof window.getDeletedIds === "function" ? window.getDeletedIds(localStorageKey) : [];
+
     let localData = null;
     try {
       const stored = localStorage.getItem(localStorageKey);
@@ -513,6 +545,17 @@ document.addEventListener("DOMContentLoaded", async () => {
         localData = JSON.parse(stored);
         if (localStorageKey === "usbl_articles" && Array.isArray(localData)) {
           localData = localData.filter((a) => !isLegacyMockArticle(a));
+        }
+        if (Array.isArray(localData)) {
+          localData = localData.filter(item => {
+            const id = item.id ? String(item.id) : null;
+            const title = item.title ? String(item.title) : null;
+            if (id && deletedIds.includes(id)) return false;
+            if (title && deletedIds.includes(title)) return false;
+            return true;
+          });
+        } else if (typeof localData === "object" && localData !== null) {
+          deletedIds.forEach(id => delete localData[id]);
         }
       }
     } catch (e) {}
@@ -548,23 +591,35 @@ document.addEventListener("DOMContentLoaded", async () => {
           }
 
           // If both are arrays, merge them to preserve local browser changes alongside any server updates
-          if (Array.isArray(serverData) && Array.isArray(localData)) {
-            const cleanServer = localStorageKey === "usbl_articles"
-              ? serverData.filter((a) => !isLegacyMockArticle(a))
-              : [...serverData];
-            const cleanLocal = localStorageKey === "usbl_articles"
-              ? localData.filter((a) => !isLegacyMockArticle(a))
-              : [...localData];
+          if (Array.isArray(serverData) && (Array.isArray(localData) || localData === null)) {
+            const isArticles = localStorageKey === "usbl_articles";
+            const cleanServer = serverData.filter(item => {
+              if (isArticles && isLegacyMockArticle(item)) return false;
+              const id = item.id ? String(item.id) : null;
+              const title = item.title ? String(item.title) : null;
+              if (id && deletedIds.includes(id)) return false;
+              if (title && deletedIds.includes(title)) return false;
+              return true;
+            });
 
-            const merged = [...cleanServer];
-            cleanLocal.forEach(localItem => {
-              const exists = cleanServer.some(serverItem => {
-                if (localItem.id && serverItem.id) return localItem.id === serverItem.id;
-                if (localItem.title && serverItem.title) return localItem.title === serverItem.title;
+            const cleanLocal = (Array.isArray(localData) ? localData : []).filter(item => {
+              if (isArticles && isLegacyMockArticle(item)) return false;
+              const id = item.id ? String(item.id) : null;
+              const title = item.title ? String(item.title) : null;
+              if (id && deletedIds.includes(id)) return false;
+              if (title && deletedIds.includes(title)) return false;
+              return true;
+            });
+
+            const merged = [...cleanLocal];
+            cleanServer.forEach(serverItem => {
+              const exists = cleanLocal.some(localItem => {
+                if (localItem.id && serverItem.id) return String(localItem.id) === String(serverItem.id);
+                if (localItem.title && serverItem.title) return String(localItem.title) === String(serverItem.title);
                 return JSON.stringify(localItem) === JSON.stringify(serverItem);
               });
               if (!exists) {
-                merged.push(localItem);
+                merged.push(serverItem);
               }
             });
             localStorage.setItem(localStorageKey, JSON.stringify(merged));
@@ -585,11 +640,25 @@ document.addEventListener("DOMContentLoaded", async () => {
             return localData || fallbackDefault;
           }
 
-          // If both are objects (like rosters), merge them
+          // If both are objects (like rosters), merge them with localData taking precedence over serverData!
           if (typeof serverData === "object" && typeof localData === "object" && !Array.isArray(serverData) && !Array.isArray(localData)) {
-            const merged = { ...localData, ...serverData };
+            const cleanServer = { ...serverData };
+            deletedIds.forEach(teamId => delete cleanServer[teamId]);
+
+            const cleanLocal = { ...(localData || {}) };
+            deletedIds.forEach(teamId => delete cleanLocal[teamId]);
+
+            const merged = { ...cleanServer, ...cleanLocal };
+            deletedIds.forEach(teamId => delete merged[teamId]);
             localStorage.setItem(localStorageKey, JSON.stringify(merged));
             return merged;
+          }
+
+          if (typeof serverData === "object" && !Array.isArray(serverData)) {
+            const cleanServer = { ...serverData };
+            deletedIds.forEach(teamId => delete cleanServer[teamId]);
+            localStorage.setItem(localStorageKey, JSON.stringify(cleanServer));
+            return cleanServer;
           }
 
           localStorage.setItem(localStorageKey, JSON.stringify(serverData));
@@ -3606,6 +3675,8 @@ window.addVolunteer = () => {
       v.role = role;
       if (photo) v.photo = photo;
     }
+    window.unmarkDeletedId("usbl_volunteers", editId);
+    window.unmarkDeletedId("usbl_volunteers", `${firstname} ${lastname}`.trim());
     safeSetLocalStorage("usbl_volunteers", volunteers);
     window.saveCollectionToDisk("usbl_volunteers", volunteers);
     window.showAdminToast("Bénévole mis à jour avec succès !");
@@ -3617,6 +3688,8 @@ window.addVolunteer = () => {
       role: role,
       photo: photo || "",
     };
+    window.unmarkDeletedId("usbl_volunteers", newVol.id);
+    window.unmarkDeletedId("usbl_volunteers", `${firstname} ${lastname}`.trim());
     volunteers.push(newVol);
     safeSetLocalStorage("usbl_volunteers", volunteers);
     window.saveCollectionToDisk("usbl_volunteers", volunteers);
@@ -3636,6 +3709,11 @@ window.addVolunteer = () => {
 
 window.deleteVolunteer = (id) => {
   if (confirm("Êtes-vous sûr de vouloir supprimer ce bénévole ?")) {
+    const v = volunteers.find((x) => x.id === id);
+    window.recordDeletedId("usbl_volunteers", id);
+    if (v && v.firstname && v.lastname) {
+      window.recordDeletedId("usbl_volunteers", `${v.firstname} ${v.lastname}`.trim());
+    }
     volunteers = volunteers.filter((v) => v.id !== id);
     safeSetLocalStorage("usbl_volunteers", volunteers);
     window.saveCollectionToDisk("usbl_volunteers", volunteers);
@@ -3761,6 +3839,8 @@ window.addActualite = () => {
           articles[artIdx].images = galleryImages;
         }
       }
+      window.unmarkDeletedId("usbl_articles", editId);
+      window.unmarkDeletedId("usbl_articles", title);
       safeSetLocalStorage("usbl_articles", articles);
       window.saveCollectionToDisk("usbl_articles", articles);
       window.showAdminToast("Publication mise à jour avec succès !");
@@ -3776,6 +3856,8 @@ window.addActualite = () => {
         images: galleryImages,
       };
 
+      window.unmarkDeletedId("usbl_articles", newArt.id);
+      window.unmarkDeletedId("usbl_articles", title);
       articles.unshift(newArt);
       const saveSuccess = safeSetLocalStorage("usbl_articles", articles);
       if (!saveSuccess) {
@@ -3811,9 +3893,14 @@ window.deleteActualite = (indexOrId) => {
     } else if (typeof indexOrId === "string" && !isNaN(parseInt(indexOrId, 10)) && String(parseInt(indexOrId, 10)) === indexOrId) {
       idx = parseInt(indexOrId, 10);
     } else {
-      idx = articles.findIndex(a => a.id === indexOrId);
+      idx = articles.findIndex(a => a.id === indexOrId || a.title === indexOrId);
     }
     if (idx >= 0 && idx < articles.length) {
+      const art = articles[idx];
+      if (art) {
+        if (art.id) window.recordDeletedId("usbl_articles", art.id);
+        if (art.title) window.recordDeletedId("usbl_articles", art.title);
+      }
       articles.splice(idx, 1);
       safeSetLocalStorage("usbl_articles", articles);
       window.saveCollectionToDisk("usbl_articles", articles);
@@ -3822,6 +3909,8 @@ window.deleteActualite = (indexOrId) => {
       window.renderArticles();
       if (window.renderTicker) window.renderTicker();
       window.showAdminToast("Publication supprimée.");
+    } else if (indexOrId) {
+      window.recordDeletedId("usbl_articles", indexOrId);
     }
   }
 };
@@ -3877,6 +3966,8 @@ window.addPartner = () => {
       p.role = role || p.role || category;
       if (logo) p.logo = logo;
     }
+    window.unmarkDeletedId("usbl_partners", editId);
+    window.unmarkDeletedId("usbl_partners", name);
     safeSetLocalStorage("usbl_partners", partners);
     window.saveCollectionToDisk("usbl_partners", partners);
     window.showAdminToast("Partenaire mis à jour avec succès !");
@@ -3888,6 +3979,8 @@ window.addPartner = () => {
       role: role || category,
       logo: finalLogo,
     };
+    window.unmarkDeletedId("usbl_partners", newPart.id);
+    window.unmarkDeletedId("usbl_partners", name);
     partners.push(newPart);
     safeSetLocalStorage("usbl_partners", partners);
     window.saveCollectionToDisk("usbl_partners", partners);
@@ -3908,6 +4001,11 @@ window.addPartner = () => {
 
 window.deletePartner = (id) => {
   if (confirm("Êtes-vous sûr de vouloir supprimer ce partenaire ?")) {
+    const p = partners.find(x => x.id === id);
+    window.recordDeletedId("usbl_partners", id);
+    if (p && p.name) {
+      window.recordDeletedId("usbl_partners", p.name);
+    }
     partners = partners.filter((p) => p.id !== id);
     safeSetLocalStorage("usbl_partners", partners);
     window.saveCollectionToDisk("usbl_partners", partners);
@@ -4066,6 +4164,7 @@ window.addTeam = () => {
     rosters[editId].linkedCategory = linkedCategory || "";
     rosters[editId].ffbbLink = ffbb || "";
     if (photo) rosters[editId].photo = photo;
+    window.unmarkDeletedId("usbl_rosters", editId);
     safeSetLocalStorage("usbl_rosters", rosters);
     window.saveCollectionToDisk("usbl_rosters", rosters);
     window.showAdminToast("Équipe mise à jour avec succès !");
@@ -4082,6 +4181,7 @@ window.addTeam = () => {
       players: [],
       isCustom: true
     };
+    window.unmarkDeletedId("usbl_rosters", teamId);
     safeSetLocalStorage("usbl_rosters", rosters);
     window.saveCollectionToDisk("usbl_rosters", rosters);
     window.showAdminToast("Équipe créée avec succès !");
@@ -4103,6 +4203,7 @@ window.addTeam = () => {
 window.deleteTeam = (teamId) => {
   if (!rosters[teamId]) return;
   if (confirm(`Êtes-vous sûr de vouloir supprimer l'équipe "${rosters[teamId].name}" et tout son effectif ?`)) {
+    window.recordDeletedId("usbl_rosters", teamId);
     delete rosters[teamId];
     safeSetLocalStorage("usbl_rosters", rosters);
     window.saveCollectionToDisk("usbl_rosters", rosters);
@@ -4147,6 +4248,8 @@ window.addCoach = () => {
       safeSetLocalStorage("usbl_rosters", rosters);
       window.saveCollectionToDisk("usbl_rosters", rosters);
     }
+    window.unmarkDeletedId("usbl_coachs", editId);
+    window.unmarkDeletedId("usbl_coachs", `${firstname} ${lastname}`.trim());
     safeSetLocalStorage("usbl_coachs", coachs);
     window.saveCollectionToDisk("usbl_coachs", coachs);
     window.showAdminToast("Coach mis à jour avec succès !");
@@ -4163,6 +4266,8 @@ window.addCoach = () => {
       photo: photo || ""
     };
     coachs.push(newCoach);
+    window.unmarkDeletedId("usbl_coachs", coachId);
+    window.unmarkDeletedId("usbl_coachs", `${firstname} ${lastname}`.trim());
     safeSetLocalStorage("usbl_coachs", coachs);
     window.saveCollectionToDisk("usbl_coachs", coachs);
 
@@ -4192,6 +4297,10 @@ window.deleteCoach = (id) => {
   if (!c) return;
 
   if (confirm(`Êtes-vous sûr de vouloir supprimer le coach "${c.firstname} ${c.lastname}" ?`)) {
+    window.recordDeletedId("usbl_coachs", id);
+    if (c.firstname && c.lastname) {
+      window.recordDeletedId("usbl_coachs", `${c.firstname} ${c.lastname}`.trim());
+    }
     coachs = coachs.filter(x => x.id !== id);
     safeSetLocalStorage("usbl_coachs", coachs);
     window.saveCollectionToDisk("usbl_coachs", coachs);
