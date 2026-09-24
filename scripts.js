@@ -398,18 +398,29 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
-  // Fermer le menu mobile lors du clic sur un lien de navigation
+  // Gestion mobile des sous-menus et fermeture lors du clic sur un lien réel
   const navLinks = document.querySelectorAll(".main-nav a");
   navLinks.forEach((link) => {
-    link.addEventListener("click", () => {
-      if (window.innerWidth <= 768 && mainNav.classList.contains("active")) {
-        mainNav.classList.remove("active");
-        menuToggle.classList.remove("active");
+    link.addEventListener("click", (e) => {
+      if (window.innerWidth <= 768) {
+        const parentDropdown = link.closest(".nav-dropdown-wrapper");
+        const isDropdownParentLink = parentDropdown && link.parentElement === parentDropdown;
 
-        const spans = menuToggle.querySelectorAll("span");
-        spans[0].style.transform = "none";
-        spans[1].style.opacity = "1";
-        spans[2].style.transform = "none";
+        if (isDropdownParentLink) {
+          e.preventDefault();
+          parentDropdown.classList.toggle("open");
+          return;
+        }
+
+        if (mainNav.classList.contains("active")) {
+          mainNav.classList.remove("active");
+          menuToggle.classList.remove("active");
+
+          const spans = menuToggle.querySelectorAll("span");
+          spans[0].style.transform = "none";
+          spans[1].style.opacity = "1";
+          spans[2].style.transform = "none";
+        }
       }
     });
   });
@@ -2749,19 +2760,22 @@ window.openEditActualite = (indexOrId) => {
   window.openAdminModal("modal-news");
 };
 
+window.openCreateNews = window.openCreateActualite;
+window.openEditNews = window.openEditActualite;
+
 // 2. Bénévoles
 window.openCreateVolunteer = () => {
   const form = document.getElementById("admin-volunteer-form");
   if (form) form.reset();
-  const editId = document.getElementById("admin-vol-edit-id");
+  const editId = document.getElementById("admin-volunteer-edit-id") || document.getElementById("admin-vol-edit-id");
   if (editId) editId.value = "";
   const title = document.getElementById("modal-volunteer-title");
   if (title) title.innerHTML = `<span>👤</span> Ajouter un Bénévole`;
-  const submitBtn = document.getElementById("admin-vol-submit-btn");
+  const submitBtn = document.getElementById("admin-volunteer-submit-btn") || document.getElementById("admin-vol-submit-btn");
   if (submitBtn) submitBtn.textContent = "Enregistrer le bénévole";
-  const preview = document.getElementById("vol-preview");
+  const preview = document.getElementById("volunteer-photo-preview") || document.getElementById("vol-preview");
   if (preview) preview.innerHTML = `<span>Aucune photo sélectionnée</span>`;
-  const base64 = document.getElementById("admin-vol-base64");
+  const base64 = document.getElementById("admin-volunteer-base64") || document.getElementById("admin-vol-base64");
   if (base64) base64.value = "";
   window.openAdminModal("modal-volunteer");
 };
@@ -2774,20 +2788,23 @@ window.openEditVolunteer = (id) => {
   }
   const form = document.getElementById("admin-volunteer-form");
   if (form) form.reset();
-  const editId = document.getElementById("admin-vol-edit-id");
+  const editId = document.getElementById("admin-volunteer-edit-id") || document.getElementById("admin-vol-edit-id");
   if (editId) editId.value = v.id;
   const title = document.getElementById("modal-volunteer-title");
   if (title) title.innerHTML = `<span>✏️</span> Modifier le Bénévole`;
-  const submitBtn = document.getElementById("admin-vol-submit-btn");
+  const submitBtn = document.getElementById("admin-volunteer-submit-btn") || document.getElementById("admin-vol-submit-btn");
   if (submitBtn) submitBtn.textContent = "Mettre à jour le bénévole";
 
-  if (document.getElementById("admin-vol-firstname")) document.getElementById("admin-vol-firstname").value = v.firstname || "";
-  if (document.getElementById("admin-vol-lastname")) document.getElementById("admin-vol-lastname").value = v.lastname || "";
-  if (document.getElementById("admin-vol-role")) document.getElementById("admin-vol-role").value = v.role || "";
+  const fnInput = document.getElementById("admin-volunteer-firstname") || document.getElementById("admin-vol-firstname");
+  if (fnInput) fnInput.value = v.firstname || "";
+  const lnInput = document.getElementById("admin-volunteer-lastname") || document.getElementById("admin-vol-lastname");
+  if (lnInput) lnInput.value = v.lastname || "";
+  const roleInput = document.getElementById("admin-volunteer-role") || document.getElementById("admin-vol-role");
+  if (roleInput) roleInput.value = v.role || "";
 
-  const base64 = document.getElementById("admin-vol-base64");
+  const base64 = document.getElementById("admin-volunteer-base64") || document.getElementById("admin-vol-base64");
   if (base64) base64.value = v.photo || "";
-  const preview = document.getElementById("vol-preview");
+  const preview = document.getElementById("volunteer-photo-preview") || document.getElementById("vol-preview");
   if (preview) {
     if (v.photo) {
       preview.innerHTML = `<img src="${v.photo}" alt="Preview" style="width: 100%; height: 100%; object-fit: cover;">`;
@@ -2802,15 +2819,15 @@ window.openEditVolunteer = (id) => {
 window.openCreatePartner = () => {
   const form = document.getElementById("admin-partner-form");
   if (form) form.reset();
-  const editId = document.getElementById("admin-part-edit-id");
+  const editId = document.getElementById("admin-partner-edit-id") || document.getElementById("admin-part-edit-id");
   if (editId) editId.value = "";
   const title = document.getElementById("modal-partner-title");
   if (title) title.innerHTML = `<span>🤝</span> Ajouter un Partenaire`;
-  const submitBtn = document.getElementById("admin-part-submit-btn");
+  const submitBtn = document.getElementById("admin-partner-submit-btn") || document.getElementById("admin-part-submit-btn");
   if (submitBtn) submitBtn.textContent = "Enregistrer le partenaire";
-  const preview = document.getElementById("part-preview");
+  const preview = document.getElementById("partner-logo-preview") || document.getElementById("part-preview");
   if (preview) preview.innerHTML = `<span>Aucun logo sélectionné</span>`;
-  const base64 = document.getElementById("admin-part-base64");
+  const base64 = document.getElementById("admin-partner-base64") || document.getElementById("admin-part-base64");
   if (base64) base64.value = "";
   window.openAdminModal("modal-partner");
 };
@@ -2823,20 +2840,23 @@ window.openEditPartner = (id) => {
   }
   const form = document.getElementById("admin-partner-form");
   if (form) form.reset();
-  const editId = document.getElementById("admin-part-edit-id");
+  const editId = document.getElementById("admin-partner-edit-id") || document.getElementById("admin-part-edit-id");
   if (editId) editId.value = p.id;
   const title = document.getElementById("modal-partner-title");
   if (title) title.innerHTML = `<span>✏️</span> Modifier le Partenaire`;
-  const submitBtn = document.getElementById("admin-part-submit-btn");
+  const submitBtn = document.getElementById("admin-partner-submit-btn") || document.getElementById("admin-part-submit-btn");
   if (submitBtn) submitBtn.textContent = "Mettre à jour le partenaire";
 
-  if (document.getElementById("admin-part-name")) document.getElementById("admin-part-name").value = p.name || "";
-  if (document.getElementById("admin-part-category")) document.getElementById("admin-part-category").value = p.category || "Majeurs";
-  if (document.getElementById("admin-part-role")) document.getElementById("admin-part-role").value = p.role || "";
+  const nameInput = document.getElementById("admin-partner-name") || document.getElementById("admin-part-name");
+  if (nameInput) nameInput.value = p.name || "";
+  const catInput = document.getElementById("admin-partner-category") || document.getElementById("admin-part-category");
+  if (catInput) catInput.value = p.category || "Partenaire Majeur";
+  const roleInput = document.getElementById("admin-partner-role") || document.getElementById("admin-part-role");
+  if (roleInput) roleInput.value = p.role || "";
 
-  const base64 = document.getElementById("admin-part-base64");
+  const base64 = document.getElementById("admin-partner-base64") || document.getElementById("admin-part-base64");
   if (base64) base64.value = p.logo || "";
-  const preview = document.getElementById("part-preview");
+  const preview = document.getElementById("partner-logo-preview") || document.getElementById("part-preview");
   if (preview) {
     if (p.logo && (p.logo.startsWith("data:image") || p.logo.startsWith("http"))) {
       preview.innerHTML = `<img src="${p.logo}" alt="Preview" style="width: 100%; height: 100%; object-fit: cover;">`;
@@ -2857,7 +2877,7 @@ window.openCreateTeam = () => {
   if (title) title.innerHTML = `<span>🏀</span> Créer une Équipe`;
   const submitBtn = document.getElementById("admin-team-submit-btn");
   if (submitBtn) submitBtn.textContent = "Enregistrer l'équipe";
-  const preview = document.getElementById("team-preview");
+  const preview = document.getElementById("team-photo-preview") || document.getElementById("team-preview");
   if (preview) preview.innerHTML = `<span>Aucune photo sélectionnée</span>`;
   const base64 = document.getElementById("admin-team-base64");
   if (base64) base64.value = "";
@@ -2889,7 +2909,7 @@ window.openEditTeam = (teamId) => {
 
   const base64 = document.getElementById("admin-team-base64");
   if (base64) base64.value = team.photo || "";
-  const preview = document.getElementById("team-preview");
+  const preview = document.getElementById("team-photo-preview") || document.getElementById("team-preview");
   if (preview) {
     if (team.photo) {
       preview.innerHTML = `<img src="${team.photo}" alt="Preview" style="width: 100%; height: 100%; object-fit: cover;">`;
@@ -3503,11 +3523,18 @@ window.triggerAdminFFBBSync = async (btnEl) => {
 window.previewImage = (event, previewId) => {
   const file = event.target.files[0];
   const previewContainer = document.getElementById(previewId);
-  let hiddenInputId = "admin-vol-base64";
-  if (previewId === "vol-preview") hiddenInputId = "admin-vol-base64";
-  else if (previewId === "part-preview") hiddenInputId = "admin-part-base64";
-  else if (previewId === "team-preview") hiddenInputId = "admin-team-base64";
-  else if (previewId === "coach-preview") hiddenInputId = "admin-coach-base64";
+  let hiddenInputId = "admin-volunteer-base64";
+  if (previewId === "vol-preview" || previewId === "volunteer-photo-preview") {
+    hiddenInputId = document.getElementById("admin-volunteer-base64") ? "admin-volunteer-base64" : "admin-vol-base64";
+  } else if (previewId === "part-preview" || previewId === "partner-logo-preview") {
+    hiddenInputId = document.getElementById("admin-partner-base64") ? "admin-partner-base64" : "admin-part-base64";
+  } else if (previewId === "team-preview" || previewId === "team-photo-preview") {
+    hiddenInputId = "admin-team-base64";
+  } else if (previewId === "coach-preview" || previewId === "coach-photo-preview") {
+    hiddenInputId = document.getElementById("admin-coach-base64") ? "admin-coach-base64" : "coach-photo-base64";
+  } else if (previewId === "player-photo-preview") {
+    hiddenInputId = "admin-player-base64";
+  }
   
   const hiddenInput = document.getElementById(hiddenInputId);
 
@@ -3555,12 +3582,16 @@ window.logoutAdmin = () => {
 
 // CRUD Actions: BÉNÉVOLES
 window.addVolunteer = () => {
-  const editIdInput = document.getElementById("admin-vol-edit-id");
+  const editIdInput = document.getElementById("admin-volunteer-edit-id") || document.getElementById("admin-vol-edit-id");
   const editId = editIdInput ? editIdInput.value : "";
-  const firstname = document.getElementById("admin-vol-firstname").value.trim();
-  const lastname = document.getElementById("admin-vol-lastname").value.trim();
-  const role = document.getElementById("admin-vol-role").value.trim();
-  const photo = document.getElementById("admin-vol-base64").value;
+  const fnInput = document.getElementById("admin-volunteer-firstname") || document.getElementById("admin-vol-firstname");
+  const firstname = fnInput ? fnInput.value.trim() : "";
+  const lnInput = document.getElementById("admin-volunteer-lastname") || document.getElementById("admin-vol-lastname");
+  const lastname = lnInput ? lnInput.value.trim() : "";
+  const roleInput = document.getElementById("admin-volunteer-role") || document.getElementById("admin-vol-role");
+  const role = roleInput ? roleInput.value.trim() : "";
+  const base64Input = document.getElementById("admin-volunteer-base64") || document.getElementById("admin-vol-base64");
+  const photo = base64Input ? base64Input.value : "";
 
   if (!firstname || !lastname || !role) {
     window.showAdminToast("Veuillez renseigner le prénom, le nom et le rôle.", "error");
@@ -3593,12 +3624,14 @@ window.addVolunteer = () => {
   }
 
   window.closeAdminModal("modal-volunteer");
-  document.getElementById("admin-volunteer-form").reset();
-  document.getElementById("vol-preview").innerHTML = `<span>Aucune photo sélectionnée</span>`;
-  document.getElementById("admin-vol-base64").value = "";
+  const form = document.getElementById("admin-volunteer-form");
+  if (form) form.reset();
+  const preview = document.getElementById("volunteer-photo-preview") || document.getElementById("vol-preview");
+  if (preview) preview.innerHTML = `<span>Aucune photo sélectionnée</span>`;
+  if (base64Input) base64Input.value = "";
 
   window.renderAdminTables();
-  window.renderVolunteers();
+  if (typeof window.renderVolunteers === "function") window.renderVolunteers();
 };
 
 window.deleteVolunteer = (id) => {
@@ -3770,18 +3803,31 @@ window.addActualite = () => {
   }
 };
 
-window.deleteActualite = (index) => {
+window.deleteActualite = (indexOrId) => {
   if (confirm("Êtes-vous sûr de vouloir supprimer cette publication ?")) {
-    articles.splice(index, 1);
-    safeSetLocalStorage("usbl_articles", articles);
-    window.saveCollectionToDisk("usbl_articles", articles);
+    let idx = -1;
+    if (typeof indexOrId === "number") {
+      idx = indexOrId;
+    } else if (typeof indexOrId === "string" && !isNaN(parseInt(indexOrId, 10)) && String(parseInt(indexOrId, 10)) === indexOrId) {
+      idx = parseInt(indexOrId, 10);
+    } else {
+      idx = articles.findIndex(a => a.id === indexOrId);
+    }
+    if (idx >= 0 && idx < articles.length) {
+      articles.splice(idx, 1);
+      safeSetLocalStorage("usbl_articles", articles);
+      window.saveCollectionToDisk("usbl_articles", articles);
 
-    window.renderAdminTables();
-    window.renderArticles();
-    if (window.renderTicker) window.renderTicker();
-    window.showAdminToast("Publication supprimée.");
+      window.renderAdminTables();
+      window.renderArticles();
+      if (window.renderTicker) window.renderTicker();
+      window.showAdminToast("Publication supprimée.");
+    }
   }
 };
+
+window.addNews = window.addActualite;
+window.deleteNews = window.deleteActualite;
 
 // Écouteur de synchronisation multi-onglets pour actualités
 window.addEventListener("storage", (e) => {
@@ -3800,22 +3846,26 @@ window.addEventListener("storage", (e) => {
 
 // CRUD Actions: PARTENAIRES
 window.addPartner = () => {
-  const editIdInput = document.getElementById("admin-part-edit-id");
+  const editIdInput = document.getElementById("admin-partner-edit-id") || document.getElementById("admin-part-edit-id");
   const editId = editIdInput ? editIdInput.value : "";
-  const name = document.getElementById("admin-part-name").value.trim();
-  const category = document.getElementById("admin-part-category").value;
-  const role = document.getElementById("admin-part-role").value.trim();
-  const logo = document.getElementById("admin-part-base64").value;
+  const nameInput = document.getElementById("admin-partner-name") || document.getElementById("admin-part-name");
+  const name = nameInput ? nameInput.value.trim() : "";
+  const catInput = document.getElementById("admin-partner-category") || document.getElementById("admin-part-category");
+  const category = catInput ? catInput.value : "Partenaire Majeur";
+  const roleInput = document.getElementById("admin-partner-role") || document.getElementById("admin-part-role");
+  const role = roleInput ? roleInput.value.trim() : "";
+  const base64Input = document.getElementById("admin-partner-base64") || document.getElementById("admin-part-base64");
+  const logo = base64Input ? base64Input.value : "";
 
-  if (!name || !category || !role) {
-    window.showAdminToast("Veuillez renseigner le nom, la catégorie et le rôle.", "error");
+  if (!name) {
+    window.showAdminToast("Veuillez renseigner le nom de l'entreprise ou du partenaire.", "error");
     return;
   }
 
   let finalLogo = logo;
   if (!finalLogo) {
-    if (category === "Institutionnels") finalLogo = "🏛️";
-    else if (category === "Majeurs") finalLogo = "🤝";
+    if (category.toLowerCase().includes("institution")) finalLogo = "🏛️";
+    else if (category.toLowerCase().includes("majeur")) finalLogo = "🤝";
     else finalLogo = "🏦";
   }
 
@@ -3824,7 +3874,7 @@ window.addPartner = () => {
     if (p) {
       p.name = name;
       p.category = category;
-      p.role = role;
+      p.role = role || p.role || category;
       if (logo) p.logo = logo;
     }
     safeSetLocalStorage("usbl_partners", partners);
@@ -3835,7 +3885,7 @@ window.addPartner = () => {
       id: "part-" + Date.now(),
       name: name,
       category: category,
-      role: role,
+      role: role || category,
       logo: finalLogo,
     };
     partners.push(newPart);
@@ -3845,13 +3895,15 @@ window.addPartner = () => {
   }
 
   window.closeAdminModal("modal-partner");
-  document.getElementById("admin-partner-form").reset();
-  document.getElementById("part-preview").innerHTML = `<span>Aucun logo sélectionné</span>`;
-  document.getElementById("admin-part-base64").value = "";
+  const form = document.getElementById("admin-partner-form");
+  if (form) form.reset();
+  const preview = document.getElementById("partner-logo-preview") || document.getElementById("part-preview");
+  if (preview) preview.innerHTML = `<span>Aucun logo sélectionné</span>`;
+  if (base64Input) base64Input.value = "";
 
   window.renderAdminTables();
-  window.renderPartners();
-  window.renderSponsorsBand();
+  if (typeof window.renderPartners === "function") window.renderPartners();
+  if (typeof window.renderSponsorsBand === "function") window.renderSponsorsBand();
 };
 
 window.deletePartner = (id) => {
@@ -4036,9 +4088,12 @@ window.addTeam = () => {
   }
 
   window.closeAdminModal("modal-team");
-  document.getElementById("admin-team-form").reset();
-  document.getElementById("team-preview").innerHTML = `<span>Aucune photo sélectionnée</span>`;
-  document.getElementById("admin-team-base64").value = "";
+  const teamForm = document.getElementById("admin-team-form");
+  if (teamForm) teamForm.reset();
+  const teamPrev = document.getElementById("team-photo-preview") || document.getElementById("team-preview");
+  if (teamPrev) teamPrev.innerHTML = `<span>Aucune photo sélectionnée</span>`;
+  const teamB64 = document.getElementById("admin-team-base64");
+  if (teamB64) teamB64.value = "";
 
   window.renderAdminTables();
   window.renderCompetitionPages();

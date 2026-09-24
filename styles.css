@@ -4216,8 +4216,13 @@ body.theme-kinetic .sponsors-row {
         width: 100% !important;
         min-width: 100% !important;
     }
-    .nav-dropdown-wrapper:hover .nav-dropdown-menu {
-        display: flex;
+    .nav-dropdown-wrapper:hover .nav-dropdown-menu,
+    .nav-dropdown-wrapper.open .nav-dropdown-menu {
+        display: flex !important;
+    }
+    .nav-dropdown-wrapper.open > a .dropdown-arrow {
+        transform: rotate(180deg);
+        display: inline-block;
     }
     .nav-submenu-wrapper {
         display: flex;
