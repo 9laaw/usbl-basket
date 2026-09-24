@@ -666,12 +666,6 @@ document.addEventListener("DOMContentLoaded", async () => {
               return true;
             });
 
-            // Si le serveur a une base vide (base vidée pour le club), on aligne le cache local immédiatement
-            if (cleanServer.length === 0) {
-              localStorage.setItem(localStorageKey, JSON.stringify([]));
-              return [];
-            }
-
             const cleanLocal = (Array.isArray(localData) ? localData : []).filter(item => {
               if (isArticles && isLegacyMockArticle(item)) return false;
               if (isCoachs && isLegacyMockCoach(item)) return false;
@@ -682,13 +676,15 @@ document.addEventListener("DOMContentLoaded", async () => {
               return true;
             });
 
-            // Le serveur fait foi
             const merged = [...cleanServer];
-            // Ajouter d'éventuels brouillons locaux non encore sur le serveur
             cleanLocal.forEach(localItem => {
-              if (localItem && localItem.isCustom) {
-                const exists = merged.some(s => s.id && localItem.id && String(s.id) === String(localItem.id));
-                if (!exists) merged.push(localItem);
+              const exists = merged.some(s => {
+                if (s.id && localItem.id) return String(s.id) === String(localItem.id);
+                if (s.title && localItem.title) return String(s.title) === String(localItem.title);
+                return JSON.stringify(s) === JSON.stringify(localItem);
+              });
+              if (!exists) {
+                merged.push(localItem);
               }
             });
 
@@ -705,24 +701,16 @@ document.addEventListener("DOMContentLoaded", async () => {
               }
             }
 
-            // Si le serveur est vide (base vidée pour le club), on aligne le cache local immédiatement
-            if (Object.keys(cleanServer).length === 0) {
-              localStorage.setItem(localStorageKey, JSON.stringify({}));
-              return {};
-            }
-
-            // Le serveur fait foi
-            const merged = { ...cleanServer };
+            const cleanLocal = {};
             if (localData && typeof localData === "object" && !Array.isArray(localData)) {
               for (const [k, v] of Object.entries(localData)) {
-                if (v && v.isCustom && !deletedIds.includes(k) && !isLegacyMockTeam(k, v)) {
-                  if (!merged[k]) {
-                    merged[k] = v;
-                  }
+                if (!isLegacyMockTeam(k, v) && !deletedIds.includes(k)) {
+                  cleanLocal[k] = v;
                 }
               }
             }
 
+            const merged = { ...cleanServer, ...cleanLocal };
             localStorage.setItem(localStorageKey, JSON.stringify(merged));
             return merged;
           }
@@ -832,14 +820,14 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   // Initialiser les rendus
-  renderArticles();
-  renderTicker();
-  renderScores();
-  renderCompetitionPages();
-  renderVolunteers();
-  renderPartners();
-  renderSponsorsBand();
-  renderCompetitionsHub();
+  if (typeof renderArticles === "function") renderArticles();
+  if (typeof renderTicker === "function") renderTicker();
+  if (typeof renderScores === "function") renderScores();
+  if (typeof window.renderCompetitionPages === "function") window.renderCompetitionPages();
+  if (typeof window.renderVolunteers === "function") window.renderVolunteers();
+  if (typeof window.renderPartners === "function") window.renderPartners();
+  if (typeof renderSponsorsBand === "function") renderSponsorsBand();
+  if (typeof window.renderCompetitionsHub === "function") window.renderCompetitionsHub();
   if (typeof window.initCategoryPdfPage === "function") {
     window.initCategoryPdfPage();
   }
@@ -881,7 +869,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (isAuth) {
       document.getElementById("page-admin-login").style.display = "none";
       document.getElementById("page-admin-dashboard").style.display = "block";
-      renderAdminTables();
+      if (typeof window.renderAdminTables === "function") window.renderAdminTables();
     } else {
       document.getElementById("page-admin-login").style.display = "block";
       document.getElementById("page-admin-dashboard").style.display = "none";
@@ -1424,8 +1412,8 @@ const competitionTeamsData = {
         diff: "-54",
       },
     ],
-    roster: rosters.rm3.players,
-    coach: rosters.rm3.coach,
+    roster: rosters?.rm3?.players || [],
+    coach: rosters?.rm3?.coach || "",
   },
   rmu21: {
     playedMatches: [
@@ -1518,8 +1506,8 @@ const competitionTeamsData = {
         diff: "-68",
       },
     ],
-    roster: rosters.rmu21.players,
-    coach: rosters.rmu21.coach,
+    roster: rosters?.rmu21?.players || [],
+    coach: rosters?.rmu21?.coach || "",
   },
   dmu18: {
     playedMatches: [
@@ -1580,8 +1568,8 @@ const competitionTeamsData = {
       { pos: 4, team: "Jegun", pts: 9, j: 8, g: 2, p: 6, diff: "-24" },
       { pos: 5, team: "Fleurance", pts: 8, j: 8, g: 1, p: 7, diff: "-18" },
     ],
-    roster: rosters.dmu18.players,
-    coach: rosters.dmu18.coach,
+    roster: rosters?.dmu18?.players || [],
+    coach: rosters?.dmu18?.coach || "",
   },
   dmu13: {
     playedMatches: [
@@ -1658,8 +1646,8 @@ const competitionTeamsData = {
       { pos: 4, team: "Cugnaux", pts: 10, j: 9, g: 2, p: 7, diff: "-44" },
       { pos: 5, team: "Auch 3", pts: 8, j: 9, g: 1, p: 8, diff: "-30" },
     ],
-    roster: rosters.dmu13.players,
-    coach: rosters.dmu13.coach,
+    roster: rosters?.dmu13?.players || [],
+    coach: rosters?.dmu13?.coach || "",
   },
 };
 
@@ -2682,7 +2670,9 @@ window.openAdminModal = (modalId) => {
   if (formBox) {
     formBox.classList.add("open");
     formBox.style.display = "block";
-    formBox.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    if (typeof formBox.scrollIntoView === "function") {
+      formBox.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
     return;
   }
   const modal = document.getElementById(modalId);
@@ -2726,8 +2716,10 @@ window.showAdminToast = (message, type = "success") => {
   setTimeout(() => {
     toast.style.opacity = "0";
     toast.style.transform = "translateX(100%)";
-    toast.style.transition = "all 0.3s ease";
-    setTimeout(() => toast.remove(), 300);
+    setTimeout(() => {
+      if (toast && typeof toast.remove === "function") toast.remove();
+      else if (toast && toast.parentNode) toast.parentNode.removeChild(toast);
+    }, 300);
   }, 4000);
 };
 
@@ -3743,7 +3735,7 @@ window.loginAdmin = () => {
     if (loginPage) loginPage.style.display = "none";
     if (dashPage) {
       dashPage.style.display = "block";
-      renderAdminTables();
+      if (typeof window.renderAdminTables === "function") window.renderAdminTables();
     }
   } else {
     if (errorBox) {

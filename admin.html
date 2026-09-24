@@ -111,22 +111,6 @@
                         <button type="button" class="btn-simple-action btn-simple-logout" onclick="window.logoutAdmin()">Déconnexion ↩</button>
                     </div>
                 </div>
-                
-                <!-- Barre d'outils et de synchronisation des données -->
-                <div class="admin-sync-bar" style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; padding: 12px 18px; background: #ffffff; border: 1px solid #e5e0d8; border-radius: 8px; margin-bottom: 25px; box-shadow: 0 2px 8px rgba(0,0,0,0.02);">
-                    <div style="display: flex; align-items: center; gap: 10px;">
-                        <span id="sync-status-indicator" style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #10b981;"></span>
-                        <span id="sync-status-text" style="font-size: 0.84rem; color: #4b5563; font-weight: 500;">Base de données synchronisée (En ligne &amp; Local)</span>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
-                        <button type="button" class="btn-simple-action" onclick="window.exportDatabaseBackup()" title="Télécharger une copie complète de la base de données au format JSON" style="font-size: 0.82rem; padding: 6px 14px; border-radius: 6px;">
-                            <span>💾</span> Exporter les données (JSON)
-                        </button>
-                        <button type="button" class="btn-simple-action" onclick="window.resetDatabaseForClub()" title="Vider complètement tous les articles, effectifs et données pour livrer un prototype propre" style="font-size: 0.82rem; padding: 6px 14px; border-radius: 6px; color: #dc2626; border-color: rgba(220, 38, 38, 0.3);">
-                            <span>🗑️</span> Vider le cache &amp; Réinitialiser
-                        </button>
-                    </div>
-                </div>
 
                 <!-- Navigation épurée par onglets -->
                 <div class="admin-simple-nav">
