@@ -10,6 +10,10 @@
       "use": "@vercel/static"
     },
     {
+      "src": "pages/*.html",
+      "use": "@vercel/static"
+    },
+    {
       "src": "*.css",
       "use": "@vercel/static"
     },

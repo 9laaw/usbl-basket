@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Infrastructures | Basket L'Isle-Jourdain</title>
-    <meta name="description" content="Découvrez les trois gymnases officiels du basketball à L'Isle-Jourdain : Complexe Gasco'Sport, Gymnase Louise Michel et Gymnase Laëtitia Moussard.">
+    <title>USBL — Présentation de la section masculine | Basket L'Isle-Jourdain</title>
+    <meta name="description" content="Présentation de l'Union Sportive Basket Lislois : histoire du club, équipes engagées en championnat, salle Gasco'Sport et partenaires.">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="styles.css?v=4.0">
-    <link rel="icon" type="image/png" href="assets/logo_usbl.png">
+    <link rel="stylesheet" href="../styles.css?v=4.0">
+    <link rel="icon" type="image/png" href="../assets/logo_usbl.png">
     <style>
         /* Anti-underline enforcement */
         header.main-header,
@@ -33,8 +33,8 @@
            STYLE ÉPURÉ ET ÉDITORIAL (RÈGLES STRICTES : ZÉRO BOX, ZÉRO SUPERFLU)
            ------------------------------------------------------------- */
         :root {
-            --primary-color: #D21A00;
-            --primary-hover: #A31609;
+            --club-color: #D21A00;
+            --club-hover: #A31609;
             --page-text: #1f1b1a;
             --muted-text: #595350;
         }
@@ -44,6 +44,7 @@
             background-color: #ffffff;
         }
 
+        /* En-tête de page sobre harmonisé avec le dégradé rouge */
         .editorial-header-banner {
             background: linear-gradient(135deg, #580c01 0%, #350702 32%, #1a0504 65%, #100302 100%);
             border-bottom: 2px solid rgba(139, 18, 0, 0.4);
@@ -60,8 +61,8 @@
         }
 
         .editorial-header-logo {
-            width: 100px;
-            height: 100px;
+            width: 110px;
+            height: 110px;
             object-fit: contain;
             flex-shrink: 0;
         }
@@ -85,11 +86,11 @@
             display: flex;
             gap: 20px;
             flex-wrap: wrap;
-            font-size: 0.88rem;
+            font-size: 0.85rem;
         }
 
         .editorial-header-nav a {
-            color: rgba(255, 255, 255, 0.85);
+            color: rgba(255, 255, 255, 0.8);
             text-decoration: underline !important;
             text-underline-offset: 3px;
         }
@@ -98,6 +99,7 @@
             color: #ffffff;
         }
 
+        /* Corps de page */
         .editorial-page-wrap {
             max-width: 860px;
             margin: 60px auto 100px auto;
@@ -105,63 +107,135 @@
         }
 
         .editorial-block {
-            margin-bottom: 70px;
-        }
-
-        .editorial-block:last-child {
-            margin-bottom: 20px;
+            margin-bottom: 60px;
         }
 
         .editorial-block h2 {
             font-family: var(--font-heading);
-            font-size: 2.1rem;
+            font-size: 1.9rem;
             color: var(--page-text);
-            margin: 0 0 10px 0;
+            margin: 0 0 20px 0;
             font-weight: 700;
         }
 
-        .gym-address {
-            font-size: 1.05rem;
-            line-height: 1.6;
-            color: var(--muted-text);
-            margin: 0 0 24px 0;
+        .editorial-block h3 {
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+            color: var(--page-text);
+            margin: 28px 0 10px 0;
+            font-weight: 600;
         }
 
-        .gym-address a {
-            color: var(--primary-color);
+        .editorial-block p {
+            font-size: 1.02rem;
+            line-height: 1.75;
+            color: var(--page-text);
+            margin: 0 0 16px 0;
+        }
+
+        .editorial-block a {
+            color: var(--club-color);
             text-decoration: underline !important;
             text-underline-offset: 3px;
             font-weight: 500;
-            margin-left: 4px;
         }
 
-        .gym-address a:hover {
-            color: var(--primary-hover);
+        .editorial-block a:hover {
+            color: var(--club-hover);
         }
 
+        /* Photographies sobres avec légende */
         .editorial-photo {
-            margin: 0;
+            margin: 24px 0 30px 0;
             padding: 0;
         }
 
         .editorial-photo img {
             width: 100%;
             height: auto;
-            max-height: 520px;
+            max-height: 460px;
             object-fit: cover;
             display: block;
         }
 
-        .photo-placeholder-notice {
-            background: #faf8f6;
-            border: 1px dashed #d8d0c9;
-            padding: 60px 24px;
-            text-align: center;
+        .editorial-photo figcaption {
+            font-size: 0.85rem;
             color: var(--muted-text);
-            font-size: 0.95rem;
+            margin-top: 8px;
             font-style: italic;
         }
 
+        /* Fiche d'identité sous forme de liste de définition épurée */
+        .identity-dl {
+            margin: 16px 0 0 0;
+            padding: 0;
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            row-gap: 12px;
+            column-gap: 20px;
+            font-size: 0.98rem;
+            line-height: 1.5;
+        }
+
+        .identity-dl dt {
+            color: var(--muted-text);
+            font-weight: 500;
+        }
+
+        .identity-dl dd {
+            margin: 0;
+            color: var(--page-text);
+            font-weight: 600;
+        }
+
+        /* Chiffres clés en typographie brute (sans encadré ni bordure) */
+        .stats-plain-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin: 28px 0 10px 0;
+        }
+
+        .stats-plain-item .stat-digits {
+            font-family: var(--font-heading);
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--club-color);
+            line-height: 1;
+            margin-bottom: 6px;
+        }
+
+        .stats-plain-item .stat-text {
+            font-size: 0.9rem;
+            color: var(--muted-text);
+            line-height: 1.4;
+        }
+
+        /* Logos partenaires épurés */
+        .partners-plain-list {
+            display: flex;
+            align-items: center;
+            gap: 36px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        .partners-plain-list img {
+            height: 34px;
+            width: auto;
+            max-width: 130px;
+            object-fit: contain;
+            filter: grayscale(100%);
+            opacity: 0.75;
+            transition: opacity 0.2s ease;
+        }
+
+        .partners-plain-list img:hover {
+            opacity: 1;
+            filter: grayscale(0%);
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
             .editorial-header-container {
                 flex-direction: column;
@@ -171,26 +245,34 @@
             .editorial-header-text h1 {
                 font-size: 2.1rem;
             }
-            .editorial-block h2 {
-                font-size: 1.75rem;
+            .identity-dl {
+                grid-template-columns: 1fr;
+                row-gap: 4px;
+            }
+            .identity-dl dt {
+                margin-top: 10px;
+            }
+            .stats-plain-row {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
             }
         }
     </style>
 </head>
-<body class="is-club-page">
+<body data-club="usbl" class="is-club-page">
 
     <!-- NAVIGATION COMMUNE -->
         <!-- HEADER / NAVIGATION -->
     <header class="main-header">
         <div class="container header-container">
-            <a href="index.html" class="logo-area" aria-label="Accueil USBL BCL">
-                <img src="assets/logo_usbl_bcl.jpg" alt="Logo USBL BCL" class="club-logo-img">
+            <a href="../index.html" class="logo-area" aria-label="Accueil USBL BCL">
+                <img src="../assets/logo_usbl_bcl.jpg" alt="Logo USBL BCL" class="club-logo-img">
             </a>
 
             <nav class="main-nav">
                 <ul>
                     <li class="nav-dropdown-wrapper">
-                        <a href="index.html" class="nav-link" id="nav-leclub" style="text-decoration: none !important; border-bottom: none !important;">Les clubs <span class="dropdown-arrow">▼</span></a>
+                        <a href="../index.html" class="nav-link" id="nav-leclub" style="text-decoration: none !important; border-bottom: none !important;">Les clubs <span class="dropdown-arrow">▼</span></a>
                         <ul class="nav-dropdown-menu">
                             <li class="nav-submenu-wrapper">
                                 <a href="qui-sommes-nous.html" class="nav-submenu-toggle" style="text-decoration: none !important; border-bottom: none !important;">Qui sommes-nous ? <span class="submenu-arrow">▸</span></a>
@@ -228,68 +310,24 @@
         </div>
     </header>
 
-    <!-- EN-TÊTE ÉDITORIAL -->
-    <header class="editorial-header-banner">
-        <div class="editorial-header-container">
-            <img src="assets/logo_usbl.png" alt="Logo USBL" class="editorial-header-logo">
-            <div class="editorial-header-text">
-                <h1>Nos infrastructures</h1>
-                <p class="editorial-header-sub">Les trois salles de basketball de L'Isle-Jourdain.</p>
-                <nav class="editorial-header-nav">
-                    <a href="#gascosport">Salle Gasco'Sport</a>
-                    <a href="#louise-michel">Gymnase Louise Michel</a>
-                    <a href="#laetitia-moussard">Gymnase Laëtitia Moussard</a>
-                </nav>
+    <!-- CONTENEUR DYNAMIQUE ET 100% PERSONNALISABLE DU CLUB -->
+    <div id="club-presentation-wrapper" data-club="usbl">
+        <div class="club-empty-state-wrap">
+            <div class="club-empty-state-card">
+                <img src="../assets/logo_usbl.png" alt="Logo USBL Spartiates" class="club-empty-state-logo">
+                <h1 class="club-empty-state-title">Union Sportive Basket Lislois</h1>
+                <div class="club-empty-state-tag">Page en cours de création</div>
+                <p class="club-empty-state-desc">
+                    Le club est actuellement en train de préparer la présentation détaillée de l'association.<br>
+                    Revenez très prochainement pour découvrir son histoire, ses équipes et ses projets.
+                </p>
+                <div class="club-empty-state-actions">
+                    <a href="../index.html" class="btn btn-outline">Retour à l'accueil</a>
+                    <a href="competitions.html#section-masculine" class="btn btn-outline">Voir les compétitions</a>
+                </div>
             </div>
         </div>
-    </header>
-
-    <!-- CONTENU PRINCIPAL -->
-    <main class="editorial-page-wrap">
-
-        <!-- 1. SALLE GASCO'SPORT -->
-        <section id="gascosport" class="editorial-block">
-            <h2>Salle Gasco'Sport</h2>
-            <p class="gym-address">
-                33 rue de Rozès, 32600 L'Isle-Jourdain &mdash;
-                <a href="https://maps.google.com/?q=Complexe+Gasco'Sport+33+rue+de+Roz%C3%A8s+32600+L'Isle-Jourdain" target="_blank" rel="noopener noreferrer">Voir sur Google Maps &rarr;</a>
-            </p>
-            <figure class="editorial-photo">
-                <img src="assets/gascosport.jpg" alt="Salle Gasco'Sport">
-            </figure>
-        </section>
-
-        <!-- 2. GYMNASE LOUISE MICHEL -->
-        <section id="louise-michel" class="editorial-block">
-            <h2>Gymnase Louise Michel</h2>
-            <p class="gym-address">
-                Avenue Jean-François Bladé, 32600 L'Isle-Jourdain &mdash;
-                <a href="https://maps.google.com/?q=Gymnase+Louise+Michel+Avenue+Jean-Fran%C3%A7ois+Blad%C3%A9+32600+L'Isle-Jourdain" target="_blank" rel="noopener noreferrer">Voir sur Google Maps &rarr;</a>
-            </p>
-            <figure class="editorial-photo" style="background: var(--bg-alt, #f8f9fa); border: 1px dashed var(--border-color, #e2e8f0); min-height: 220px; display: flex; align-items: center; justify-content: center; border-radius: 8px;">
-                <div style="text-align: center; color: var(--text-muted); font-size: 0.95rem;">
-                    <i class="fas fa-camera" style="font-size: 2rem; margin-bottom: 8px; opacity: 0.5; display: block;"></i>
-                    Photo du gymnase à venir
-                </div>
-            </figure>
-        </section>
-
-        <!-- 3. GYMNASE LAËTITIA MOUSSARD -->
-        <section id="laetitia-moussard" class="editorial-block">
-            <h2>Gymnase Laëtitia Moussard</h2>
-            <p class="gym-address">
-                15 rue François Darolles, 32600 L'Isle-Jourdain &mdash;
-                <a href="https://maps.google.com/?q=Complexe+Sportif+Laetitia+Moussard+15+rue+Darolles+32600+L'Isle-Jourdain" target="_blank" rel="noopener noreferrer">Voir sur Google Maps &rarr;</a>
-            </p>
-            <figure class="editorial-photo" style="background: var(--bg-alt, #f8f9fa); border: 1px dashed var(--border-color, #e2e8f0); min-height: 220px; display: flex; align-items: center; justify-content: center; border-radius: 8px;">
-                <div style="text-align: center; color: var(--text-muted); font-size: 0.95rem;">
-                    <i class="fas fa-camera" style="font-size: 2rem; margin-bottom: 8px; opacity: 0.5; display: block;"></i>
-                    Photo du gymnase à venir
-                </div>
-            </figure>
-        </section>
-
-    </main>
+    </div>
 
     <!-- PIED DE PAGE SOBRE -->
     <footer class="main-footer">
@@ -314,6 +352,6 @@
         </div>
     </footer>
 
-    <script src="scripts.js"></script>
+    <script src="../scripts.js"></script>
 </body>
 </html>

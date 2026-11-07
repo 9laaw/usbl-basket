@@ -1,0 +1,17 @@
+#!/bin/bash
+cd "$(dirname "$0")"
+echo "================================================="
+echo "  DÉMARRAGE DU SERVEUR SPARTIATES USBL & BCL 🏀🔥"
+echo "================================================="
+echo ""
+echo "Le serveur local assure la sauvegarde automatique permanente"
+echo "de toutes vos modifications admin directement sur le disque."
+echo ""
+echo "Site web accessible à l'adresse :"
+echo "👉 http://localhost:3001"
+echo "👉 http://localhost:3001/admin.html"
+echo ""
+echo "Pour quitter le serveur : fermez cette fenêtre ou faites Ctrl+C"
+echo "================================================="
+open "http://localhost:3001"
+node server.js

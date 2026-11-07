@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirection en cours | USBL &amp; BCL</title>
+    <script>
+        (function() {
+            var pathname = window.location.pathname;
+            var search = window.location.search || "";
+            var hash = window.location.hash || "";
+            var segments = pathname.split("/").filter(Boolean);
+            var filename = segments.pop() || "";
+
+            var knownPages = [
+                "qui-sommes-nous.html",
+                "qui-sommes-nous-usbl.html",
+                "qui-sommes-nous-bcl.html",
+                "infrastructures.html",
+                "benevoles.html",
+                "contact.html",
+                "competitions.html",
+                "competition-detail.html",
+                "coachs.html",
+                "coach-detail.html",
+                "evenements.html",
+                "event-detail.html",
+                "article-detail.html",
+                "partenaires.html",
+                "informations.html",
+                "inscriptions.html",
+                "planning.html",
+                "boutiques.html",
+                "charte-interne.html",
+                "commissions.html"
+            ];
+
+            if (knownPages.indexOf(filename) !== -1) {
+                var newPath = pathname.replace(filename, "pages/" + filename);
+                window.location.replace(newPath + search + hash);
+            } else {
+                var prefix = pathname.includes("/usbl-basket") ? "/usbl-basket/" : "/";
+                window.location.replace(prefix + "index.html" + search + hash);
+            }
+        })();
+    </script>
+</head>
+<body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; background-color: #120e0d; color: #ffffff;">
+    <div style="text-align: center;">
+        <h2 style="margin-bottom: 8px;">Redirection en cours...</h2>
+        <p style="color: #a89f91; font-size: 0.95rem;">Vous êtes redirigé vers la page demandée des Spartiates.</p>
+    </div>
+</body>
+</html>

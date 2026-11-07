@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bénévoles | Basket L'Isle-Jourdain</title>
-    <meta name="description" content="Découvrez l'équipe des bénévoles et dirigeants de l'USBL à L'Isle-Jourdain et rejoignez l'aventure du basket lislois.">
+    <title>Infrastructures | Basket L'Isle-Jourdain</title>
+    <meta name="description" content="Découvrez les trois gymnases officiels du basketball à L'Isle-Jourdain : Complexe Gasco'Sport, Gymnase Louise Michel et Gymnase Laëtitia Moussard.">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="styles.css?v=4.0">
-    <link rel="icon" type="image/png" href="assets/logo_usbl.png">
+    <link rel="stylesheet" href="../styles.css?v=4.0">
+    <link rel="icon" type="image/png" href="../assets/logo_usbl.png">
     <style>
         /* Anti-underline enforcement */
         header.main-header,
@@ -85,11 +85,11 @@
             display: flex;
             gap: 20px;
             flex-wrap: wrap;
-            font-size: 0.85rem;
+            font-size: 0.88rem;
         }
 
         .editorial-header-nav a {
-            color: rgba(255, 255, 255, 0.8);
+            color: rgba(255, 255, 255, 0.85);
             text-decoration: underline !important;
             text-underline-offset: 3px;
         }
@@ -105,95 +105,61 @@
         }
 
         .editorial-block {
-            margin-bottom: 60px;
+            margin-bottom: 70px;
+        }
+
+        .editorial-block:last-child {
+            margin-bottom: 20px;
         }
 
         .editorial-block h2 {
             font-family: var(--font-heading);
-            font-size: 1.9rem;
+            font-size: 2.1rem;
             color: var(--page-text);
-            margin: 0 0 20px 0;
+            margin: 0 0 10px 0;
             font-weight: 700;
         }
 
-        .editorial-block h3 {
-            font-family: var(--font-heading);
-            font-size: 1.35rem;
-            color: var(--page-text);
-            margin: 28px 0 10px 0;
-            font-weight: 600;
+        .gym-address {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: var(--muted-text);
+            margin: 0 0 24px 0;
         }
 
-        .editorial-block p {
-            font-size: 1.02rem;
-            line-height: 1.75;
-            color: var(--page-text);
-            margin: 0 0 16px 0;
-        }
-
-        .editorial-block a {
+        .gym-address a {
             color: var(--primary-color);
             text-decoration: underline !important;
             text-underline-offset: 3px;
             font-weight: 500;
+            margin-left: 4px;
         }
 
-        .editorial-block a:hover {
+        .gym-address a:hover {
             color: var(--primary-hover);
         }
 
-        /* Grille des bénévoles sobre */
-        .volunteers-cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 30px;
-            margin: 28px 0 40px 0;
-        }
-
-        .volunteer-card {
-            background: transparent;
-            border: none;
-            box-shadow: none;
-            padding: 0;
-            text-align: center;
-        }
-
-        .volunteer-avatar-frame {
-            width: 84px;
-            height: 84px;
-            margin: 0 auto 12px auto;
-            border-radius: 50%;
-            overflow: hidden;
-            background: #eae5e1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .volunteer-avatar-frame img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .volunteer-avatar-placeholder {
-            font-size: 1.8rem;
-            opacity: 0.6;
-        }
-
-        .volunteer-name {
-            font-family: var(--font-heading);
-            font-size: 1.05rem;
-            margin: 0 0 4px 0;
-            color: var(--page-text);
-            font-weight: 600;
-        }
-
-        .volunteer-role {
-            font-size: 0.85rem;
-            color: var(--muted-text);
+        .editorial-photo {
             margin: 0;
-            line-height: 1.4;
+            padding: 0;
+        }
+
+        .editorial-photo img {
+            width: 100%;
+            height: auto;
+            max-height: 520px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .photo-placeholder-notice {
+            background: #faf8f6;
+            border: 1px dashed #d8d0c9;
+            padding: 60px 24px;
+            text-align: center;
+            color: var(--muted-text);
+            font-size: 0.95rem;
+            font-style: italic;
         }
 
         @media (max-width: 768px) {
@@ -205,9 +171,8 @@
             .editorial-header-text h1 {
                 font-size: 2.1rem;
             }
-            .volunteers-cards-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 20px;
+            .editorial-block h2 {
+                font-size: 1.75rem;
             }
         }
     </style>
@@ -218,14 +183,14 @@
         <!-- HEADER / NAVIGATION -->
     <header class="main-header">
         <div class="container header-container">
-            <a href="index.html" class="logo-area" aria-label="Accueil USBL BCL">
-                <img src="assets/logo_usbl_bcl.jpg" alt="Logo USBL BCL" class="club-logo-img">
+            <a href="../index.html" class="logo-area" aria-label="Accueil USBL BCL">
+                <img src="../assets/logo_usbl_bcl.jpg" alt="Logo USBL BCL" class="club-logo-img">
             </a>
 
             <nav class="main-nav">
                 <ul>
                     <li class="nav-dropdown-wrapper">
-                        <a href="index.html" class="nav-link" id="nav-leclub" style="text-decoration: none !important; border-bottom: none !important;">Les clubs <span class="dropdown-arrow">▼</span></a>
+                        <a href="../index.html" class="nav-link" id="nav-leclub" style="text-decoration: none !important; border-bottom: none !important;">Les clubs <span class="dropdown-arrow">▼</span></a>
                         <ul class="nav-dropdown-menu">
                             <li class="nav-submenu-wrapper">
                                 <a href="qui-sommes-nous.html" class="nav-submenu-toggle" style="text-decoration: none !important; border-bottom: none !important;">Qui sommes-nous ? <span class="submenu-arrow">▸</span></a>
@@ -266,15 +231,14 @@
     <!-- EN-TÊTE ÉDITORIAL -->
     <header class="editorial-header-banner">
         <div class="editorial-header-container">
-            <img src="assets/logo_usbl.png" alt="Logo USBL" class="editorial-header-logo">
+            <img src="../assets/logo_usbl.png" alt="Logo USBL" class="editorial-header-logo">
             <div class="editorial-header-text">
-                <h1>Les bénévoles du club</h1>
-                <p class="editorial-header-sub">L'USBL vit et grandit grâce au dévouement de ses membres bénévoles.</p>
+                <h1>Nos infrastructures</h1>
+                <p class="editorial-header-sub">Les trois salles de basketball de L'Isle-Jourdain.</p>
                 <nav class="editorial-header-nav">
-                    <a href="#equipe">L'équipe active</a>
-                    <a href="#pourquoi">Pourquoi s'engager</a>
-                    <a href="#missions">Les missions</a>
-                    <a href="#rejoindre">Nous rejoindre</a>
+                    <a href="#gascosport">Salle Gasco'Sport</a>
+                    <a href="#louise-michel">Gymnase Louise Michel</a>
+                    <a href="#laetitia-moussard">Gymnase Laëtitia Moussard</a>
                 </nav>
             </div>
         </div>
@@ -283,68 +247,46 @@
     <!-- CONTENU PRINCIPAL -->
     <main class="editorial-page-wrap">
 
-        <!-- ÉQUIPE ACTIVE -->
-        <section id="equipe" class="editorial-block">
-            <h2>L'équipe dirigeante et le bureau</h2>
-            <p>
-                Présidence, secrétariat, trésorerie, intendance et logistique des matchs : ces bénévoles assurent le fonctionnement associatif de l'USBL tout au long de la saison sportive.
+        <!-- 1. SALLE GASCO'SPORT -->
+        <section id="gascosport" class="editorial-block">
+            <h2>Salle Gasco'Sport</h2>
+            <p class="gym-address">
+                33 rue de Rozès, 32600 L'Isle-Jourdain &mdash;
+                <a href="https://maps.google.com/?q=Complexe+Gasco'Sport+33+rue+de+Roz%C3%A8s+32600+L'Isle-Jourdain" target="_blank" rel="noopener noreferrer">Voir sur Google Maps &rarr;</a>
             </p>
-            
-            <div id="volunteers-grid" class="volunteers-cards-grid">
-                <!-- Rempli dynamiquement par scripts.js depuis localStorage -->
-            </div>
+            <figure class="editorial-photo">
+                <img src="../assets/gascosport.jpg" alt="Salle Gasco'Sport">
+            </figure>
         </section>
 
-        <!-- POURQUOI S'ENGAGER -->
-        <section id="pourquoi" class="editorial-block">
-            <h2>Faire vivre le club au quotidien</h2>
-            
-            <p>
-                Sans bénévoles, aucun match ne pourrait avoir lieu le samedi. C'est une réalité simple.
+        <!-- 2. GYMNASE LOUISE MICHEL -->
+        <section id="louise-michel" class="editorial-block">
+            <h2>Gymnase Louise Michel</h2>
+            <p class="gym-address">
+                Avenue Jean-François Bladé, 32600 L'Isle-Jourdain &mdash;
+                <a href="https://maps.google.com/?q=Gymnase+Louise+Michel+Avenue+Jean-Fran%C3%A7ois+Blad%C3%A9+32600+L'Isle-Jourdain" target="_blank" rel="noopener noreferrer">Voir sur Google Maps &rarr;</a>
             </p>
-
-            <p>
-                Toutes les activités du club — des entraînements du mercredi aux déplacements du dimanche — reposent sur des parents, d'anciens joueurs et des passionnés qui donnent de leur temps.
-            </p>
-
-            <p>
-                Rejoindre l'équipe permet de participer activement à la vie sportive de L'Isle-Jourdain, d'accompagner les enfants dans leur progression et de partager des moments conviviaux au club-house.
-            </p>
+            <figure class="editorial-photo" style="background: var(--bg-alt, #f8f9fa); border: 1px dashed var(--border-color, #e2e8f0); min-height: 220px; display: flex; align-items: center; justify-content: center; border-radius: 8px;">
+                <div style="text-align: center; color: var(--text-muted); font-size: 0.95rem;">
+                    <i class="fas fa-camera" style="font-size: 2rem; margin-bottom: 8px; opacity: 0.5; display: block;"></i>
+                    Photo du gymnase à venir
+                </div>
+            </figure>
         </section>
 
-        <!-- MISSIONS DU WEEK-END -->
-        <section id="missions" class="editorial-block">
-            <h2>Les différentes missions</h2>
-            
-            <p>
-                Les besoins sont variés et s'adaptent aux disponibilités de chacun, que ce soit pour une heure par mois ou chaque week-end.
+        <!-- 3. GYMNASE LAËTITIA MOUSSARD -->
+        <section id="laetitia-moussard" class="editorial-block">
+            <h2>Gymnase Laëtitia Moussard</h2>
+            <p class="gym-address">
+                15 rue François Darolles, 32600 L'Isle-Jourdain &mdash;
+                <a href="https://maps.google.com/?q=Complexe+Sportif+Laetitia+Moussard+15+rue+Darolles+32600+L'Isle-Jourdain" target="_blank" rel="noopener noreferrer">Voir sur Google Maps &rarr;</a>
             </p>
-
-            <h3>La table de marque</h3>
-            <p>
-                Tenir le chronomètre de tir ou remplir la feuille de match officielle (e-marque). Une initiation rapide est proposée à tout nouveau volontaire avant le début des rencontres.
-            </p>
-
-            <h3>L'accueil et la buvette</h3>
-            <p>
-                Préparer le goûter des jeunes le samedi matin, servir les rafraîchissements lors des matchs seniors et participer à l'organisation des repas d'après-match à Gasco'Sport.
-            </p>
-
-            <h3>L'arbitrage club</h3>
-            <p>
-                Accompagner et arbitrer les rencontres des équipes de mini-basket et de poussins pour leur permettre de jouer dans un cadre formateur et serein.
-            </p>
-        </section>
-
-        <!-- REJOINDRE -->
-        <section id="rejoindre" class="editorial-block">
-            <h2>Rejoindre l'équipe</h2>
-            <p>
-                Vous avez envie de donner un coup de main ponctuel lors des tournois ou de vous investir plus régulièrement dans une commission ? Toute aide est bienvenue chez les Spartiates.
-            </p>
-            <p>
-                <a href="contact.html">Prendre contact avec le bureau pour devenir bénévole</a>
-            </p>
+            <figure class="editorial-photo" style="background: var(--bg-alt, #f8f9fa); border: 1px dashed var(--border-color, #e2e8f0); min-height: 220px; display: flex; align-items: center; justify-content: center; border-radius: 8px;">
+                <div style="text-align: center; color: var(--text-muted); font-size: 0.95rem;">
+                    <i class="fas fa-camera" style="font-size: 2rem; margin-bottom: 8px; opacity: 0.5; display: block;"></i>
+                    Photo du gymnase à venir
+                </div>
+            </figure>
         </section>
 
     </main>
@@ -372,6 +314,6 @@
         </div>
     </footer>
 
-    <script src="scripts.js"></script>
+    <script src="../scripts.js"></script>
 </body>
 </html>

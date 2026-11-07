@@ -10,7 +10,7 @@ try {
 } catch (e) {}
 
 let PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3001;
-const PUBLIC_DIR = __dirname;
+const PUBLIC_DIR = path.resolve(__dirname);
 
 const MIME_TYPES = {
   ".html": "text/html",
@@ -572,7 +572,8 @@ const server = http.createServer((req, res) => {
     return;
   }
 
-  let filePath = path.join(PUBLIC_DIR, parsedUrl.pathname);
+  let safePath = path.normalize(parsedUrl.pathname).replace(/^(\.\.[\/\\])+/, "");
+  let filePath = path.resolve(PUBLIC_DIR, "." + safePath);
 
   if (!filePath.startsWith(PUBLIC_DIR)) {
     res.writeHead(403, { "Content-Type": "text/plain" });

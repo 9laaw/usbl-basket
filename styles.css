@@ -783,16 +783,21 @@ body.has-dark-banner .main-header:not(.scrolled-header) .club-logo-img {
 .mobile-menu-toggle {
     display: none;
     flex-direction: column;
-    gap: 6px;
-    background: none;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    background: transparent;
     border: none;
     cursor: pointer;
+    padding: 8px;
+    z-index: 1001;
 }
 .mobile-menu-toggle span {
     display: block;
-    width: 20px;
-    height: 2px;
-    background-color: var(--text-color);
+    width: 24px;
+    height: 2.5px;
+    background-color: #ffffff !important;
+    border-radius: 2px;
     transition: all 0.3s ease;
 }
 
@@ -1060,154 +1065,322 @@ body.is-club-page .editorial-header-banner {
 }
 
 /* --------------------------------------------------------------------------
-   HIGH-IMPACT HERO SECTION WITH GASCOSPORT BACKGROUND & TYPOGRAPHY PREVIEW
+   BANDEAU D'INFORMATIONS TICKER (DIRECTEMENT SOUS LA NAVBAR)
+   -------------------------------------------------------------------------- */
+body.is-home-page .main-header {
+    background-color: rgba(18, 14, 13, 0.97) !important;
+    backdrop-filter: blur(14px) !important;
+    -webkit-backdrop-filter: blur(14px) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35) !important;
+}
+
+body.is-home-page .main-header .main-nav a {
+    color: rgba(255, 255, 255, 0.92) !important;
+}
+
+body.is-home-page .main-header .main-nav a:hover,
+body.is-home-page .main-header .main-nav a.active {
+    color: #ff6a2f !important;
+}
+
+body.is-home-page .main-header .dropdown-arrow {
+    color: rgba(255, 255, 255, 0.75) !important;
+}
+
+body.is-home-page .main-header .club-logo-img {
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5) !important;
+}
+
+body.is-home-page .main-header .mobile-menu-toggle span {
+    background-color: #ffffff !important;
+}
+
+.club-ticker-section {
+    position: relative;
+    width: 100%;
+    margin-top: 72px; /* Positionné immédiatement sous la navbar fixe */
+    height: 44px;
+    background: rgba(18, 14, 13, 0.96);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    z-index: 900;
+}
+
+.ticker-header-badge {
+    position: relative;
+    z-index: 10;
+    height: 100%;
+    background: #110d0c;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 16px;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-right: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 4px 0 14px rgba(0, 0, 0, 0.45);
+    flex-shrink: 0;
+}
+
+.ticker-pulse-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background-color: var(--primary-color, #D21A00);
+    box-shadow: 0 0 8px var(--primary-color, #D21A00);
+    animation: tickerPulseDot 1.8s infinite ease-in-out;
+}
+
+@keyframes tickerPulseDot {
+    0% { transform: scale(0.9); opacity: 0.7; }
+    50% { transform: scale(1.3); opacity: 1; box-shadow: 0 0 10px rgba(210, 26, 0, 0.8); }
+    100% { transform: scale(0.9); opacity: 0.7; }
+}
+
+.ticker-marquee-track {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    position: relative;
+    white-space: nowrap;
+}
+
+.ticker-marquee-content {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+    animation: tickerMarquee 42s linear infinite;
+    will-change: transform;
+}
+
+.club-ticker-section:hover .ticker-marquee-content {
+    animation-play-state: paused;
+}
+
+@keyframes tickerMarquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+.ticker-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    color: #ffffff;
+    text-decoration: none !important;
+    padding: 0 16px;
+    white-space: nowrap;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.ticker-item:hover {
+    opacity: 0.85;
+}
+
+.ticker-thumb {
+    width: 26px;
+    height: 26px;
+    border-radius: 4px;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+}
+
+.ticker-date {
+    font-family: var(--font-body, 'Inter', sans-serif);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    color: #ff6a2f;
+    text-transform: uppercase;
+    flex-shrink: 0;
+}
+
+.ticker-title {
+    font-family: var(--font-body, 'Inter', sans-serif);
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: #ffffff;
+    letter-spacing: 0.01em;
+}
+
+.ticker-separator {
+    color: rgba(255, 255, 255, 0.25);
+    font-size: 0.75rem;
+    margin: 0 8px;
+    user-select: none;
+}
+
+/* --------------------------------------------------------------------------
+   HIGH-IMPACT HERO SECTION WITH GASCOSPORT BACKGROUND (FILTRE ATTÉNUÉ)
    -------------------------------------------------------------------------- */
 .hero-sports-section {
     position: relative;
     width: 100%;
-    min-height: calc(100vh - 52px);
+    min-height: calc(100vh - 116px);
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-    background-color: #ffffff;
-    background-image: 
-        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.96) 0%, rgba(252, 250, 246, 0.6) 55%, rgba(243, 238, 230, 0.75) 100%),
-        radial-gradient(rgba(42, 34, 31, 0.075) 1.2px, transparent 1.2px);
-    background-size: 100% 100%, 28px 28px;
-    color: var(--text-color);
-    padding-top: 75px;
-    padding-bottom: 25px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: #ffffff;
+    padding-top: 50px;
+    padding-bottom: 75px;
     box-sizing: border-box;
     overflow: hidden;
 }
 
-/* Basketball Tactical Court Watermark Lines with Faded Soft Edges */
+/* Filtre noir atténué : permet d'admirer le parquet tout en assurant un excellent contraste */
 .hero-sports-section::before {
     content: '';
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: min(1100px, 94vw);
-    height: min(640px, 76vh);
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 700' fill='none' stroke='%232a221f' stroke-width='2.2'%3E%3Crect x='50' y='40' width='1100' height='620' rx='16' stroke-width='2.8' opacity='0.95'/%3E%3Cline x1='600' y1='40' x2='600' y2='660' stroke-width='2.5' opacity='0.9'/%3E%3Ccircle cx='600' cy='350' r='110' stroke-width='2.2' opacity='0.85'/%3E%3Ccircle cx='600' cy='350' r='22' stroke='%23D21A00' stroke-width='2' opacity='0.65'/%3E%3Cpath d='M 50 130 L 210 130 A 280 280 0 0 1 210 570 L 50 570' stroke-width='2.2' opacity='0.45'/%3E%3Crect x='50' y='235' width='230' height='230' stroke-width='2' opacity='0.45'/%3E%3Ccircle cx='280' cy='350' r='75' stroke-dasharray='8 8' stroke-width='1.8' opacity='0.45'/%3E%3Cpath d='M 1150 130 L 990 130 A 280 280 0 0 0 990 570 L 1150 570' stroke-width='2.2' opacity='0.45'/%3E%3Crect x='920' y='235' width='230' height='230' stroke-width='2' opacity='0.45'/%3E%3Ccircle cx='920' cy='350' r='75' stroke-dasharray='8 8' stroke-width='1.8' opacity='0.45'/%3E%3C/svg%3E");
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-    opacity: 0.22;
-    pointer-events: none;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 45%, rgba(10, 8, 8, 0.22) 0%, rgba(10, 8, 8, 0.58) 100%);
     z-index: 1;
-    mask-image: radial-gradient(ellipse at center, black 42%, transparent 88%);
-    -webkit-mask-image: radial-gradient(ellipse at center, black 42%, transparent 88%);
 }
 
 .hero-sports-container {
     position: relative;
     z-index: 2;
     width: 100%;
-    max-width: 1300px;
+    max-width: 1100px;
     margin: 0 auto;
-    padding: 0 30px;
+    padding: 0 24px;
     display: flex;
     justify-content: flex-start;
 }
 
-.hero-sports-content {
-    max-width: 800px;
+.hero-sports-content.style-serif {
+    max-width: 900px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    text-align: left;
 }
 
-.spartan-badge-hero {
+/* LOGOS DES DEUX CLUBS CÔTE À CÔTE */
+.hero-dual-logos {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    font-family: var(--font-body);
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: rgba(255, 255, 255, 0.8);
-    letter-spacing: 0.12em;
-    margin-bottom: 25px;
-    text-transform: uppercase;
-    background-color: rgba(138, 29, 34, 0.2);
-    border: 1px solid rgba(138, 29, 34, 0.35);
-    padding: 4px 12px;
-    border-radius: 2px;
-}
-.spartan-badge-hero .sep {
-    color: var(--primary-color);
-}
-
-/* Master dynamic font wrapper with smooth elite transition */
-.hero-title-wrapper {
-    margin-bottom: 25px;
-    width: 100%;
-}
-
-.usbl-highlight,
-.hero-sports-title {
-    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* ==========================================
-   HERO HOMEPAGE TYPOGRAPHY — BOLD EDITORIAL
-   ========================================== */
-
-/* Hero club logo above hero-tag */
-.hero-club-logo-wrapper {
-    margin-bottom: 16px;
-    animation: heroFadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-.hero-club-logo {
-    width: auto;
-    height: clamp(65px, 8vw, 85px);
-    max-height: 90px;
-    object-fit: contain;
-    filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.5));
-    transition: transform 0.3s ease;
-}
-
-.hero-club-logo:hover {
-    transform: scale(1.05);
-}
-
-/* Subtle top context tag */
-.hero-tag {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.7rem;
-    font-weight: 600;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.6);
-    margin-bottom: 16px;
-    display: block;
+    gap: 16px;
+    margin-bottom: 20px;
     animation: heroFadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* Base divider and lead styling */
+.hero-club-logo-link {
+    display: inline-block;
+    transition: transform 0.25s ease, filter 0.25s ease;
+    text-decoration: none !important;
+}
+
+.hero-club-logo-link:hover {
+    transform: translateY(-2px) scale(1.06);
+}
+
+.hero-club-logo-img {
+    width: clamp(52px, 7vw, 76px);
+    height: clamp(52px, 7vw, 76px);
+    object-fit: contain;
+    filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.55));
+}
+
+.hero-logo-divider {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: clamp(1.3rem, 2.2vw, 1.8rem);
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 400;
+}
+
+.hero-tag {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 10px;
+    display: block;
+    animation: heroFadeInUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+html, body {
+    overflow-x: hidden;
+    max-width: 100%;
+}
+
+.hero-sports-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 700;
+    font-size: clamp(1.6rem, 3.8vw, 3.2rem);
+    letter-spacing: -0.01em;
+    line-height: 1.15;
+    color: #ffffff;
+    margin: 0;
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.65);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    animation: heroFadeInUp 1.0s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.hero-partner-title {
+    font-style: italic;
+    font-weight: 400;
+    font-size: 0.88em;
+    color: rgba(255, 255, 255, 0.88);
+}
+
 .hero-separator {
-    width: 50px;
+    width: 60px;
     height: 3px;
-    background: var(--primary-color);
-    margin: 10px 0 0 0;
+    background: var(--primary-color, #D21A00);
+    margin: 18px 0 16px 0;
     border: none;
+    border-radius: 2px;
+    box-shadow: 0 0 10px rgba(210, 26, 0, 0.5);
+    animation: heroFadeInUp 1.1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.hero-sports-slogan {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(0.95rem, 1.8vw, 1.25rem);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #ffffff;
+    margin: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    background: rgba(210, 26, 0, 0.28);
+    border: 1px solid rgba(210, 26, 0, 0.55);
+    border-radius: 4px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
     animation: heroFadeInUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.hero-sports-lead {
-    font-family: 'Inter', sans-serif;
-    font-size: 0.85rem;
-    font-weight: 400;
-    line-height: 1.6;
-    letter-spacing: 0.03em;
-    color: rgba(255, 255, 255, 0.55);
-    margin-top: 18px;
-    margin-bottom: 0;
-    max-width: 450px;
-    animation: heroFadeInUp 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+.slogan-badge-icon {
+    font-size: 1rem;
+    color: #ff9e6b;
 }
 
 @keyframes heroFadeInUp {
@@ -1221,261 +1394,60 @@ body.is-club-page .editorial-header-banner {
     }
 }
 
-/* ==========================================================================
-   HERO CENTER BOX : DUAL CLUB LOGOS DIAGONAL (USBL BAS GAUCHE, BCL HAUT DROITE)
-   ========================================================================== */
-.hero-center-box {
-    position: relative;
-    z-index: 2;
-    width: clamp(320px, 48vw, 540px);
-    height: clamp(250px, 36vw, 400px);
-    margin: 0 auto;
-    animation: heroLogosFadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes heroLogosFadeIn {
-    from {
-        opacity: 0;
-        transform: scale(0.92);
+@media (max-width: 768px) {
+    .main-header .mobile-menu-toggle {
+        display: flex !important;
+        margin-left: auto;
     }
-    to {
-        opacity: 1;
-        transform: scale(1);
+    .main-header .main-nav:not(.active) {
+        display: none !important;
     }
-}
-
-.hero-dual-logo-link {
-    position: absolute;
-    display: block;
-    width: clamp(140px, 22vw, 240px);
-    height: clamp(140px, 22vw, 240px);
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
-    text-decoration: none;
-}
-
-/* BCL en haut à droite */
-.hero-logo-bcl {
-    top: 0;
-    right: 0;
-}
-
-/* USBL en bas à gauche */
-.hero-logo-usbl {
-    bottom: 0;
-    left: 0;
-}
-
-.hero-dual-logo-img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.18)) drop-shadow(0 18px 30px rgba(0, 0, 0, 0.22));
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
-}
-
-.hero-dual-logo-link:hover {
-    z-index: 10;
-}
-
-.hero-dual-logo-link:hover .hero-dual-logo-img {
-    transform: scale(1.08);
-    filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.24)) drop-shadow(0 24px 40px rgba(0, 0, 0, 0.28));
-}
-
-@media (max-width: 680px) {
-    .hero-center-box {
-        width: clamp(270px, 82vw, 360px);
-        height: clamp(220px, 66vw, 290px);
+    .main-header .main-nav.active {
+        display: block !important;
     }
-    .hero-dual-logo-link {
-        width: clamp(130px, 40vw, 175px);
-        height: clamp(130px, 40vw, 175px);
-    }
-}
-
-/* ==========================================================================
-   BANDEAU DÉFILANT : VIE DU CLUB & ÉVÉNEMENTS (MARQUEE)
-   ========================================================================== */
-.club-ticker-section {
-    position: relative;
-    width: 100%;
-    background: #ffffff;
-    border-top: 1px solid var(--border-color);
-    border-bottom: 1px solid var(--border-color);
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-    height: 52px;
-    z-index: 20;
-}
-
-.ticker-header-badge {
-    position: relative;
-    z-index: 5;
-    height: 100%;
-    background: #ffffff;
-    color: var(--text-color);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 0 24px;
-    border-right: 1px solid var(--border-color);
-    box-shadow: none;
-    flex-shrink: 0;
-}
-
-.ticker-pulse-dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--primary-color);
-    box-shadow: 0 0 6px rgba(138, 29, 34, 0.5);
-    animation: tickerPulseDot 1.8s infinite;
-}
-
-@keyframes tickerPulseDot {
-    0% { transform: scale(0.9); opacity: 0.7; }
-    50% { transform: scale(1.3); opacity: 1; box-shadow: 0 0 10px rgba(138, 29, 34, 0.7); }
-    100% { transform: scale(0.9); opacity: 0.7; }
-}
-
-.ticker-badge-text {
-    font-family: 'Outfit', 'Inter', sans-serif;
-    font-size: 0.74rem;
-    font-weight: 800;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--primary-color);
-    white-space: nowrap;
-}
-
-.ticker-marquee-track {
-    display: flex;
-    overflow: hidden;
-    width: 100%;
-    position: relative;
-    mask-image: linear-gradient(to right, transparent, black 25px, black calc(100% - 25px), transparent);
-    -webkit-mask-image: linear-gradient(to right, transparent, black 25px, black calc(100% - 25px), transparent);
-}
-
-.ticker-marquee-track:hover .ticker-marquee-content {
-    animation-play-state: paused;
-}
-
-.ticker-marquee-content {
-    display: flex;
-    align-items: center;
-    white-space: nowrap;
-    animation: marqueeScroll 42s linear infinite;
-    flex-shrink: 0;
-}
-
-@keyframes marqueeScroll {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-100%); }
-}
-
-.ticker-item {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 0 14px;
-    text-decoration: none;
-    color: var(--text-color);
-    font-family: var(--font-body, 'Inter', sans-serif);
-    font-size: 0.82rem;
-    transition: all 0.2s ease;
-}
-
-.ticker-item:hover {
-    color: var(--primary-color);
-}
-
-.ticker-item:hover .ticker-title {
-    color: var(--primary-color);
-    text-decoration: underline;
-    text-underline-offset: 3px;
-}
-
-.ticker-item:hover .ticker-date {
-    color: var(--primary-color);
-}
-
-/* Date — pure typographic style, no background, no border */
-.ticker-date {
-    font-family: 'Outfit', sans-serif;
-    font-size: 0.78rem;
-    font-weight: 700;
-    letter-spacing: 0.10em;
-    color: var(--primary-color);
-    background: none;
-    border: none;
-    padding: 0;
-    text-transform: uppercase;
-}
-
-/* Category — pure typography, no colored block or pill */
-.ticker-cat {
-    font-family: var(--font-body, 'Inter', sans-serif);
-    font-size: 0.70rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--primary-color);
-    background: none;
-    border: none;
-    padding: 0;
-}
-
-/* Empty message — elegant muted typography */
-.ticker-empty-text {
-    font-family: var(--font-body, 'Inter', sans-serif);
-    font-size: 0.82rem;
-    color: var(--text-muted);
-    font-style: italic;
-}
-
-.ticker-item-empty {
-    cursor: default;
-}
-
-.ticker-title {
-    font-weight: 500;
-    color: var(--text-color);
-    transition: color 0.2s ease;
-}
-
-.ticker-venue {
-    font-size: 0.76rem;
-    color: var(--text-muted);
-    margin-left: 2px;
-}
-
-.ticker-separator {
-    color: var(--border-color);
-    font-size: 0.75rem;
-    margin: 0 10px;
-    user-select: none;
-}
-
-@media (max-width: 680px) {
     .club-ticker-section {
-        height: 44px;
+        margin-top: 60px;
+        height: 38px;
     }
     .ticker-header-badge {
-        padding: 0 14px;
-        gap: 6px;
-    }
-    .ticker-badge-text {
-        font-size: 0.68rem;
+        padding: 0 10px;
+        gap: 5px;
+        font-size: 0.65rem;
     }
     .ticker-item {
-        font-size: 0.76rem;
         gap: 6px;
         padding: 0 10px;
     }
+    .ticker-thumb {
+        width: 22px;
+        height: 22px;
+        border-radius: 3px;
+    }
+    .ticker-date {
+        font-size: 0.64rem;
+    }
+    .ticker-title {
+        font-size: 0.75rem;
+    }
     .ticker-separator {
-        margin: 0 6px;
+        margin: 0 5px;
+    }
+    .hero-sports-section {
+        min-height: calc(100vh - 98px);
+        padding-top: 35px;
+        padding-bottom: 50px;
+    }
+    .hero-dual-logos {
+        gap: 12px;
+        margin-bottom: 14px;
+    }
+    .hero-club-logo-img {
+        width: 50px;
+        height: 50px;
+    }
+    .hero-sports-title {
+        font-size: clamp(1.35rem, 5.8vw, 1.75rem);
+        line-height: 1.2;
     }
 }
 
@@ -2327,7 +2299,7 @@ body.theme-kinetic .sponsors-row {
         display: none;
     }
     .mobile-menu-toggle {
-        display: flex;
+        display: flex !important;
     }
     
     .main-nav.active {

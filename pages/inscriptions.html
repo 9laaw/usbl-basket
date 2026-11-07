@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Événement | US Basket Lislois</title>
-    <meta name="description" content="Découvrez les grands rendez-vous associatifs et sportifs de l'Union Sportive de Basket Lislois (USBL).">
+    <title>Inscriptions & Licences | Basket L'Isle-Jourdain</title>
+    <meta name="description" content="Toutes les informations pour s'inscrire à l'USBL et au BCL : tarifs des licences, démarches FFBB, défiscalisation et dates des permanences.">
     
     <!-- Google Fonts Imports -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="styles.css?v=4.0">
-    <link rel="icon" type="image/png" href="assets/logo_usbl.png">
+    <link rel="stylesheet" href="../styles.css?v=4.0">
+    <link rel="icon" type="image/png" href="../assets/logo_usbl.png">
 </head>
 <body class="editorial-pure-theme has-red-navbar">
 
@@ -20,14 +20,14 @@
         <!-- HEADER / NAVIGATION -->
     <header class="main-header">
         <div class="container header-container">
-            <a href="index.html" class="logo-area" aria-label="Accueil USBL BCL">
-                <img src="assets/logo_usbl_bcl.jpg" alt="Logo USBL BCL" class="club-logo-img">
+            <a href="../index.html" class="logo-area" aria-label="Accueil USBL BCL">
+                <img src="../assets/logo_usbl_bcl.jpg" alt="Logo USBL BCL" class="club-logo-img">
             </a>
 
             <nav class="main-nav">
                 <ul>
                     <li class="nav-dropdown-wrapper">
-                        <a href="index.html" class="nav-link" id="nav-leclub" style="text-decoration: none !important; border-bottom: none !important;">Les clubs <span class="dropdown-arrow">▼</span></a>
+                        <a href="../index.html" class="nav-link" id="nav-leclub" style="text-decoration: none !important; border-bottom: none !important;">Les clubs <span class="dropdown-arrow">▼</span></a>
                         <ul class="nav-dropdown-menu">
                             <li class="nav-submenu-wrapper">
                                 <a href="qui-sommes-nous.html" class="nav-submenu-toggle" style="text-decoration: none !important; border-bottom: none !important;">Qui sommes-nous ? <span class="submenu-arrow">▸</span></a>
@@ -65,61 +65,15 @@
         </div>
     </header>
 
-    <div id="page-event-detail">
-        <section class="event-detail-section section-padding">
-            <div class="container event-detail-container">
-                <a href="evenements.html" class="btn-back-link">← Retourner à l'agenda</a>
-                
-                <div class="event-rich-header">
-                    <span class="event-rich-tag" id="detail-event-tag">Tournoi</span>
-                    <h1 class="event-rich-title font-style-serif" id="detail-event-title">Chargement de l'événement...</h1>
-                    <div class="section-divider left-align"></div>
-                </div>
+    <div id="page-inscriptions" class="editorial-wrapper" style="max-width: 1100px; margin: 120px auto 80px auto; padding: 0 24px;">
+        <header class="editorial-header">
+            <span class="section-tag">Saison 2025-2026</span>
+            <h1>Inscriptions & Licences</h1>
+            <p class="editorial-subtitle">"Retrouvez ci-dessous le document officiel relatif aux inscriptions, licences FFBB, tarifs et modalités pour la saison sportive."</p>
+        </header>
 
-                <div class="event-body-layout">
-                    <!-- Left: Details Card & Presentation -->
-                    <div class="event-details-col">
-                        <div class="event-info-panel-box">
-                            <h3 class="panel-box-title font-style-serif">Informations Pratiques</h3>
-                            <div class="panel-detail-row">
-                                <span class="panel-detail-lbl">Date de l'événement</span>
-                                <span class="panel-detail-val" id="detail-event-date">-- -- ----</span>
-                            </div>
-                            <div class="panel-detail-row">
-                                <span class="panel-detail-lbl">Lieu et adresse</span>
-                                <span class="panel-detail-val" id="detail-event-venue">📍 --</span>
-                            </div>
-                            <div class="panel-detail-row">
-                                <span class="panel-detail-lbl">Conditions d'accès</span>
-                                <span class="panel-detail-val" id="detail-event-access">--</span>
-                            </div>
-                        </div>
-
-                        <div class="event-description-text" id="detail-event-description">
-                            <!-- Dynamic text loaded by scripts.js -->
-                        </div>
-                    </div>
-
-                    <!-- Right: Dynamic Specific Form Container -->
-                    <div class="event-form-col">
-                        <div class="event-action-card-box">
-                            <h3 class="form-title" id="detail-event-form-title">S'INSCRIRE À L'ÉVÉNEMENT</h3>
-                            
-                            <!-- Success registration banner (hidden by default) -->
-                            <div class="event-registration-success-box" id="event-success-box" style="display: none;">
-                                <span class="success-icon">🏆</span>
-                                <h4 class="font-style-serif">INSCRIPTION VALIDÉE !</h4>
-                                <p id="event-success-message">Félicitations ! Votre inscription a bien été enregistrée pour cet événement.</p>
-                            </div>
-
-                            <div id="event-form-wrapper">
-                                <!-- The specific form will be injected here by scripts.js -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <!-- Visionneuse dynamique du document officiel (BDD interne data/informations.json) -->
+        <div id="category-pdf-viewer-container" data-category="inscriptions"></div>
     </div>
 
     <!-- PIED DE PAGE SOBRE -->
@@ -145,6 +99,6 @@
         </div>
     </footer>
 
-    <script src="scripts.js"></script>
+    <script src="../scripts.js"></script>
 </body>
 </html>

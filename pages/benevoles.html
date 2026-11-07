@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>USBL — Présentation de la section masculine | Basket L'Isle-Jourdain</title>
-    <meta name="description" content="Présentation de l'Union Sportive Basket Lislois : histoire du club, équipes engagées en championnat, salle Gasco'Sport et partenaires.">
+    <title>Bénévoles | Basket L'Isle-Jourdain</title>
+    <meta name="description" content="Découvrez l'équipe des bénévoles et dirigeants de l'USBL à L'Isle-Jourdain et rejoignez l'aventure du basket lislois.">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="styles.css?v=4.0">
-    <link rel="icon" type="image/png" href="assets/logo_usbl.png">
+    <link rel="stylesheet" href="../styles.css?v=4.0">
+    <link rel="icon" type="image/png" href="../assets/logo_usbl.png">
     <style>
         /* Anti-underline enforcement */
         header.main-header,
@@ -33,8 +33,8 @@
            STYLE ÉPURÉ ET ÉDITORIAL (RÈGLES STRICTES : ZÉRO BOX, ZÉRO SUPERFLU)
            ------------------------------------------------------------- */
         :root {
-            --club-color: #D21A00;
-            --club-hover: #A31609;
+            --primary-color: #D21A00;
+            --primary-hover: #A31609;
             --page-text: #1f1b1a;
             --muted-text: #595350;
         }
@@ -44,7 +44,6 @@
             background-color: #ffffff;
         }
 
-        /* En-tête de page sobre harmonisé avec le dégradé rouge */
         .editorial-header-banner {
             background: linear-gradient(135deg, #580c01 0%, #350702 32%, #1a0504 65%, #100302 100%);
             border-bottom: 2px solid rgba(139, 18, 0, 0.4);
@@ -61,8 +60,8 @@
         }
 
         .editorial-header-logo {
-            width: 110px;
-            height: 110px;
+            width: 100px;
+            height: 100px;
             object-fit: contain;
             flex-shrink: 0;
         }
@@ -99,7 +98,6 @@
             color: #ffffff;
         }
 
-        /* Corps de page */
         .editorial-page-wrap {
             max-width: 860px;
             margin: 60px auto 100px auto;
@@ -120,7 +118,7 @@
 
         .editorial-block h3 {
             font-family: var(--font-heading);
-            font-size: 1.3rem;
+            font-size: 1.35rem;
             color: var(--page-text);
             margin: 28px 0 10px 0;
             font-weight: 600;
@@ -134,108 +132,70 @@
         }
 
         .editorial-block a {
-            color: var(--club-color);
+            color: var(--primary-color);
             text-decoration: underline !important;
             text-underline-offset: 3px;
             font-weight: 500;
         }
 
         .editorial-block a:hover {
-            color: var(--club-hover);
+            color: var(--primary-hover);
         }
 
-        /* Photographies sobres avec légende */
-        .editorial-photo {
-            margin: 24px 0 30px 0;
-            padding: 0;
-        }
-
-        .editorial-photo img {
-            width: 100%;
-            height: auto;
-            max-height: 460px;
-            object-fit: cover;
-            display: block;
-        }
-
-        .editorial-photo figcaption {
-            font-size: 0.85rem;
-            color: var(--muted-text);
-            margin-top: 8px;
-            font-style: italic;
-        }
-
-        /* Fiche d'identité sous forme de liste de définition épurée */
-        .identity-dl {
-            margin: 16px 0 0 0;
-            padding: 0;
+        /* Grille des bénévoles sobre */
+        .volunteers-cards-grid {
             display: grid;
-            grid-template-columns: 200px 1fr;
-            row-gap: 12px;
-            column-gap: 20px;
-            font-size: 0.98rem;
-            line-height: 1.5;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 30px;
+            margin: 28px 0 40px 0;
         }
 
-        .identity-dl dt {
-            color: var(--muted-text);
-            font-weight: 500;
+        .volunteer-card {
+            background: transparent;
+            border: none;
+            box-shadow: none;
+            padding: 0;
+            text-align: center;
         }
 
-        .identity-dl dd {
-            margin: 0;
+        .volunteer-avatar-frame {
+            width: 84px;
+            height: 84px;
+            margin: 0 auto 12px auto;
+            border-radius: 50%;
+            overflow: hidden;
+            background: #eae5e1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .volunteer-avatar-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .volunteer-avatar-placeholder {
+            font-size: 1.8rem;
+            opacity: 0.6;
+        }
+
+        .volunteer-name {
+            font-family: var(--font-heading);
+            font-size: 1.05rem;
+            margin: 0 0 4px 0;
             color: var(--page-text);
             font-weight: 600;
         }
 
-        /* Chiffres clés en typographie brute (sans encadré ni bordure) */
-        .stats-plain-row {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 24px;
-            margin: 28px 0 10px 0;
-        }
-
-        .stats-plain-item .stat-digits {
-            font-family: var(--font-heading);
-            font-size: 3rem;
-            font-weight: 700;
-            color: var(--club-color);
-            line-height: 1;
-            margin-bottom: 6px;
-        }
-
-        .stats-plain-item .stat-text {
-            font-size: 0.9rem;
+        .volunteer-role {
+            font-size: 0.85rem;
             color: var(--muted-text);
+            margin: 0;
             line-height: 1.4;
         }
 
-        /* Logos partenaires épurés */
-        .partners-plain-list {
-            display: flex;
-            align-items: center;
-            gap: 36px;
-            flex-wrap: wrap;
-            margin: 20px 0;
-        }
-
-        .partners-plain-list img {
-            height: 34px;
-            width: auto;
-            max-width: 130px;
-            object-fit: contain;
-            filter: grayscale(100%);
-            opacity: 0.75;
-            transition: opacity 0.2s ease;
-        }
-
-        .partners-plain-list img:hover {
-            opacity: 1;
-            filter: grayscale(0%);
-        }
-
-        /* Responsive */
         @media (max-width: 768px) {
             .editorial-header-container {
                 flex-direction: column;
@@ -245,34 +205,27 @@
             .editorial-header-text h1 {
                 font-size: 2.1rem;
             }
-            .identity-dl {
-                grid-template-columns: 1fr;
-                row-gap: 4px;
-            }
-            .identity-dl dt {
-                margin-top: 10px;
-            }
-            .stats-plain-row {
+            .volunteers-cards-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 20px;
             }
         }
     </style>
 </head>
-<body data-club="usbl" class="is-club-page">
+<body class="is-club-page">
 
     <!-- NAVIGATION COMMUNE -->
         <!-- HEADER / NAVIGATION -->
     <header class="main-header">
         <div class="container header-container">
-            <a href="index.html" class="logo-area" aria-label="Accueil USBL BCL">
-                <img src="assets/logo_usbl_bcl.jpg" alt="Logo USBL BCL" class="club-logo-img">
+            <a href="../index.html" class="logo-area" aria-label="Accueil USBL BCL">
+                <img src="../assets/logo_usbl_bcl.jpg" alt="Logo USBL BCL" class="club-logo-img">
             </a>
 
             <nav class="main-nav">
                 <ul>
                     <li class="nav-dropdown-wrapper">
-                        <a href="index.html" class="nav-link" id="nav-leclub" style="text-decoration: none !important; border-bottom: none !important;">Les clubs <span class="dropdown-arrow">▼</span></a>
+                        <a href="../index.html" class="nav-link" id="nav-leclub" style="text-decoration: none !important; border-bottom: none !important;">Les clubs <span class="dropdown-arrow">▼</span></a>
                         <ul class="nav-dropdown-menu">
                             <li class="nav-submenu-wrapper">
                                 <a href="qui-sommes-nous.html" class="nav-submenu-toggle" style="text-decoration: none !important; border-bottom: none !important;">Qui sommes-nous ? <span class="submenu-arrow">▸</span></a>
@@ -310,24 +263,91 @@
         </div>
     </header>
 
-    <!-- CONTENEUR DYNAMIQUE ET 100% PERSONNALISABLE DU CLUB -->
-    <div id="club-presentation-wrapper" data-club="usbl">
-        <div class="club-empty-state-wrap">
-            <div class="club-empty-state-card">
-                <img src="assets/logo_usbl.png" alt="Logo USBL Spartiates" class="club-empty-state-logo">
-                <h1 class="club-empty-state-title">Union Sportive Basket Lislois</h1>
-                <div class="club-empty-state-tag">Page en cours de création</div>
-                <p class="club-empty-state-desc">
-                    Le club est actuellement en train de préparer la présentation détaillée de l'association.<br>
-                    Revenez très prochainement pour découvrir son histoire, ses équipes et ses projets.
-                </p>
-                <div class="club-empty-state-actions">
-                    <a href="index.html" class="btn btn-outline">Retour à l'accueil</a>
-                    <a href="competitions.html#section-masculine" class="btn btn-outline">Voir les compétitions</a>
-                </div>
+    <!-- EN-TÊTE ÉDITORIAL -->
+    <header class="editorial-header-banner">
+        <div class="editorial-header-container">
+            <img src="../assets/logo_usbl.png" alt="Logo USBL" class="editorial-header-logo">
+            <div class="editorial-header-text">
+                <h1>Les bénévoles du club</h1>
+                <p class="editorial-header-sub">L'USBL vit et grandit grâce au dévouement de ses membres bénévoles.</p>
+                <nav class="editorial-header-nav">
+                    <a href="#equipe">L'équipe active</a>
+                    <a href="#pourquoi">Pourquoi s'engager</a>
+                    <a href="#missions">Les missions</a>
+                    <a href="#rejoindre">Nous rejoindre</a>
+                </nav>
             </div>
         </div>
-    </div>
+    </header>
+
+    <!-- CONTENU PRINCIPAL -->
+    <main class="editorial-page-wrap">
+
+        <!-- ÉQUIPE ACTIVE -->
+        <section id="equipe" class="editorial-block">
+            <h2>L'équipe dirigeante et le bureau</h2>
+            <p>
+                Présidence, secrétariat, trésorerie, intendance et logistique des matchs : ces bénévoles assurent le fonctionnement associatif de l'USBL tout au long de la saison sportive.
+            </p>
+            
+            <div id="volunteers-grid" class="volunteers-cards-grid">
+                <!-- Rempli dynamiquement par scripts.js depuis localStorage -->
+            </div>
+        </section>
+
+        <!-- POURQUOI S'ENGAGER -->
+        <section id="pourquoi" class="editorial-block">
+            <h2>Faire vivre le club au quotidien</h2>
+            
+            <p>
+                Sans bénévoles, aucun match ne pourrait avoir lieu le samedi. C'est une réalité simple.
+            </p>
+
+            <p>
+                Toutes les activités du club — des entraînements du mercredi aux déplacements du dimanche — reposent sur des parents, d'anciens joueurs et des passionnés qui donnent de leur temps.
+            </p>
+
+            <p>
+                Rejoindre l'équipe permet de participer activement à la vie sportive de L'Isle-Jourdain, d'accompagner les enfants dans leur progression et de partager des moments conviviaux au club-house.
+            </p>
+        </section>
+
+        <!-- MISSIONS DU WEEK-END -->
+        <section id="missions" class="editorial-block">
+            <h2>Les différentes missions</h2>
+            
+            <p>
+                Les besoins sont variés et s'adaptent aux disponibilités de chacun, que ce soit pour une heure par mois ou chaque week-end.
+            </p>
+
+            <h3>La table de marque</h3>
+            <p>
+                Tenir le chronomètre de tir ou remplir la feuille de match officielle (e-marque). Une initiation rapide est proposée à tout nouveau volontaire avant le début des rencontres.
+            </p>
+
+            <h3>L'accueil et la buvette</h3>
+            <p>
+                Préparer le goûter des jeunes le samedi matin, servir les rafraîchissements lors des matchs seniors et participer à l'organisation des repas d'après-match à Gasco'Sport.
+            </p>
+
+            <h3>L'arbitrage club</h3>
+            <p>
+                Accompagner et arbitrer les rencontres des équipes de mini-basket et de poussins pour leur permettre de jouer dans un cadre formateur et serein.
+            </p>
+        </section>
+
+        <!-- REJOINDRE -->
+        <section id="rejoindre" class="editorial-block">
+            <h2>Rejoindre l'équipe</h2>
+            <p>
+                Vous avez envie de donner un coup de main ponctuel lors des tournois ou de vous investir plus régulièrement dans une commission ? Toute aide est bienvenue chez les Spartiates.
+            </p>
+            <p>
+                <a href="contact.html">Prendre contact avec le bureau pour devenir bénévole</a>
+            </p>
+        </section>
+
+    </main>
 
     <!-- PIED DE PAGE SOBRE -->
     <footer class="main-footer">
@@ -352,6 +372,6 @@
         </div>
     </footer>
 
-    <script src="scripts.js"></script>
+    <script src="../scripts.js"></script>
 </body>
 </html>

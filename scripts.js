@@ -6,6 +6,34 @@
  */
 
 // =========================================================================
+// GESTION INTELLIGENTE DES CHEMINS D'ACCÈS (ROOT VS DOSSIER /pages/)
+// =========================================================================
+function isInPagesDir() {
+  return typeof window !== "undefined" && window.location && window.location.pathname.includes("/pages/");
+}
+window.isInPagesDir = isInPagesDir;
+
+function resolvePageUrl(pageFileName) {
+  const inPages = isInPagesDir();
+  if (pageFileName === "index.html" || pageFileName.startsWith("index.html?") || pageFileName.startsWith("index.html#")) {
+    return inPages ? `../${pageFileName}` : pageFileName;
+  }
+  if (pageFileName === "admin.html" || pageFileName.startsWith("admin.html?") || pageFileName.startsWith("admin.html#")) {
+    return inPages ? `../${pageFileName}` : pageFileName;
+  }
+  if (inPages) {
+    return pageFileName;
+  }
+  return `pages/${pageFileName}`;
+}
+window.resolvePageUrl = resolvePageUrl;
+
+function resolveAssetUrl(relPath) {
+  return isInPagesDir() ? `../${relPath}` : relPath;
+}
+window.resolveAssetUrl = resolveAssetUrl;
+
+// =========================================================================
 // GESTION & ÉDITION DYNAMIQUE DES PAGES DE PRÉSENTATION DES CLUBS (QUI SOMMES-NOUS)
 // Fonctions déclarées au plus haut niveau pour éviter toute contrainte de TDZ
 // =========================================================================
@@ -618,7 +646,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     try {
       let res = null;
-      const cacheBustUrl = `${fileName}?_t=${Date.now()}`;
+      const relativeFileUrl = resolveAssetUrl(fileName);
+      const cacheBustUrl = `${relativeFileUrl}?_t=${Date.now()}`;
       if (window.location.protocol !== "file:") {
         try { res = await fetch(cacheBustUrl, { cache: "no-store" }); } catch(e) {}
       }
@@ -626,7 +655,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         const ports = [3001, 3000, 8080];
         for (const p of ports) {
           try {
-            const r = await fetch(`http://localhost:${p}/${cacheBustUrl}`, { cache: "no-store" });
+            const r = await fetch(`http://localhost:${p}/${fileName}?_t=${Date.now()}`, { cache: "no-store" });
             if (r.ok) { res = r; break; }
           } catch(e) {}
         }
@@ -1077,10 +1106,10 @@ const safeSetLocalStorage = (key, data) => {
 // 6. SYSTÈME DE ROUTING SPA (ET HEADER COLOR TRANSITIONS)
 // ----------------------------------------------------------------------
 window.navigateTo = (pageId) => {
-  if (pageId === "leclub") {
-    window.location.href = "index.html";
+  if (pageId === "leclub" || pageId === "index") {
+    window.location.href = resolvePageUrl("index.html");
   } else {
-    window.location.href = `${pageId}.html`;
+    window.location.href = resolvePageUrl(`${pageId}.html`);
   }
 };
 
@@ -1088,7 +1117,7 @@ window.navigateTo = (pageId) => {
 // 7. SYSTEM DE LECTURE D'ARTICLES EN HAUTE FIDÉLITÉ (MPA DIRECT REDIRECT)
 // ----------------------------------------------------------------------
 window.readArticle = (indexOrId) => {
-  window.location.href = `article-detail.html?article=${encodeURIComponent(indexOrId)}`;
+  window.location.href = `${resolvePageUrl("article-detail.html")}?article=${encodeURIComponent(indexOrId)}`;
 };
 
 function renderArticleDetail(identifier) {
@@ -1101,7 +1130,7 @@ function renderArticleDetail(identifier) {
   }
 
   if (!art) {
-    window.location.href = "evenements.html";
+    window.location.href = resolvePageUrl("evenements.html");
     return;
   }
 
@@ -1156,13 +1185,13 @@ function renderArticleDetail(identifier) {
 // 8. LOGIQUE DÉTAIL D'ÉVÉNEMENTS & INSCRIPTIONS ASSOCIÉES
 // ----------------------------------------------------------------------
 window.viewEvent = (eventId) => {
-  window.location.href = `event-detail.html?event=${eventId}`;
+  window.location.href = `${resolvePageUrl("event-detail.html")}?event=${eventId}`;
 };
 
 function renderEventDetail(eventId) {
   const ev = events[eventId];
   if (!ev) {
-    window.location.href = "evenements.html";
+    window.location.href = resolvePageUrl("evenements.html");
     return;
   }
 
@@ -2019,23 +2048,27 @@ function renderArticles() {
 }
 window.renderArticles = renderArticles;
 
-// Rendu du Bandeau Défilant des Actualités (Ticker dynamique BDD)
+// Rendu du Bandeau Défilant des Actualités (Ticker dynamique BDD avec vignettes, dates et titres)
 function renderTicker() {
   const track = document.getElementById("club-ticker-track");
   if (!track) return;
 
+  const defaultImg = resolveAssetUrl("assets/gascosport.jpg");
+
   if (!articles || articles.length === 0) {
     const emptyMsgs = [
-      "Aucune actualité publiée pour le moment",
-      "Le secrétariat de l'USBL & BCL prépare les prochains communiqués officiels",
-      "Retrouvez très bientôt toute l'actualité de nos équipes et de la vie du club",
+      { title: "Bienvenue sur le site officiel des Spartiates USBL & BCL", date: "INFO", img: defaultImg },
+      { title: "Le secrétariat prépare les prochains communiqués de la saison", date: "OFFICIEL", img: defaultImg },
+      { title: "Retrouvez très bientôt toute l'actualité de nos équipes et résultats", date: "SAISON", img: defaultImg },
     ];
 
     const emptyHtml = emptyMsgs
       .map(
-        (msg) => `
+        (item) => `
           <span class="ticker-item ticker-item-empty">
-            <span class="ticker-empty-text">${msg}</span>
+            <img src="${item.img}" alt="" class="ticker-thumb" loading="lazy">
+            <span class="ticker-date">${item.date}</span>
+            <span class="ticker-title">${item.title}</span>
           </span>
           <span class="ticker-separator" aria-hidden="true">•</span>
         `,
@@ -2063,12 +2096,13 @@ function renderTicker() {
     .map((art, idx) => {
       const artIdOrIndex = art.id || String(idx % articles.length);
       const dateStr = art.date ? art.date.toUpperCase() : "";
-      const catStr = art.category ? art.category.toUpperCase() : "";
+      const artImg = art.image || defaultImg;
+      const targetHref = `${resolvePageUrl("article-detail.html")}?article=${encodeURIComponent(artIdOrIndex)}`;
 
       return `
-        <a href="article-detail.html?article=${encodeURIComponent(artIdOrIndex)}" class="ticker-item">
+        <a href="${targetHref}" class="ticker-item">
+          <img src="${artImg}" alt="" class="ticker-thumb" loading="lazy" onerror="this.src='${defaultImg}'">
           ${dateStr ? `<span class="ticker-date">${dateStr}</span>` : ""}
-          ${catStr ? `<span class="ticker-cat">${catStr}</span>` : ""}
           <span class="ticker-title">${art.title}</span>
         </a>
         <span class="ticker-separator" aria-hidden="true">•</span>
@@ -5066,7 +5100,7 @@ window.buildCoachDetailUrl = (coachObj, coachName, teamKey) => {
   if (coachObj && coachObj.id) params.set("id", coachObj.id);
   if (coachName) params.set("name", coachName.trim());
   if (teamKey) params.set("team", teamKey);
-  return `coach-detail.html?${params.toString()}`;
+  return `${resolvePageUrl("coach-detail.html")}?${params.toString()}`;
 };
 
 window.renderCoachDetailPage = async () => {
@@ -5310,7 +5344,7 @@ window.renderCoachDetailPage = async () => {
           <div style="font-size: 3.5rem; margin-bottom: 15px;">🏀</div>
           <h2 style="font-family: var(--font-heading); font-size: 2rem; margin-bottom: 12px;">Profil d'entraîneur introuvable</h2>
           <p style="color: var(--text-muted); margin-bottom: 25px;">Aucune fiche d'entraîneur ne correspond à cette requête.</p>
-          <a href="competitions.html" class="btn btn-outline">← Retour à nos équipes</a>
+          <a href="${resolvePageUrl("competitions.html")}" class="btn btn-outline">← Retour à nos équipes</a>
         </div>
       `;
     }
@@ -5360,11 +5394,11 @@ window.renderCoachDetailPage = async () => {
   if (teamLinkEl) {
     if (associatedTeam && teamKey) {
       teamLinkEl.style.display = "inline-flex";
-      teamLinkEl.href = `competition-detail.html?team=${teamKey}`;
+      teamLinkEl.href = `${resolvePageUrl("competition-detail.html")}?team=${teamKey}`;
       teamLinkEl.innerHTML = `Consulter l'équipe ${associatedTeam.name} ↗`;
     } else {
       teamLinkEl.style.display = "inline-flex";
-      teamLinkEl.href = "competitions.html";
+      teamLinkEl.href = resolvePageUrl("competitions.html");
       teamLinkEl.innerHTML = `Consulter toutes nos équipes ↗`;
     }
   }
@@ -5397,7 +5431,7 @@ window.renderCompetitionsHub = async () => {
   // Load gamesData dynamically to show 3 last matches & standings position on cards!
   let gamesData = {};
   try {
-    const res = await fetch("data/games.json");
+    const res = await fetch(resolveAssetUrl("data/games.json"));
     if (res.ok) {
       gamesData = await res.json();
     }
@@ -5420,7 +5454,7 @@ window.renderCompetitionsHub = async () => {
       const playedMatches = teamStats.matches.filter(m => m.joue);
       const last3 = playedMatches.slice(0, 3);
 
-      const clickAction = `window.location.href='competition-detail.html?team=${key}'`;
+      const clickAction = `window.location.href='${resolvePageUrl("competition-detail.html")}?team=${key}'`;
 
       const getMatchResultBadge = (m) => {
         if (m.notreScore === null || m.scoreAdverse === null) return "";
@@ -5490,7 +5524,7 @@ window.loadCompetitionDetailPage = async () => {
   const urlParams = new URLSearchParams(window.location.search);
   const teamKey = urlParams.get("team");
   if (!teamKey || !rosters[teamKey]) {
-    window.location.href = "competitions.html";
+    window.location.href = resolvePageUrl("competitions.html");
     return;
   }
 
@@ -5511,7 +5545,7 @@ window.loadCompetitionDetailPage = async () => {
     const coachName = (team.coach || "").trim();
     const coachLink = (typeof window.buildCoachDetailUrl === "function") 
       ? window.buildCoachDetailUrl(coachObj, coachName, teamKey)
-      : (coachObj ? `coach-detail.html?id=${coachObj.id}` : (coachName ? `coach-detail.html?name=${encodeURIComponent(coachName)}` : null));
+      : (coachObj ? `${resolvePageUrl("coach-detail.html")}?id=${coachObj.id}` : (coachName ? `${resolvePageUrl("coach-detail.html")}?name=${encodeURIComponent(coachName)}` : null));
     const coachDisplayHtml = coachLink
       ? `<a href="${coachLink}" class="team-coach-link">${coachName}</a>`
       : (coachName || 'Non renseigné');
@@ -5522,14 +5556,14 @@ window.loadCompetitionDetailPage = async () => {
     if (team.photo) {
       teamPhotoDisplay.style.backgroundImage = `linear-gradient(rgba(26, 20, 18, 0.2), rgba(26, 20, 18, 0.6)), url('${team.photo}')`;
     } else {
-      teamPhotoDisplay.style.backgroundImage = `linear-gradient(rgba(26, 20, 18, 0.2), rgba(26, 20, 18, 0.6)), url('assets/court_bg.jpg')`;
+      teamPhotoDisplay.style.backgroundImage = `linear-gradient(rgba(26, 20, 18, 0.2), rgba(26, 20, 18, 0.6)), url('${resolveAssetUrl("assets/court_bg.jpg")}')`;
     }
   }
 
   // Load gamesData dynamically to group phases
   let gamesData = {};
   try {
-    const res = await fetch("data/games.json");
+    const res = await fetch(resolveAssetUrl("data/games.json"));
     if (res.ok) {
       gamesData = await res.json();
     }
@@ -5817,7 +5851,7 @@ async function fetchInformationsDb() {
 
   // 1. Base physique data/informations.json
   try {
-    const res = await fetch(`data/informations.json?t=${Date.now()}`);
+    const res = await fetch(`${resolveAssetUrl("data/informations.json")}?t=${Date.now()}`);
     if (res.ok) {
       db = await res.json();
     }
@@ -5919,8 +5953,8 @@ async function initCategoryPdfPage() {
           Il sera directement consultable et téléchargeable ici en haute résolution.
         </p>
         <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
-          <a href="informations.html" class="btn btn-outline" style="font-size: 0.85rem; padding: 10px 22px;">← Retour aux Informations</a>
-          <a href="contact.html" class="btn btn-primary" style="font-size: 0.85rem; padding: 10px 22px;">Contacter le secrétariat</a>
+          <a href="${resolvePageUrl("informations.html")}" class="btn btn-outline" style="font-size: 0.85rem; padding: 10px 22px;">← Retour aux Informations</a>
+          <a href="${resolvePageUrl("contact.html")}" class="btn btn-primary" style="font-size: 0.85rem; padding: 10px 22px;">Contacter le secrétariat</a>
         </div>
       </div>
     `;
@@ -5940,7 +5974,7 @@ async function initInformationsHubPage() {
       id: "inscriptions",
       title: "Inscriptions & Licences",
       desc: "Démarches dématérialisées e-Licence FFBB, tarifs par catégorie, dispositifs Pass'Sport et permanences du club.",
-      href: "inscriptions.html",
+      href: resolvePageUrl("inscriptions.html"),
       icon: "📝",
       accent: "#D21A00"
     },
@@ -5948,7 +5982,7 @@ async function initInformationsHubPage() {
       id: "planning",
       title: "Planning des Entraînements",
       desc: "Grille complète des créneaux hebdomadaires pour l'ensemble des équipes masculines et féminines (Gasco'Sport et Gymnase Municipal).",
-      href: "planning.html",
+      href: resolvePageUrl("planning.html"),
       icon: "⏱️",
       accent: "#F92C00"
     },
@@ -5956,7 +5990,7 @@ async function initInformationsHubPage() {
       id: "boutiques",
       title: "Boutiques Officielles",
       desc: "Habillez-vous aux couleurs de votre club ! Survêtements, maillots d'échauffement, sacs et catalogue textile officiel.",
-      href: "boutiques.html",
+      href: resolvePageUrl("boutiques.html"),
       icon: "🛍️",
       accent: "#FF6A2F"
     },
@@ -5964,7 +5998,7 @@ async function initInformationsHubPage() {
       id: "charte",
       title: "Charte Interne & Fair-Play",
       desc: "Les valeurs fondatrices de l'USBL et du BCL : respect de l'arbitrage, esprit d'équipe, convivialité et engagement citoyen.",
-      href: "charte-interne.html",
+      href: resolvePageUrl("charte-interne.html"),
       icon: "📜",
       accent: "#A31609"
     },
@@ -5972,7 +6006,7 @@ async function initInformationsHubPage() {
       id: "commissions",
       title: "Commissions du Club",
       desc: "Organisation interne, rôles et composition des pôles du club : Communication, Partenaires, OTM, Animations & Événements.",
-      href: "commissions.html",
+      href: resolvePageUrl("commissions.html"),
       icon: "🏛️",
       accent: "#B82400"
     }

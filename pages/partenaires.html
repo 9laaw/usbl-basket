@@ -3,31 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Actualités | US Basket Lislois</title>
-    <meta name="description" content="Bulletin d'actualités et communiqués officiels de l'Union Sportive de Basket Lislois (USBL).">
+    <title>Partenaires Officiels | Basket L'Isle-Jourdain (USBL & BCL)</title>
+    <meta name="description" content="Découvrez les acteurs publics et partenaires privés du Gers qui soutiennent l'USBL et le BCL.">
     
     <!-- Google Fonts Imports -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="styles.css?v=4.0">
-    <link rel="icon" type="image/png" href="assets/logo_usbl.png">
+    <link rel="stylesheet" href="../styles.css?v=4.0">
+    <link rel="icon" type="image/png" href="../assets/logo_usbl.png">
 </head>
-<body class="editorial-pure-theme has-red-navbar">
+<body class="editorial-pure-theme is-club-page">
 
     <!-- HEADER / NAVIGATION -->
         <!-- HEADER / NAVIGATION -->
     <header class="main-header">
         <div class="container header-container">
-            <a href="index.html" class="logo-area" aria-label="Accueil USBL BCL">
-                <img src="assets/logo_usbl_bcl.jpg" alt="Logo USBL BCL" class="club-logo-img">
+            <a href="../index.html" class="logo-area" aria-label="Accueil USBL BCL">
+                <img src="../assets/logo_usbl_bcl.jpg" alt="Logo USBL BCL" class="club-logo-img">
             </a>
 
             <nav class="main-nav">
                 <ul>
                     <li class="nav-dropdown-wrapper">
-                        <a href="index.html" class="nav-link" id="nav-leclub" style="text-decoration: none !important; border-bottom: none !important;">Les clubs <span class="dropdown-arrow">▼</span></a>
+                        <a href="../index.html" class="nav-link" id="nav-leclub" style="text-decoration: none !important; border-bottom: none !important;">Les clubs <span class="dropdown-arrow">▼</span></a>
                         <ul class="nav-dropdown-menu">
                             <li class="nav-submenu-wrapper">
                                 <a href="qui-sommes-nous.html" class="nav-submenu-toggle" style="text-decoration: none !important; border-bottom: none !important;">Qui sommes-nous ? <span class="submenu-arrow">▸</span></a>
@@ -65,36 +65,19 @@
         </div>
     </header>
 
-    <div id="page-article-detail">
-        <section class="article-detail-section section-padding">
-            <div class="container article-read-container">
-                <a href="evenements.html" class="btn-back-link">← Retourner au bulletin</a>
-                
-                <div class="article-rich-header">
-                    <span class="article-rich-cat" id="detail-article-category">Inscriptions</span>
-                    <h1 class="article-rich-title font-style-serif" id="detail-article-title">Chargement de l'article...</h1>
-                    <div class="article-rich-meta">
-                        <span class="article-rich-date" id="detail-article-date">-- -- ----</span>
-                        <span class="meta-sep">•</span>
-                        <span class="article-rich-author">Par Secrétariat USBL & BCL</span>
-                    </div>
-                    <div class="section-divider center-align"></div>
+    <div id="page-partenaires">
+        <section class="partners-catalog-section section-padding">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">Mécénat & Sponsors</span>
+                    <h2 class="section-title">NOS PARTENAIRES DE JEU</h2>
+                    <div class="section-divider"></div>
+                    <p class="section-lead">Nous remercions chaleureusement les acteurs publics et les commerçants locaux du Gers qui soutiennent le projet éducatif et compétitif de l'USBL et du BCL.</p>
                 </div>
 
-                <div class="article-rich-photo-frame">
-                    <img src="assets/gascosport.jpg" alt="Illustration" class="article-rich-img">
-                </div>
-
-                <div class="article-rich-content" id="detail-article-content">
-                    <!-- Dynamic paragraphs populated by scripts.js -->
-                </div>
-                
-                <!-- Galerie de photos intégrées -->
-                <div class="article-rich-gallery" id="detail-article-gallery"></div>
-
-                <div class="article-read-footer">
-                    <div class="section-divider center-align"></div>
-                    <button class="btn btn-outline" onclick="window.location.href='evenements.html'">← Retourner aux actualités</button>
+                <!-- Partenaires dynamic categories will be injected here -->
+                <div id="partners-container">
+                    <!-- Populated dynamically by scripts.js -->
                 </div>
             </div>
         </section>
@@ -123,6 +106,6 @@
         </div>
     </footer>
 
-    <script src="scripts.js"></script>
+    <script src="../scripts.js"></script>
 </body>
 </html>
