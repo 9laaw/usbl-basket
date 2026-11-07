@@ -2048,7 +2048,7 @@ function renderArticles() {
 }
 window.renderArticles = renderArticles;
 
-// Rendu du Bandeau Défilant des Actualités (Ticker dynamique BDD avec vignettes, dates et titres)
+// Rendu du Bandeau Défilant des Actualités (Ticker dynamique BDD avec images pleine hauteur, dates de publication et titres)
 function renderTicker() {
   const track = document.getElementById("club-ticker-track");
   if (!track) return;
@@ -2057,16 +2057,16 @@ function renderTicker() {
 
   if (!articles || articles.length === 0) {
     const emptyMsgs = [
-      { title: "Bienvenue sur le site officiel des Spartiates USBL & BCL", date: "INFO", img: defaultImg },
-      { title: "Le secrétariat prépare les prochains communiqués de la saison", date: "OFFICIEL", img: defaultImg },
-      { title: "Retrouvez très bientôt toute l'actualité de nos équipes et résultats", date: "SAISON", img: defaultImg },
+      { title: "Aucune actualité pour le moment — De nouvelles publications arrivent très bientôt !", date: "BIENTÔT DISPONIBLE", img: defaultImg },
+      { title: "Les prochains communiqués et résultats des équipes arrivent très bientôt !", date: "À TRÈS BIENTÔT", img: defaultImg },
+      { title: "Retrouvez très bientôt toute l'actualité sportive des Spartiates USBL & BCL !", date: "SAISON EN COURS", img: defaultImg },
     ];
 
     const emptyHtml = emptyMsgs
       .map(
         (item) => `
           <span class="ticker-item ticker-item-empty">
-            <img src="${item.img}" alt="" class="ticker-thumb" loading="lazy">
+            <img src="${item.img}" alt="Spartiates" class="ticker-thumb" loading="lazy">
             <span class="ticker-date">${item.date}</span>
             <span class="ticker-title">${item.title}</span>
           </span>
@@ -2095,14 +2095,14 @@ function renderTicker() {
   const itemsHtml = displayList
     .map((art, idx) => {
       const artIdOrIndex = art.id || String(idx % articles.length);
-      const dateStr = art.date ? art.date.toUpperCase() : "";
+      const dateStr = art.date ? `Publié le ${art.date}` : "Actualité du club";
       const artImg = art.image || defaultImg;
       const targetHref = `${resolvePageUrl("article-detail.html")}?article=${encodeURIComponent(artIdOrIndex)}`;
 
       return `
         <a href="${targetHref}" class="ticker-item">
           <img src="${artImg}" alt="" class="ticker-thumb" loading="lazy" onerror="this.src='${defaultImg}'">
-          ${dateStr ? `<span class="ticker-date">${dateStr}</span>` : ""}
+          <span class="ticker-date">${dateStr}</span>
           <span class="ticker-title">${art.title}</span>
         </a>
         <span class="ticker-separator" aria-hidden="true">•</span>

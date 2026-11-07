@@ -20,39 +20,23 @@
     <header class="main-header" id="main-header">
         <div class="container header-container">
             <a href="index.html" class="logo-area" aria-label="Accueil USBL &amp; BCL">
-                <img src="assets/logo_usbl.png" alt="Logo USBL" class="club-logo-img">
+                <img src="assets/logousblbcl.png" alt="Logo USBL BCL" class="club-logo-img">
             </a>
 
             <nav class="main-nav">
                 <ul>
                     <li class="nav-dropdown-wrapper">
-                        <a href="index.html" class="nav-link active" id="nav-leclub">Les clubs <span class="dropdown-arrow">▼</span></a>
+                        <a href="index.html" class="nav-link active" id="nav-leclub">Le club <span class="dropdown-arrow">▼</span></a>
                         <ul class="nav-dropdown-menu">
-                            <li class="nav-submenu-wrapper">
-                                <a href="pages/qui-sommes-nous.html" class="nav-submenu-toggle">Qui sommes-nous ? <span class="submenu-arrow">▸</span></a>
-                                <ul class="nav-sub-menu">
-                                    <li><a href="pages/qui-sommes-nous-usbl.html">USBL (Masculin)</a></li>
-                                    <li><a href="pages/qui-sommes-nous-bcl.html">BCL (Féminin)</a></li>
-                                </ul>
-                            </li>
+                            <li><a href="pages/qui-sommes-nous.html">Qui sommes-nous ?</a></li>
                             <li><a href="pages/infrastructures.html">Nos infrastructures</a></li>
-                            <li><a href="pages/partenaires.html">Nos partenaires</a></li>
                             <li><a href="pages/benevoles.html">Bénévoles</a></li>
                             <li><a href="pages/contact.html">Nous contacter</a></li>
                         </ul>
                     </li>
-                    <li><a href="pages/competitions.html" class="nav-link" id="nav-competitions">Nos équipes</a></li>
+                    <li><a href="pages/competitions.html" class="nav-link" id="nav-competitions">Compétitions</a></li>
                     <li><a href="pages/evenements.html" class="nav-link" id="nav-evenements">Événements</a></li>
-                    <li class="nav-dropdown-wrapper nav-dropdown-right">
-                        <a href="pages/informations.html" class="nav-link" id="nav-informations">Informations <span class="dropdown-arrow">▼</span></a>
-                        <ul class="nav-dropdown-menu">
-                            <li><a href="pages/inscriptions.html">Inscriptions &amp; Licences</a></li>
-                            <li><a href="pages/planning.html">Planning des entraînements</a></li>
-                            <li><a href="pages/boutiques.html">Boutiques officielles</a></li>
-                            <li><a href="pages/charte-interne.html">Charte interne</a></li>
-                            <li><a href="pages/commissions.html">Commissions</a></li>
-                        </ul>
-                    </li>
+                    <li><a href="pages/partenaires.html" class="nav-link" id="nav-partenaires">Nos partenaires</a></li>
                 </ul>
             </nav>
 
@@ -64,20 +48,21 @@
         </div>
     </header>
 
-    <!-- BANDEAU D'INFORMATIONS : DIRECTEMENT SOUS LA NAVBAR -->
-    <aside class="club-ticker-section" id="club-ticker-section" aria-label="Actualités et Informations du club">
-        <div class="ticker-header-badge">
-            <span class="ticker-pulse-dot" aria-hidden="true"></span>
-            <span class="ticker-badge-text">ACTUALITÉS</span>
-        </div>
-        <div class="ticker-marquee-track" id="club-ticker-track">
-            <!-- Rendu dynamique par scripts.js : image, date de publication, titre de l'actualité -->
-        </div>
-    </aside>
-
     <div id="page-leclub">
         <!-- HERO SECTION SPORTIF HAUTE DÉFINITION AVEC FOND GASCOSPORT (FILTRE NOIR ATTÉNUÉ) -->
         <main id="accueil" class="hero-sports-section" style="background-image: linear-gradient(rgba(14, 11, 10, 0.28), rgba(14, 11, 10, 0.52)), url('assets/gascosport.jpg');">
+            
+            <!-- BANDEAU D'INFORMATIONS : DIRECTEMENT SOUS LA NAVBAR -->
+            <aside class="club-ticker-section" id="club-ticker-section" aria-label="Actualités et Informations du club">
+                <div class="ticker-header-badge">
+                    <span class="ticker-pulse-dot" aria-hidden="true"></span>
+                    <span class="ticker-badge-text">ACTUALITÉS</span>
+                </div>
+                <div class="ticker-marquee-track" id="club-ticker-track">
+                    <!-- Rendu dynamique par scripts.js : image pleine hauteur, date de publication, titre de l'actualité -->
+                </div>
+            </aside>
+
             <div class="container hero-sports-container">
                 <div class="hero-sports-content style-serif" id="hero-title-container">
                     
@@ -96,16 +81,6 @@
                     <div class="hero-club-titles">
                         <span class="hero-tag">BASKET · L'ISLE-JOURDAIN</span>
                         <h1 class="hero-sports-title">Union Sportive<br>Basket Lislois<br><span class="hero-partner-title">&amp; Basket Club Lislois</span></h1>
-                    </div>
-
-                    <!-- SÉPARATEUR ÉLÉGANT -->
-                    <div class="hero-separator"></div>
-
-                    <!-- SLOGAN (CRI DE GUERRE) -->
-                    <div class="hero-slogan-wrapper">
-                        <p class="hero-sports-slogan">
-                            <span class="slogan-badge-icon">⚡</span> Cri de guerre
-                        </p>
                     </div>
 
                 </div>

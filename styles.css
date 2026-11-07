@@ -499,17 +499,14 @@ body.theme-kinetic .section-tag {
    -------------------------------------------------------------------------- */
 .main-header {
     background-color: transparent;
-    border-bottom: 1px solid transparent;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
     position: fixed;
     width: 100%;
     top: 0;
     left: 0;
     z-index: 999;
-    padding: 16px 0;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-    box-shadow: none;
-    transition: background-color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease, padding 0.35s ease, backdrop-filter 0.35s ease;
+    padding: 20px 0;
+    transition: all var(--transition-speed, 0.3s) ease;
 }
 
 .header-container {
@@ -517,7 +514,7 @@ body.theme-kinetic .section-tag {
     align-items: center;
     justify-content: space-between;
     position: relative;
-    min-height: 44px;
+    min-height: 48px;
 }
 
 .logo-area {
@@ -528,13 +525,13 @@ body.theme-kinetic .section-tag {
 }
 
 .club-logo-img {
-    width: 42px;
-    height: 42px;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
     object-fit: cover;
     display: block;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    border: 1.5px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
     transition: transform 0.25s ease, border-color var(--transition-speed) ease, box-shadow 0.25s ease;
 }
 
@@ -727,56 +724,29 @@ header.main-header,
     border-bottom: none !important;
 }
 
-/* Desktop: Menus centered at page arrival, realigned to right when scrolled */
-@media (min-width: 769px) {
-    .main-header .main-nav {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        transition: left 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-        white-space: nowrap;
-    }
-
-    .main-header.scrolled-header .main-nav {
-        left: calc(100% - 24px);
-        transform: translate(-100%, -50%);
-    }
-
-    .main-header:not(.scrolled-header) .main-nav a {
-        text-shadow: none;
-        color: var(--text-color);
-    }
+.main-header:not(.scrolled-header) .main-nav > ul > li > a,
+.main-header:not(.scrolled-header) .main-nav > ul > li > .nav-link {
+    color: rgba(255, 255, 255, 0.85) !important;
 }
 
-/* Adaptation pour les pages avec en-tête sombre à l'état initial (non scrollé) */
-body:has(.editorial-header-banner) .main-header:not(.scrolled-header) .main-nav > ul > li > a,
-body:has(.editorial-header-banner) .main-header:not(.scrolled-header) .main-nav > ul > li > .nav-link,
-body.has-dark-banner .main-header:not(.scrolled-header) .main-nav > ul > li > a,
-body.has-dark-banner .main-header:not(.scrolled-header) .main-nav > ul > li > .nav-link {
-    color: rgba(255, 255, 255, 0.92) !important;
+.main-header:not(.scrolled-header) .main-nav > ul > li > a:hover,
+.main-header:not(.scrolled-header) .main-nav > ul > li > a.active,
+.main-header:not(.scrolled-header) .main-nav > ul > li > .nav-link:hover,
+.main-header:not(.scrolled-header) .main-nav > ul > li > .nav-link.active {
+    color: #ffffff !important;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5) !important;
 }
-body:has(.editorial-header-banner) .main-header:not(.scrolled-header) .main-nav > ul > li > a:hover,
-body:has(.editorial-header-banner) .main-header:not(.scrolled-header) .main-nav > ul > li > a.active,
-body:has(.editorial-header-banner) .main-header:not(.scrolled-header) .main-nav > ul > li > .nav-link:hover,
-body:has(.editorial-header-banner) .main-header:not(.scrolled-header) .main-nav > ul > li > .nav-link.active,
-body.has-dark-banner .main-header:not(.scrolled-header) .main-nav > ul > li > a:hover,
-body.has-dark-banner .main-header:not(.scrolled-header) .main-nav > ul > li > a.active,
-body.has-dark-banner .main-header:not(.scrolled-header) .main-nav > ul > li > .nav-link:hover,
-body.has-dark-banner .main-header:not(.scrolled-header) .main-nav > ul > li > .nav-link.active {
-    color: var(--palette-400, #FF6A2F) !important;
-}
-body:has(.editorial-header-banner) .main-header:not(.scrolled-header) .main-nav > ul > li > a .dropdown-arrow,
-body.has-dark-banner .main-header:not(.scrolled-header) .main-nav > ul > li > a .dropdown-arrow {
+
+.main-header:not(.scrolled-header) .dropdown-arrow {
     color: rgba(255, 255, 255, 0.75) !important;
 }
-body:has(.editorial-header-banner) .main-header:not(.scrolled-header) .mobile-menu-toggle span,
-body.has-dark-banner .main-header:not(.scrolled-header) .mobile-menu-toggle span {
+
+.main-header:not(.scrolled-header) .mobile-menu-toggle span {
     background-color: #ffffff !important;
 }
-body:has(.editorial-header-banner) .main-header:not(.scrolled-header) .club-logo-img,
-body.has-dark-banner .main-header:not(.scrolled-header) .club-logo-img {
-    border-color: rgba(255, 255, 255, 0.25) !important;
+
+.main-header:not(.scrolled-header) .club-logo-img {
+    border-color: rgba(255, 255, 255, 0.3) !important;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35) !important;
 }
 
@@ -910,26 +880,22 @@ body.has-dark-banner .main-header:not(.scrolled-header) .club-logo-img {
 }
 
 /* ==========================================================================
-   NAVBAR DÉGRADÉ DE ROUGE - TOUTES LES PAGES SAUF LA PAGE D'ACCUEIL
+   NAVBAR COMMUNE STYLE MAQUETTE VERSELY SUR LES SOUS-PAGES
    ========================================================================== */
 body:not(.is-home-page) .main-header,
 body.has-red-navbar .main-header,
 body.is-club-page .main-header {
-    background: linear-gradient(135deg, #8B1200 0%, #680B00 50%, #380300 100%) !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
-    transition: background 0.35s ease, padding 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+    background-color: #ffffff !important;
+    border-bottom: 1px solid var(--border-color, #eae5de) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05) !important;
+    padding: 14px 0 !important;
 }
 
 body:not(.is-home-page) .main-header.scrolled-header,
 body.has-red-navbar .main-header.scrolled-header,
 body.is-club-page .main-header.scrolled-header {
-    background: linear-gradient(135deg, rgba(139, 18, 0, 0.96) 0%, rgba(104, 11, 0, 0.97) 50%, rgba(56, 3, 0, 0.98) 100%) !important;
-    backdrop-filter: blur(14px) !important;
-    -webkit-backdrop-filter: blur(14px) !important;
     padding: 11px 0 !important;
-    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.45) !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.18) !important;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.08) !important;
 }
 
 body:not(.is-home-page) .main-header .main-nav > ul > li > a,
@@ -937,77 +903,75 @@ body:not(.is-home-page) .main-header .main-nav > ul > li > .nav-link,
 body.has-red-navbar .main-header .main-nav > ul > li > a,
 body.has-red-navbar .main-header .main-nav > ul > li > .nav-link,
 body.is-club-page .main-header .main-nav > ul > li > a,
-body.is-club-page .main-header .main-nav > ul > li > .nav-link,
-body.is-club-page:has(.editorial-header-banner) .main-header:not(.scrolled-header) .main-nav > ul > li > a,
-body.is-club-page:has(.editorial-header-banner) .main-header:not(.scrolled-header) .main-nav > ul > li > .nav-link,
-body.is-club-page.has-dark-banner .main-header:not(.scrolled-header) .main-nav > ul > li > a,
-body.is-club-page.has-dark-banner .main-header:not(.scrolled-header) .main-nav > ul > li > .nav-link {
-    color: rgba(255, 255, 255, 0.85) !important;
-    font-weight: 500 !important;
-    transition: color 0.25s ease, text-shadow 0.25s ease !important;
+body.is-club-page .main-header .main-nav > ul > li > .nav-link {
+    color: var(--text-color, #1a1a1a) !important;
+    font-weight: 600 !important;
 }
 
 body:not(.is-home-page) .main-header .main-nav > ul > li > a:hover,
 body:not(.is-home-page) .main-header .main-nav > ul > li > .nav-link:hover,
-body.has-red-navbar .main-header .main-nav > ul > li > a:hover,
-body.has-red-navbar .main-header .main-nav > ul > li > .nav-link:hover,
-body.is-club-page .main-header .main-nav > ul > li > a:hover,
-body.is-club-page .main-header .main-nav > ul > li > .nav-link:hover,
-body.is-club-page:has(.editorial-header-banner) .main-header:not(.scrolled-header) .main-nav > ul > li > a:hover,
-body.is-club-page:has(.editorial-header-banner) .main-header:not(.scrolled-header) .main-nav > ul > li > .nav-link:hover,
-body.is-club-page.has-dark-banner .main-header:not(.scrolled-header) .main-nav > ul > li > a:hover,
-body.is-club-page.has-dark-banner .main-header:not(.scrolled-header) .main-nav > ul > li > .nav-link:hover {
-    color: #ffffff !important;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5) !important;
-}
-
 body:not(.is-home-page) .main-header .main-nav > ul > li > a.active,
 body:not(.is-home-page) .main-header .main-nav > ul > li > .nav-link.active,
-body:not(.is-home-page) .main-header.scrolled-header .main-nav > ul > li > a.active,
-body:not(.is-home-page) .main-header.scrolled-header .main-nav > ul > li > .nav-link.active,
+body.has-red-navbar .main-header .main-nav > ul > li > a:hover,
 body.has-red-navbar .main-header .main-nav > ul > li > a.active,
-body.has-red-navbar .main-header .main-nav > ul > li > .nav-link.active,
-body.has-red-navbar .main-header.scrolled-header .main-nav > ul > li > a.active,
-body.has-red-navbar .main-header.scrolled-header .main-nav > ul > li > .nav-link.active,
-body.is-club-page .main-header .main-nav > ul > li > a.active,
-body.is-club-page .main-header .main-nav > ul > li > .nav-link.active,
-body.is-club-page .main-header.scrolled-header .main-nav > ul > li > a.active,
-body.is-club-page .main-header.scrolled-header .main-nav > ul > li > .nav-link.active,
-body.is-club-page:has(.editorial-header-banner) .main-header:not(.scrolled-header) .main-nav > ul > li > a.active,
-body.is-club-page:has(.editorial-header-banner) .main-header:not(.scrolled-header) .main-nav > ul > li > .nav-link.active,
-body.is-club-page.has-dark-banner .main-header:not(.scrolled-header) .main-nav > ul > li > a.active,
-body.is-club-page.has-dark-banner .main-header:not(.scrolled-header) .main-nav > ul > li > .nav-link.active {
-    color: #ffffff !important;
-    font-weight: 700 !important;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.75), 0 1px 2px rgba(0, 0, 0, 0.9) !important;
+body.is-club-page .main-header .main-nav > ul > li > a:hover,
+body.is-club-page .main-header .main-nav > ul > li > a.active {
+    color: var(--primary-color, #D21A00) !important;
+    text-shadow: none !important;
 }
 
 body:not(.is-home-page) .main-header .dropdown-arrow,
 body.has-red-navbar .main-header .dropdown-arrow,
 body.is-club-page .main-header .dropdown-arrow {
-    color: rgba(255, 255, 255, 0.8) !important;
-    transition: color 0.25s ease, text-shadow 0.25s ease !important;
-}
-
-body:not(.is-home-page) .main-header .main-nav > ul > li > a.active .dropdown-arrow,
-body:not(.is-home-page) .main-header .main-nav > ul > li > .nav-link.active .dropdown-arrow,
-body.has-red-navbar .main-header .main-nav > ul > li > a.active .dropdown-arrow,
-body.has-red-navbar .main-header .main-nav > ul > li > .nav-link.active .dropdown-arrow,
-body.is-club-page .main-header .main-nav > ul > li > a.active .dropdown-arrow,
-body.is-club-page .main-header .main-nav > ul > li > .nav-link.active .dropdown-arrow {
-    color: #ffffff !important;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.75) !important;
+    color: #777777 !important;
 }
 
 body:not(.is-home-page) .main-header .mobile-menu-toggle span,
 body.has-red-navbar .main-header .mobile-menu-toggle span,
 body.is-club-page .main-header .mobile-menu-toggle span {
-    background-color: #ffffff !important;
+    background-color: var(--text-color, #1a1a1a) !important;
 }
 
 body:not(.is-home-page) .main-header .club-logo-img,
 body.has-red-navbar .main-header .club-logo-img,
 body.is-club-page .main-header .club-logo-img {
+    border-color: rgba(0, 0, 0, 0.1) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* En-tête avec bannière sombre éditoriale */
+body:has(.editorial-header-banner) .main-header:not(.scrolled-header),
+body.has-dark-banner .main-header:not(.scrolled-header) {
+    background-color: transparent !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+    box-shadow: none !important;
+}
+
+body:has(.editorial-header-banner) .main-header:not(.scrolled-header) .main-nav > ul > li > a,
+body.has-dark-banner .main-header:not(.scrolled-header) .main-nav > ul > li > a {
+    color: rgba(255, 255, 255, 0.85) !important;
+}
+
+body:has(.editorial-header-banner) .main-header:not(.scrolled-header) .main-nav > ul > li > a:hover,
+body:has(.editorial-header-banner) .main-header:not(.scrolled-header) .main-nav > ul > li > a.active,
+body.has-dark-banner .main-header:not(.scrolled-header) .main-nav > ul > li > a:hover,
+body.has-dark-banner .main-header:not(.scrolled-header) .main-nav > ul > li > a.active {
+    color: #ffffff !important;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5) !important;
+}
+
+body:has(.editorial-header-banner) .main-header:not(.scrolled-header) .dropdown-arrow,
+body.has-dark-banner .main-header:not(.scrolled-header) .dropdown-arrow {
+    color: rgba(255, 255, 255, 0.75) !important;
+}
+
+body:has(.editorial-header-banner) .main-header:not(.scrolled-header) .mobile-menu-toggle span,
+body.has-dark-banner .main-header:not(.scrolled-header) .mobile-menu-toggle span {
+    background-color: #ffffff !important;
+}
+
+body:has(.editorial-header-banner) .main-header:not(.scrolled-header) .club-logo-img,
+body.has-dark-banner .main-header:not(.scrolled-header) .club-logo-img {
     border-color: rgba(255, 255, 255, 0.3) !important;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35) !important;
 }
@@ -1067,50 +1031,23 @@ body.is-club-page .editorial-header-banner {
 /* --------------------------------------------------------------------------
    BANDEAU D'INFORMATIONS TICKER (DIRECTEMENT SOUS LA NAVBAR)
    -------------------------------------------------------------------------- */
-body.is-home-page .main-header {
-    background-color: rgba(18, 14, 13, 0.97) !important;
-    backdrop-filter: blur(14px) !important;
-    -webkit-backdrop-filter: blur(14px) !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35) !important;
-}
-
-body.is-home-page .main-header .main-nav a {
-    color: rgba(255, 255, 255, 0.92) !important;
-}
-
-body.is-home-page .main-header .main-nav a:hover,
-body.is-home-page .main-header .main-nav a.active {
-    color: #ff6a2f !important;
-}
-
-body.is-home-page .main-header .dropdown-arrow {
-    color: rgba(255, 255, 255, 0.75) !important;
-}
-
-body.is-home-page .main-header .club-logo-img {
-    border: 1px solid rgba(255, 255, 255, 0.25) !important;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5) !important;
-}
-
-body.is-home-page .main-header .mobile-menu-toggle span {
-    background-color: #ffffff !important;
-}
-
+/* --------------------------------------------------------------------------
+   BANDEAU D'INFORMATIONS TICKER (DIRECTEMENT SOUS LA NAVBAR)
+   -------------------------------------------------------------------------- */
 .club-ticker-section {
     position: relative;
     width: 100%;
-    margin-top: 72px; /* Positionné immédiatement sous la navbar fixe */
-    height: 44px;
-    background: rgba(18, 14, 13, 0.96);
+    margin-top: 89px; /* Positionné immédiatement sous la navbar fixe */
+    height: 48px;
+    background: rgba(18, 14, 13, 0.95);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
     border-bottom: 1px solid rgba(255, 255, 255, 0.12);
     display: flex;
     align-items: center;
     overflow: hidden;
-    z-index: 900;
+    z-index: 10;
 }
 
 .ticker-header-badge {
@@ -1150,6 +1087,7 @@ body.is-home-page .main-header .mobile-menu-toggle span {
 
 .ticker-marquee-track {
     flex: 1;
+    height: 100%;
     overflow: hidden;
     display: flex;
     position: relative;
@@ -1159,6 +1097,7 @@ body.is-home-page .main-header .mobile-menu-toggle span {
 .ticker-marquee-content {
     display: inline-flex;
     align-items: center;
+    height: 100%;
     white-space: nowrap;
     animation: tickerMarquee 42s linear infinite;
     will-change: transform;
@@ -1176,33 +1115,37 @@ body.is-home-page .main-header .mobile-menu-toggle span {
 .ticker-item {
     display: inline-flex;
     align-items: center;
-    gap: 9px;
+    height: 100%;
+    gap: 12px;
     color: #ffffff;
     text-decoration: none !important;
-    padding: 0 16px;
+    padding: 0 20px 0 0;
     white-space: nowrap;
-    transition: opacity 0.2s ease, transform 0.2s ease;
+    transition: opacity 0.2s ease, background-color 0.2s ease;
 }
 
 .ticker-item:hover {
     opacity: 0.85;
 }
 
+/* Image miniature prenant toute la hauteur du bandeau */
 .ticker-thumb {
-    width: 26px;
-    height: 26px;
-    border-radius: 4px;
+    width: 48px;
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 0;
     object-fit: cover;
     flex-shrink: 0;
-    border: 1px solid rgba(255, 255, 255, 0.25);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+    border: none;
+    border-right: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.35);
 }
 
 .ticker-date {
     font-family: var(--font-body, 'Inter', sans-serif);
     font-size: 0.72rem;
     font-weight: 800;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.05em;
     color: #ff6a2f;
     text-transform: uppercase;
     flex-shrink: 0;
@@ -1219,7 +1162,7 @@ body.is-home-page .main-header .mobile-menu-toggle span {
 .ticker-separator {
     color: rgba(255, 255, 255, 0.25);
     font-size: 0.75rem;
-    margin: 0 8px;
+    margin: 0 10px;
     user-select: none;
 }
 
@@ -1229,15 +1172,15 @@ body.is-home-page .main-header .mobile-menu-toggle span {
 .hero-sports-section {
     position: relative;
     width: 100%;
-    min-height: calc(100vh - 116px);
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     color: #ffffff;
-    padding-top: 50px;
+    padding-top: 0;
     padding-bottom: 75px;
     box-sizing: border-box;
     overflow: hidden;
@@ -1253,6 +1196,19 @@ body.is-home-page .main-header .mobile-menu-toggle span {
     height: 100%;
     background: radial-gradient(circle at 50% 45%, rgba(10, 8, 8, 0.22) 0%, rgba(10, 8, 8, 0.58) 100%);
     z-index: 1;
+    pointer-events: none;
+}
+
+.hero-sports-container {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 1100px;
+    margin: auto auto;
+    padding: 30px 24px 60px;
+    display: flex;
+    justify-content: flex-start;
+}
 }
 
 .hero-sports-container {
@@ -1406,8 +1362,8 @@ html, body {
         display: block !important;
     }
     .club-ticker-section {
-        margin-top: 60px;
-        height: 38px;
+        margin-top: 69px;
+        height: 40px;
     }
     .ticker-header-badge {
         padding: 0 10px;
@@ -1415,13 +1371,13 @@ html, body {
         font-size: 0.65rem;
     }
     .ticker-item {
-        gap: 6px;
-        padding: 0 10px;
+        gap: 8px;
+        padding: 0 14px 0 0;
     }
     .ticker-thumb {
-        width: 22px;
-        height: 22px;
-        border-radius: 3px;
+        width: 40px;
+        height: 100%;
+        border-radius: 0;
     }
     .ticker-date {
         font-size: 0.64rem;
@@ -1433,9 +1389,13 @@ html, body {
         margin: 0 5px;
     }
     .hero-sports-section {
-        min-height: calc(100vh - 98px);
-        padding-top: 35px;
+        min-height: 100vh;
+        padding-top: 0;
         padding-bottom: 50px;
+    }
+    .hero-sports-container {
+        margin: auto 0;
+        padding: 20px 16px 40px;
     }
     .hero-dual-logos {
         gap: 12px;
