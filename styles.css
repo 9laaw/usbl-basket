@@ -1246,7 +1246,7 @@ body.is-club-page .editorial-header-banner {
     align-items: center;
     justify-content: center;
     width: 100%;
-    gap: 24px;
+    gap: 48px;
 }
 
 .hero-club-col {
@@ -1254,27 +1254,31 @@ body.is-club-page .editorial-header-banner {
     max-width: 440px;
 }
 
+.hero-club-link,
 .hero-club-card-link {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
     text-decoration: none !important;
-    padding: 14px 16px;
-    border-radius: 0;
-    background: transparent;
-    border: none;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-    box-shadow: none;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    background: none !important;
+    background-color: transparent !important;
+    border: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    box-shadow: none !important;
     transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.hero-club-link:hover,
 .hero-club-card-link:hover {
     transform: translateY(-5px);
-    background: transparent;
-    border: none;
-    box-shadow: none;
+    background: none !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
 }
 
 .hero-club-logo-wrap {
@@ -1289,20 +1293,13 @@ body.is-club-page .editorial-header-banner {
     width: 145px;
     height: 145px;
     object-fit: contain;
-    filter: drop-shadow(0 10px 28px rgba(0, 0, 0, 0.75));
-    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
+    filter: none !important;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.hero-club-link:hover .hero-club-big-logo,
 .hero-club-card-link:hover .hero-club-big-logo {
     transform: scale(1.08);
-}
-
-.hero-club-usbl .hero-club-card-link:hover .hero-club-big-logo {
-    filter: drop-shadow(0 10px 28px rgba(230, 161, 92, 0.55));
-}
-
-.hero-club-bcl .hero-club-card-link:hover .hero-club-big-logo {
-    filter: drop-shadow(0 10px 28px rgba(210, 26, 0, 0.55));
 }
 
 .hero-club-info {
@@ -1319,15 +1316,16 @@ body.is-club-page .editorial-header-banner {
     transition: color 0.3s ease, text-shadow 0.3s ease;
 }
 
+.hero-club-usbl .hero-club-link:hover .hero-club-title,
 .hero-club-usbl .hero-club-card-link:hover .hero-club-title {
     color: #f7ca88;
     text-shadow: 0 0 24px rgba(230, 161, 92, 0.6), 0 2px 14px rgba(0, 0, 0, 0.9);
 }
 
+.hero-club-bcl .hero-club-link:hover .hero-club-title,
 .hero-club-bcl .hero-club-card-link:hover .hero-club-title {
     color: #ff8b5c;
     text-shadow: 0 0 24px rgba(255, 106, 47, 0.6), 0 2px 14px rgba(0, 0, 0, 0.9);
-}
 }
 
 /* Police 1 : USBL - Spartan Heroic Roman Serif */
@@ -1360,30 +1358,7 @@ body.is-club-page .editorial-header-banner {
     text-transform: uppercase;
 }
 
-/* Séparateur central entre les deux clubs */
-.hero-clubs-divider {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    padding: 0 8px;
-    flex-shrink: 0;
-}
 
-.divider-line {
-    width: 1px;
-    height: 70px;
-    background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.35), transparent);
-}
-
-.divider-amp {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-style: italic;
-    font-size: clamp(1.6rem, 2.6vw, 2.3rem);
-    color: rgba(255, 255, 255, 0.6);
-    line-height: 1;
-}
 
 html, body {
     overflow-x: hidden;
@@ -1455,20 +1430,22 @@ html, body {
         font-size: 0.68rem;
     }
     .hero-clubs-row {
-        gap: 8px;
+        gap: 16px;
         align-items: stretch;
     }
     .hero-club-col {
         max-width: 48%;
     }
+    .hero-club-link,
     .hero-club-card-link {
-        padding: 6px 4px;
+        padding: 0;
         border-radius: 0;
-        background: transparent;
-        border: none;
-        backdrop-filter: none;
-        -webkit-backdrop-filter: none;
-        box-shadow: none;
+        background: none !important;
+        background-color: transparent !important;
+        border: none !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        box-shadow: none !important;
     }
     .hero-club-logo-wrap {
         height: 94px;
@@ -1477,6 +1454,7 @@ html, body {
     .hero-club-big-logo {
         width: 88px;
         height: 88px;
+        filter: none !important;
     }
     .font-usbl {
         font-size: clamp(0.92rem, 3.8vw, 1.15rem);
@@ -1488,16 +1466,6 @@ html, body {
     }
     .hero-club-section-desc {
         font-size: 0.65rem;
-    }
-    .hero-clubs-divider {
-        padding: 0 1px;
-        gap: 6px;
-    }
-    .divider-line {
-        height: 38px;
-    }
-    .divider-amp {
-        font-size: 1.3rem;
     }
 }
 
